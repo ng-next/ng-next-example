@@ -1,0 +1,22 @@
+<md-toolbar id="main-toolbar">
+
+  <div layout="row"
+       flex
+       class="md-toolbar-tools">
+
+    <!--TODO "hide-gt-??" (menuIsLockedOpenStartingFrom) must be configurable-->
+    <!--along with menu's md-is-locked-open="$media('gt-md')"-->
+    <md-button ng-click="vm.toggleNav()"
+               hide-gt-sm
+               aria-label="Toggle Menu">
+      <!--<div class="il-icon-hamburger"></div>-->
+      <md-icon icon="lib/assets/icons/hamburger_24px.svg"></md-icon>
+    </md-button>
+    <div flex>
+      <!-- TODO: Display "Story/Feature Group -> Story/Feature" -->
+    </div>
+    <div ui-view="headerright">
+      <md-button ng-click="vm.goToLogin()">Login</md-button>
+    </div>
+  </div>
+</md-toolbar>

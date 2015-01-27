@@ -1,0 +1,48 @@
+<div layout="column">
+  <div layout="row" layout-align="center center">
+    <md-whiteframe layout="column"
+                   flex-sm="90"
+                   flex-gt-sm="70"
+                   flex-md="50"
+                   flex-gt-md="30"
+                   class="md-whiteframe-z1">
+
+      <md-toolbar class="md-toolbar-tools">
+        <h3>Login</h3>
+      </md-toolbar>
+
+      <md-content layout-margin>
+        <form id="loginForm"
+              ng-submit="login.submit()"
+              name="loginForm">
+
+          <md-input-container>
+            <label for="username">username</label>
+            <input id="username" type="text"/>
+          </md-input-container>
+
+          <md-input-container>
+            <label for="password">password</label>
+            <input id="password" type="password"/>
+          </md-input-container>
+          <br>
+
+          <!--<div layout="row"-->
+          <!--layout-align="center center">-->
+
+          <div layout="column">
+            <md-button ng-click="login.submit()"
+                       aria-label="login">
+              Login
+            </md-button>
+          </div>
+          <!--</div>-->
+        </form>
+      </md-content>
+
+    </md-whiteframe>
+  </div>
+</div>
+<!--<p>-->
+<!--<a ui-sref="root.authentication.signup">register</a>-->
+<!--</p>-->

@@ -1,0 +1,105 @@
+*, *:after, *:before{
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+}
+body{
+	margin: 0;
+	font-family: RobotoDraft, Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.loader-wrap{
+	background-color: white;
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	z-index: 99999;
+}
+.loader{
+	font-size: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	    -ms-transform: translateX(-50%) translateY(-50%);
+                transform: translateX(-50%) translateY(-50%);
+	width: 120px;
+	height: 20px;
+}
+.loader:after{
+	color: rgb(3, 169, 244);
+	content: "Loading...";
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	font-size: 24px;
+	position: absolute;
+	width: 120px;
+	top: 40px;
+	left: 5px;
+	text-align: center;
+}
+[class*='box-']{
+	display: inline-block;
+	font-size: 15px;
+	line-height: 20px;
+	margin-right: 5px;
+	height: 20px;
+	width: 20px;
+	border: 5px solid rgba(0,183,229,0.9);
+	border-right: 5px solid transparent;
+	border-left: 5px solid transparent;
+	box-shadow: 0 0 10px #2187e7;
+	border-radius: 50%;
+	-webkit-transform: scale(0.7);
+	    -ms-transform: scale(0.7);
+	        transform: scale(0.7);
+	-webkit-animation: loader 1s infinite linear;
+	        animation: loader 1s infinite linear;
+}
+[class*='box-']:last-child{
+	margin-right: 0;
+}
+.box-1{
+	-webkit-animation-delay: .4s;
+	        animation-delay: .4s;
+}
+.box-2{
+	-webkit-animation-delay: .3s;
+	        animation-delay: .3s;
+}
+.box-3{
+	-webkit-animation-delay: .2s;
+	        animation-delay: .2s;
+}
+.box-4{
+	-webkit-animation-delay: .3s;
+	        animation-delay: .3s;
+}
+.box-5{
+	-webkit-animation-delay: .4s;
+	        animation-delay: .4s;
+}
+@-webkit-keyframes loader{
+    0% {
+        -webkit-transform: scale(1.2);
+                transform: scale(1.2);
+        opacity: 1;
+    }
+
+    100% {
+        -webkit-transform: scale(0.7) rotate(10deg);
+                transform: scale(0.7) rotate(10deg);
+        opacity: 0.1;
+    }
+}
+@keyframes loader{
+    0% {
+        -webkit-transform: scale(1.2);
+                transform: scale(1.2);
+        opacity: 1;
+    }
+
+    100% {
+        -webkit-transform: scale(0.7) rotate(10deg);
+                transform: scale(0.7) rotate(10deg);
+        opacity: 0.1;
+    }
+}

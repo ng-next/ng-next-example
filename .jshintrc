@@ -1,0 +1,45 @@
+{
+  "browser" : true,
+  "phantom" : true,
+  "jquery"  : true,
+  "mocha"   : true,
+
+  "predef" : [
+    "MY_GLOBAL_VARIABLE",
+    "__moduleName",
+    "angular",
+    "sinon",
+    "expect",
+    "inject",
+    "module",
+    "ngInject",
+    "_"
+  ],
+
+  "bitwise"  : true,
+  "curly"    : true,
+  "eqeqeq"   : true,
+  "forin"    : true,
+  "freeze"   : true,
+  "immed"    : true,
+  "indent"   : 2,
+  "latedef"  : false,
+  "newcap"   : true,
+  "noarg"    : true,
+  "noempty"  : true,
+  "nonbsp"   : true,
+  "nonew"    : true,
+  "plusplus" : true,
+  "quotmark" : "single",
+  "undef"    : true,
+  "unused"   : true,
+
+  "maxparams"     : 8,
+  "maxdepth"      : 4,
+  "maxstatements" : 40,
+  "maxlen"        : 120,
+
+  "esnext" : true,
+
+  "devel" : true
+}

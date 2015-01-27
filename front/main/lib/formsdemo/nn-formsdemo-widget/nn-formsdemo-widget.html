@@ -1,0 +1,36 @@
+<md-whiteframe class="md-whiteframe-z1">
+
+  <md-toolbar class="md-primary nn-widget">
+    <h1 class="md-toolbar-tools nn-widget">
+      FormsDemo Data Widget
+    </h1>
+  </md-toolbar>
+
+  <md-content class="md-padding nn-widget">
+    <div>nnDate: {{formsdemoWidget.data.nnDate | date:'yyyy-MM-dd'}}
+    </div>
+    <div>Email: {{formsdemoWidget.data.nnEmail}}</div>
+    <div>Time (from model): {{formsdemoWidget.data.nnTime | date: 'HH:mm:ss'}}
+         (Timezone: {{formsdemoWidget.data.nnTime | date: 'Z'}})
+    </div>
+    <div>Description: {{formsdemoWidget.data.nnDescription}}</div>
+    <div>Number (OneTime): {{::formsdemoWidget.data.nnNumber}}</div>
+  </md-content>
+
+  <!--<md-list>-->
+    <!--<md-item>-->
+      <!--<md-item-content>-->
+        <!--<div class="md-tile-left">-->
+          <!--nnDate_fooooooooooo:-->
+        <!--</div>-->
+
+        <!--<div class="md-tile-content">-->
+          <!--<span>{{formsdemoWidget.data.nnDate | date:'yyyy-MM-dd'}}-->
+                <!--&nbsp;(timezone: {{formsdemoWidget.data.nnDate | date:'Z'}})-->
+          <!--</span>-->
+        <!--</div>-->
+      <!--</md-item-content>-->
+      <!--<md-divider ng-hide="$last"></md-divider>-->
+    <!--</md-item>-->
+  <!--</md-list>-->
+</md-whiteframe>

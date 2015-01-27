@@ -1,0 +1,66 @@
+<md-whiteframe layout="column"
+               class="md-whiteframe-z1">
+  <md-toolbar class="md-primary">
+    <h1 class="md-toolbar-tools">
+      {{ngnextWelcomeCtrl.title}}
+    </h1>
+  </md-toolbar>
+
+  <md-content class="md-padding">
+    <h3>What is ng-next?</h3>
+    <div>ng-next is AngularJS 1.x using ...</div>
+    <ul>
+      <li>jspm. <br/> jspm is a package manager for the SystemJS universal module
+      loader, built on top of the dynamic ES6 module loader
+      <ul>
+         <li>Load any module format (ES6, AMD, CommonJS and globals) directly
+             from any endpoint such as npm and github with flat versioned
+             dependency management.
+        </li>
+        <li>For development, load modules as separate files with ES6 and plugins
+            compiled in the browser.
+        </li>
+        <li>For production, optimize into a bundle, layered bundles or a
+            self-executing bundle with a single command."
+        </li>
+      </ul>
+      <li>angular material design</li>
+      <li>Controller As syntax</li>
+      <li>ES6 classes for controllers and services</li>
+      <li>abstracts away angular modules in favor of ES6 modules (import)</li>
+      </li>
+    </ul>
+    <div>... trying to make it easy to migrate to Angular 2.x at some
+    point in the future.</div>
+  </md-content>
+</md-whiteframe>
+<br/>
+<md-whiteframe layout="column"
+               class="md-whiteframe-z1">
+
+  <md-toolbar class="md-primary">
+    <h1 class="md-toolbar-tools">
+      mdToast Test
+    </h1>
+  </md-toolbar>
+
+  <md-content>
+    <div layout-sm="column"
+         layout-align-sm="start center"
+         layout-gt-sm="row"
+         layout-align-gt-sm="center start"
+         layout-margin>
+
+      <md-button flex
+                 class="md-raised"
+                 ng-click="ngnextWelcomeCtrl.sayHiSimpleAndConsoleLog()">
+        Say Hi on document
+      </md-button>
+      <md-button flex
+                 class="md-raised"
+                 ng-click="ngnextWelcomeCtrl.sayHiCustom()">
+        Say Hi on {{ngnextWelcomeCtrl.customParentElementForToasts}}
+      </md-button>
+    </div>
+  </md-content>
+</md-whiteframe>

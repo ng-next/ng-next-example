@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <base href="/">
+    <title>ng-next</title>
+
+    <link rel="stylesheet" href="loading.css"/>
+
+    <script src="jspm_packages/system.js"></script>
+    <script src="config.js"></script>
+
+    <script>
+      System.import( 'main' )
+      .then( function () {
+        System.import( 'index.css!' );
+      })
+      .catch( console.error.bind( console ));
+    </script>
+  </head>
+  <body layout>
+    <nn-rootstate ui-view
+                  layout="column"
+                  layout-fill>
+    </nn-rootstate>
+
+    <!--TODO: maybe make a fade out -->
+    <!--.. or delete it completely if loading fast enough -->
+    <div class="loader-wrap" ng-hide>
+      <div class="loader">
+        <div class="box-1 box"></div>
+        <div class="box-2 box"></div>
+        <div class="box-3 box"></div>
+        <div class="box-4 box"></div>
+        <div class="box-5 box"></div>
+      </div>
+    </div>
+  </body>
+</html>

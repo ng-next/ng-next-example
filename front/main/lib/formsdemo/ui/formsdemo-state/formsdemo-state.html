@@ -1,0 +1,143 @@
+<!--layout="row"-->
+<!--layout-sm="column"-->
+
+<div layout="row">
+
+  <md-whiteframe layout-margin
+                 flex
+                 flex-gt-lg="50"
+                 id="formsdemoFromWidget"
+                 class="md-whiteframe-z1">
+
+    <form name="fromsdemoForm">
+      <md-toolbar class="md-primary">
+        <h1 class="md-toolbar-tools">
+          FormDemo Data
+        </h1>
+      </md-toolbar>
+
+      <md-content class="md-padding">
+
+        <md-input-container>
+          <label>Demo Date</label>
+          <input type="date"
+                 ng-model="formsdemo.data.nnDate">
+        </md-input-container>
+
+        <md-input-container>
+          <label>Email</label>
+          <input name="email"
+                 id="email"
+                 type="email"
+                 ng-model="formsdemo.data.nnEmail"
+                 required>
+        </md-input-container>
+
+        <md-input-container>
+          <label>Time</label>
+          <input id="nnTime"
+                 type="time"
+                 ng-model="formsdemo.data.nnTime">
+        </md-input-container>
+
+        <md-input-container>
+          <label>Description</label>
+          <input id="description"
+                 name="description"
+                 type="text"
+                 ng-model="formsdemo.data.nnDescription"
+                 required
+                 md-maxlength="30"
+                 ng-model-options="{ updateOn: 'default blur', debounce: {'default': 2000, 'blur': 0} }"
+            >
+          <div ng-messages="fromsdemoForm.description.$error">
+            <div ng-message="required">This is required.</div>
+            <div ng-message="md-maxlength">The description has to be less than
+             30 characters long.</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container>
+          <label>A number</label>
+          <input id="nnNumber"
+                 name="nnNumber"
+                 type="number"
+                 ng-model="formsdemo.data.nnNumber"
+                 required
+                 step="any"
+                 min="12"
+                 max="24"
+            >
+          <div ng-messages="fromsdemoForm.nnNumber.$error">
+            <div ng-message="required">Please specify a number</div>
+            <div ng-message="min">must be at least 12</div>
+            <div ng-message="max">must be less than 25</div>
+          </div>
+
+        </md-input-container>
+
+      </md-content>
+    </form>
+  </md-whiteframe>
+
+  <md-whiteframe hide
+                 show-gt-lg
+                 layout-margin
+                 flex
+                 flex-gt-lg="49"
+                 id="formsdemoImGreaterThanLargeWidget"
+                 class="md-whiteframe-z1">
+
+    <md-toolbar class="md-primary nn-widget">
+      <h1 class="md-toolbar-tools nn-widget">
+        I'm GT-LG
+      </h1>
+    </md-toolbar>
+
+    <md-content class="md-padding nn-widget">
+      You only see me on screens greater than 1200px
+    </md-content>
+  </md-whiteframe>
+</div>
+
+<br/>
+<md-divider></md-divider>
+<br/>
+
+<div layout="row">
+
+  <div layout="column"
+       layout-lg="row"
+       layout-fill
+       flex-gt-lg="50">
+
+    <nn-formsdemo-widget flex
+                         flex-lg="70"
+                         layout-margin>
+    </nn-formsdemo-widget>
+
+    <md-whiteframe flex
+                   layout-margin
+                   id="formsdemoFloatingWidget"
+                   class="md-whiteframe-z1">
+
+      <md-toolbar class="md-primary nn-widget">
+        <h1 class="md-toolbar-tools nn-widget">
+          Dummy Widget
+        </h1>
+      </md-toolbar>
+      <md-content class="md-padding nn-widget"
+                  layout="column">
+        <md-content>I'm just floating around depending on the screen's
+        size</md-content>
+        <md-content hide show-sm>Current Screen Size: <b>SM</b></md-content>
+        <md-content hide show-md>Current Screen Size:
+         <b>MD (GT-SM)</b></md-content>
+        <md-content hide show-lg>Current Screen Size:
+         <b>LG (GT-MD)</b></md-content>
+        <md-content hide show-gt-lg>Current Screen Size:
+         <b>GT-LG</b></md-content>
+      </md-content>
+    </md-whiteframe>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+# project settings folder for (JetBrains) IDE
+.idea
+
+# logs
+logs
+log
+*.log
+
+# runtime data
+pids
+*.pid
+*.seed
+
+# coverage directory used by tools like istanbul
+front/test/unit/coverage
+
+node_modules
+jspm_packages
+
+# build
+dist
+build
+build.js
+build.js.map
+
+# deployment
+public
+
+# misc
+.sass-cache
