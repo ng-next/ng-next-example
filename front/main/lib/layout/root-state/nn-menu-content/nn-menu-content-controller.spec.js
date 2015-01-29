@@ -8,7 +8,7 @@ import { StateDummy, StateSpy } from 'test-doubles-angular';
 
 import Controller from './nn-menu-content-controller';
 
-describe.only( 'NnMenuContentController', () => {
+describe( 'NnMenuContentController', () => {
   let controller;
 
   describe( 'given the stateProvider', () => {
