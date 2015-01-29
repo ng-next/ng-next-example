@@ -1,6 +1,4 @@
 ﻿// jscs:disable disallowAnonymousFunctions
-// baked in concept of gulp task to have an anonymous function per gulp-task
-
 /* jshint node: true */
 
 var path             = require( 'path' );
@@ -23,13 +21,11 @@ var ngAnnotate       = require( 'gulp-ng-annotate' );
 var jsdoc            = require( 'gulp-jsdoc' );
 
 gulp.task( 'clean', [ 'clean-build-artifacts', 'clean-public' ], function () {
-  //  console.log(path.join( process.cwd(), 'front/main' ) );
 });
 
 gulp.task( 'clean-build-artifacts', function ( cb ) {
   del([
     'front/main/build.*',
-    'front/main/dist/**'
     // becomes functional as soon as we make use of sass
     //,
     //'front/main/index.css'
@@ -48,54 +44,21 @@ gulp.task( 'set-local-mode', shell.task(
   [ 'jspm setmode local' ], { cwd : pathToMainFolder }
 ) );
 
+gulp.task( 'build-production', [ 'set-local-mode' ], function () {
+  buildProduction();
+});
+
 gulp.task( 'bundle-production',
-  //[ 'lint' ],
+  //[ 'lint', 'jscs' ],
   shell.task(
-    [ 'jspm bundle main + css + text build.js --inject' ],
+    [ 'jspm bundle main + css + text build.js --inject --skip-source-maps' ],
     { cwd : pathToMainFolder }
   )
 );
 
-gulp.task( 'bundle-dev', [ 'lint' ], shell.task(
-  [ 'jspm bundle main + css + text  --inject ' ],
-  { cwd : pathToMainFolder }
-) );
-
-gulp.task( 'bundle-dummy', [ 'lint' ], shell.task(
-  [ 'jspm bundle text - text  --inject ' ],
-  { cwd : pathToMainFolder }
-) );
-
-gulp.task( 'build-sass', function () {
-  //return gulp.src( 'front/main/lib/index.scss' )
-  //  .pipe( sass({ style : 'compressed' }) )
-  //  .pipe( gulp.dest( 'front/main' ) );
-});
-
-gulp.task( 'publish', [ 'clean-public' ], function () {
-  // TODO: remove. was used before making use of minification task
-  //  gulp.src([
-  //    'front/main/dist/**/*',
-  //    '!front/main/dist/**/*.spec.*'
-  //  ]).pipe( gulp.dest( 'public/dist' ) );
-
-  gulp.src([
-    'front/main/favicon.ico',
-    'front/main/*.js',
-    'front/main/*.js.map',
-    'front/main/index.*'
-  ]).pipe( gulp.dest( 'public' ) );
-
-  gulp.src([
-    'front/main/lib/assets/**/*'
-  ]).pipe( gulp.dest( 'public/lib/assets' ) );
-});
-
-function runProductionSequence ( next ) {
+function buildProduction ( next ) {
   runSequence(
-    'clean-build-artifacts',
-    // TODO: move mode setting to individual tasks (if still needed)!
-    'set-local-mode',
+    'clean',
     function () {
       runSequence(
         'bundle-production',
@@ -110,39 +73,76 @@ function runProductionSequence ( next ) {
           //  } else {
           //    runSequence( 'publish' );
           //  }
+          if ( next ) {
+            next();
+          }
           //});
         });
     }
   );
 }
 
-function runBundledDevSequence ( next ) {
-  runSequence(
-    'clean-build-artifacts',
-    // TODO: move mode setting to individual tasks (if still needed)!
-    'set-local-mode',
-    function () {
-      runSequence(
-        'bundle-dev',
-        // becomes functional as soon as we make use of sass
-        //,
-        //'build-sass',
-        function () {
-          if ( next ) {
-            runSequence( 'publish', next );
-          } else {
-            runSequence( 'publish' );
-          }
-        });
+gulp.task( 'build-debug', [ 'set-local-mode' ], function () {
+  buildDebug();
+});
+
+gulp.task( 'bundle-debug',
+  //[ 'lint', 'jscs' ],
+  shell.task([ 'jspm bundle main + css + text  build.js --inject ' ],
+    { cwd : pathToMainFolder }
+  )
+);
+
+function buildDebug ( next ) {
+  runSequence( 'clean', function () {
+    runSequence(
+      'bundle-debug',
+      // becomes functional as soon as we make use of sass
+      //,
+      //'build-sass',
+      function () {
+        if ( next ) {
+          next();
+        }
+      }
+    );
     }
   );
 }
 
-function runDevSequence ( next ) {
-  runSequence( 'clean', 'set-local-mode', function () {
+gulp.task( 'unbundle', shell.task(
+  [ 'jspm unbundle' ],
+  { cwd : pathToMainFolder }
+) );
+
+gulp.task( 'build-sass', function () {
+  //return gulp.src( 'front/main/lib/index.scss' )
+  //  .pipe( sass({ style : 'compressed' }) )
+  //  .pipe( gulp.dest( 'front/main' ) );
+});
+
+gulp.task( 'publish', [ 'clean-public' ], function () {
+  gulp.src([
+    'front/main/favicon.ico',
+    'front/main/*.js',
+    'front/main/*.js.map',
+    'front/main/index.*'
+  ]).pipe( gulp.dest( 'public' ) );
+
+  gulp.src([
+    'front/main/lib/assets/**/*'
+  ]).pipe( gulp.dest( 'public/lib/assets' ) );
+});
+
+gulp.task( 'dev', function () {
+  switchToDevelopmentMode();
+});
+
+function switchToDevelopmentMode ( next ) {
+  runSequence( 'clean', function () {
     if ( next ) {
       runSequence(
-        'bundle-dummy',
+        'unbundle',
         // becomes functional as soon as we make use of sass
         //,
         //'build-sass',
@@ -150,7 +150,7 @@ function runDevSequence ( next ) {
       );
     } else {
       runSequence(
-        'bundle-dummy'
+        'unbundle'
         // becomes functional as soon as we make use of sass
         //,
         //'build-sass'
@@ -160,7 +160,7 @@ function runDevSequence ( next ) {
 }
 
 function runBrowsersyncAndWatchFiles ( action ) {
-  runSequence( 'browser-sync', function () {
+  runSequence( 'browser-sync-front', function () {
     gulp.watch(
       [
         'front/main/**/*',
@@ -189,19 +189,7 @@ function runBrowsersyncAndWatchFiles ( action ) {
 //  );
 //});
 
-gulp.task( 'production', function () {
-  runProductionSequence();
-});
-
-gulp.task( 'bundled-dev', function () {
-  runBundledDevSequence();
-});
-
-gulp.task( 'dev', function () {
-  runDevSequence();
-});
-
-gulp.task( 'browser-sync', function () {
+gulp.task( 'browser-sync-front', function () {
   browserSync({
     proxy   : 'localhost:3000',  // local node app address
     port    : 5000,
@@ -263,49 +251,37 @@ gulp.task( 'nodemon', function ( cb ) {
   //  .on('change', ['lint'])
 });
 
+gulp.task( 'bundle-debug-and-reload', function () {
+  buildDebug( function () {
+    gulp.start( 'reload-browsers' );
+  });
+});
+
 gulp.task( 'production-and-reload', function () {
-  runProductionSequence( function () {
-    gulp.start( 'reload-browsers' );
-  });
-});
-
-gulp.task( 'bundle-dev-and-reload', function () {
-  runBundledDevSequence( function () {
-    gulp.start( 'reload-browsers' );
-  });
-});
-
-gulp.task( 'dev-and-reload', function () {
-  runDevSequence( function () {
+  buildProduction( function () {
     gulp.start( 'reload-browsers' );
   });
 });
 
 gulp.task( 'watch-production', function () {
   process.env.NODE_ENV = 'production';
-  runProductionSequence( function () {
+  buildProduction( function () {
     runBrowsersyncAndWatchFiles( 'production-and-reload' );
   });
 });
 
-gulp.task( 'watch-bundled-dev', function () {
-  process.env.NODE_ENV = 'bundled-dev';
-  runBundledDevSequence( function () {
-    runBrowsersyncAndWatchFiles( 'bundle-dev-and-reload' );
-  });
-});
-
-gulp.task( 'watch-dev', function () {
-  process.env.NODE_ENV = 'development';
-  runDevSequence( function () {
-    runBrowsersyncAndWatchFiles( 'dev-and-reload' );
+gulp.task( 'watch-build-debug', function () {
+  process.env.NODE_ENV = 'bundle-debug';
+  buildDebug( function () {
+    runBrowsersyncAndWatchFiles( 'bundle-debug-and-reload' );
   });
 });
 
 gulp.task( 'watch', function () {
-  //gulp.start( 'watch-dev' );
   process.env.NODE_ENV = 'development';
-  runBrowsersyncAndWatchFiles( 'reload-browsers' );
+  switchToDevelopmentMode( function () {
+    runBrowsersyncAndWatchFiles( 'reload-browsers' );
+  });
 });
 
 gulp.task( 'jscs', function () {
@@ -361,7 +337,6 @@ gulp.task( 'watch-test-server', function () {
     [ 'test-server' ]);
 });
 
-//TODO: check esprima harmony compatibility
 gulp.task( 'minify', function () {
   return gulp.src([
     'front/main/build.js'
@@ -371,7 +346,7 @@ gulp.task( 'minify', function () {
     add           : true,
     single_quotes : true // jscs:disable
   }) )
-  //.pipe( uglify() )
+  .pipe( uglify() )
   .pipe( gulp.dest( 'front/main' ) );
 });
 
