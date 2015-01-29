@@ -1,14 +1,10 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-let ngName = 'formsdemoGateway';
+let name = 'formsdemoGateway';
 
 import _ from 'lodash';
-
-// TODO: make alias
-import { registerService } from 'app/core/angular/nn-register-ng-provider';
-
-export default FormsdemoGatewayService;
+import { registerService } from 'nn-ng-helper';
 
 class FormsdemoGatewayService {
   constructor ( ctx ) {
@@ -35,4 +31,6 @@ class FormsdemoGatewayService {
   }
 }
 
-registerService( ngName, __moduleName, FormsdemoGatewayService );
+registerService( name, __moduleName, FormsdemoGatewayService );
+
+export default FormsdemoGatewayService;

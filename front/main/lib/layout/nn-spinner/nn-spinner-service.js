@@ -1,12 +1,9 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-let ngName = 'spinnerService';
+let name = 'spinnerService';
 
-// TODO: make alias
-import { registerService } from 'app/core/angular/nn-register-ng-provider';
-
-export default SpinnerService;
+import { registerService } from 'nn-ng-helper';
 
 class SpinnerService {
   constructor () {
@@ -32,4 +29,6 @@ class SpinnerService {
   }
 }
 
-registerService( ngName, __moduleName, SpinnerService );
+registerService( name, __moduleName, SpinnerService );
+
+export default SpinnerService;

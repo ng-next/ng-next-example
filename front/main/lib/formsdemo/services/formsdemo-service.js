@@ -1,15 +1,12 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-let ngName = 'formsdemoService';
+let name = 'formsdemoService';
 
 import _ from 'lodash';
-
-// TODO: make alias
-import { registerService } from 'app/core/angular/nn-register-ng-provider';
+import { registerService } from 'nn-ng-helper';
 
 class FormsdemoService {
-  // @ngInject
   constructor ( $log, formsdemoGateway ) {
     //noinspection BadExpressionStatementJS
     'ngInject';
@@ -33,6 +30,6 @@ class FormsdemoService {
   }
 }
 
-registerService( ngName, __moduleName, FormsdemoService );
+registerService( name, __moduleName, FormsdemoService );
 
 export default FormsdemoService;

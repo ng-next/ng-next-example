@@ -1,12 +1,9 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-let ngName = 'log';
+let name = 'log';
 
-// TODO: make alias
-import { registerService } from 'app/core/angular/nn-register-ng-provider';
-
-export default LogService;
+import { registerService } from 'nn-ng-helper';
 
 class LogService {
   constructor ( $log, toast ) {
@@ -50,4 +47,6 @@ class LogService {
   }
 }
 
-registerService( ngName, __moduleName, LogService );
+registerService( name, __moduleName, LogService );
+
+export default LogService;

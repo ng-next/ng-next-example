@@ -1,21 +1,21 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-let name = 'nnFormsdemoWidget';
+let name = 'nnSpinner';
 
 import { registerDirective } from 'nn-ng-helper';
 
-import template from './nn-formsdemo-widget.html!text';
-import controller from './nn-formsdemo-widget-controller';
+import './nn-spinner-service';
+import template from './nn-spinner.html!text';
+import controller from './nn-spinner-controller';
 
 export var ddo = {
   restrict     : 'E',
   replace      : true,
-  transclude   : false,
-  scope        : false,
+  template     : template,
   controller   : controller,
-  controllerAs : 'formsdemoWidget',
-  template     : template
+  controllerAs : 'spinner',
+  scope        : {}
 };
 
 registerDirective( name, __moduleName, ddo );

@@ -12,7 +12,7 @@ import 'angular-animate';
 import 'angular-messages';
 import 'angular-aria';
 import 'angular-material';
-import angularModuleNameContainer from 'app/core/angular/nn-ng-modules';
+import { nnNgModules as angularModuleNameContainer } from 'nn-ng-helper';
 registerAngularCoreModules();
 
 // import custom app modules

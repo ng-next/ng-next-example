@@ -1,12 +1,9 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-let ngName = 'nnMenuContent';
+let name = 'nnMenuContent';
 
-export default __moduleName;
-
-// TODO: make alias
-import { registerDirective } from 'app/core/angular/nn-register-ng-provider';
+import { registerDirective } from 'nn-ng-helper';
 
 import template from './nn-menu-content.html!text';
 import controller from './nn-menu-content-controller';
@@ -16,9 +13,11 @@ export var ddo = {
   replace          : true,
   template         : template,
   controller       : controller,
-  controllerAs     : 'vm',
+  controllerAs     : 'menuContent',
   bindToController : true,
   scope            : true
 };
 
-registerDirective( ngName, __moduleName, ddo );
+registerDirective( name, __moduleName, ddo );
+
+export default __moduleName;

@@ -1,12 +1,9 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-let ngName = 'authService';
+let name = 'authService';
 
-// TODO: make alias
-import { registerService } from 'app/core/angular/nn-register-ng-provider';
-
-export default AuthService;
+import { registerService } from 'nn-ng-helper';
 
 class AuthService {
   constructor () {
@@ -24,4 +21,6 @@ class AuthService {
   }
 }
 
-registerService( ngName, __moduleName, AuthService );
+registerService( name, __moduleName, AuthService );
+
+export default AuthService;

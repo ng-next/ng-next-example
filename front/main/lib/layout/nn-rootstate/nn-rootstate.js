@@ -1,13 +1,9 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-let ngName = 'nnRootstate';
+let name = 'nnRootstate';
 
-// needed to register directive module when unit testing
-export default __moduleName;
-
-// TODO: make alias
-import { registerDirective } from 'app/core/angular/nn-register-ng-provider';
+import { registerDirective } from 'nn-ng-helper';
 
 import template from './nn-rootstate.html!text';
 
@@ -18,4 +14,6 @@ export var ddo = {
   template : template
 };
 
-registerDirective( ngName, __moduleName, ddo );
+registerDirective( name, __moduleName, ddo );
+
+export default __moduleName;

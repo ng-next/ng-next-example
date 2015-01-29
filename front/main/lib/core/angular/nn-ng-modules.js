@@ -1,4 +1,6 @@
-// TODO: rename to NnNgModules
+//noinspection BadExpressionStatementJS
+'format es6';
+
 class NnNgModules {
   constructor () {
     this._angularCoreModules = [];

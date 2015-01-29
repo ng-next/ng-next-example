@@ -2,12 +2,9 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-let ngName = 'ctx';
+let name = 'ctx';
 
-// TODO: make alias
-import { registerService } from 'app/core/angular/nn-register-ng-provider';
-
-export default CtxService;
+import { registerService } from 'nn-ng-helper';
 
 class CtxService {
   constructor (
@@ -54,4 +51,6 @@ class CtxService {
   }
 }
 
-registerService( ngName, __moduleName, CtxService );
+registerService( name, __moduleName, CtxService );
+
+export default CtxService;

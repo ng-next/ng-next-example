@@ -1,14 +1,11 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-let ngName = 'exceptionConfig';
+let name = 'exceptionConfig';
 
-// TODO: make alias
-import { registerProvider } from 'app/core/angular/nn-register-ng-provider';
+import { registerProvider } from 'nn-ng-helper';
 
 //import MyConfigClass from './exception-config';
-
-export default ExceptionConfigProvider;
 
 const DEFAULT_APP_ERROR_PREFIX = '';
 
@@ -32,4 +29,6 @@ class ExceptionConfigProvider {
   }
 }
 
-registerProvider( ngName, __moduleName, ExceptionConfigProvider );
+registerProvider( name, __moduleName, ExceptionConfigProvider );
+
+export default ExceptionConfigProvider;

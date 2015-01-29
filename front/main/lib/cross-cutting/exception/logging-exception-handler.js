@@ -1,7 +1,6 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-/* @ngInject */
 export default function loggingExceptionHandler (
   $injector,
   $delegate,

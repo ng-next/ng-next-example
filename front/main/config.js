@@ -28,6 +28,7 @@ System.config({
     "css": "github:systemjs/plugin-css@0.1.0",
     "hammer": "github:hammerjs/hammer.js@2.0.4",
     "lodash": "npm:lodash@2.4.1",
+    "nn-ng-helper": "./lib/core/angular/index",
     "test-doubles-angular": "./test-doubles/angular/index",
     "test-doubles-formsdemo-service": "./lib/formsdemo/services/test-doubles/index",
     "test-doubles-log-service": "./lib/cross-cutting/log-service/test-doubles/index",

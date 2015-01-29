@@ -6,7 +6,7 @@
 
     <!--TODO "hide-gt-??" (menuIsLockedOpenStartingFrom) must be configurable-->
     <!--along with menu's md-is-locked-open="$media('gt-md')"-->
-    <md-button ng-click="vm.toggleNav()"
+    <md-button ng-click="mainToolbar.toggleNav()"
                hide-gt-sm
                aria-label="Toggle Menu">
       <!--<div class="il-icon-hamburger"></div>-->
@@ -16,7 +16,7 @@
       <!-- TODO: Display "Story/Feature Group -> Story/Feature" -->
     </div>
     <div ui-view="headerright">
-      <md-button ng-click="vm.goToLogin()">Login</md-button>
+      <md-button ng-click="mainToolbar.goToLogin()">Login</md-button>
     </div>
   </div>
 </md-toolbar>

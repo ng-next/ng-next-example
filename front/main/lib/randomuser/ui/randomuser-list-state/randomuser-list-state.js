@@ -1,12 +1,9 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-let stateName =  'root.randomuserlist';
+let name =  'root.randomuserlist';
 
-export default __moduleName;
-
-// TODO: make alias
-import UiRouterState from 'app/core/angular/ui-router-state';
+import { registerUiState } from 'nn-ng-helper';
 
 import controller from './randomuser-list-state-controller';
 import template from './randomuser-list-state.html!text';
@@ -16,7 +13,7 @@ let config = {
   url          : '^/randomusers',
   template     : template,
   controller   : controller,
-  controllerAs : 'vm',
+  controllerAs : 'randomuserState',
   data         : {
     authenticationRequired : true
   },
@@ -30,4 +27,6 @@ let config = {
   }
 };
 
-new UiRouterState( stateName, config ).registerAs( __moduleName );
+registerUiState( name, config, __moduleName );
+
+export default __moduleName;

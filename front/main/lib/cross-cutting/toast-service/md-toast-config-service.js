@@ -1,14 +1,11 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-let ngName = 'mdToastConfig';
+let name = 'mdToastConfig';
 
-// TODO: make alias
-import { registerProvider } from 'app/core/angular/nn-register-ng-provider';
+import { registerProvider } from 'nn-ng-helper';
 
 import MdToastConfig from './md-toast-config';
-
-export default MdToastConfigProvider;
 
 const DEFAULT_HIDE_DELAY = 3000;
 const DEFAULT_POSITION = 'bottom right';
@@ -43,4 +40,6 @@ class MdToastConfigProvider {
   }
 }
 
-registerProvider( ngName, __moduleName, MdToastConfigProvider );
+registerProvider( name, __moduleName, MdToastConfigProvider );
+
+export default MdToastConfigProvider;

@@ -1,12 +1,9 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-let stateName =  'root.authentication';
+let name =  'root.authentication';
 
-export default __moduleName;
-
-// TODO: make alias
-import UiRouterState from 'app/core/angular/ui-router-state';
+import { registerUiState } from 'nn-ng-helper';
 
 import template from './authentication-state.html!text';
 
@@ -18,4 +15,6 @@ let config = {
   }
 };
 
-new UiRouterState( stateName, config ).registerAs( __moduleName );
+registerUiState( name, config, __moduleName );
+
+export default __moduleName;

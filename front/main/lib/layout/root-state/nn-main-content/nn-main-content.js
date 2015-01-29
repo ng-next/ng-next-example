@@ -1,20 +1,22 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-let ngName = 'nnMainContent';
+let name = 'nnMainContent';
 
-export default __moduleName;
-
-// TODO: make alias
-import { registerDirective } from 'app/core/angular/nn-register-ng-provider';
+import { registerDirective } from 'nn-ng-helper';
 
 import template from './nn-main-content.html!text';
+import controller from './nn-main-content-controller';
 
 export var ddo = {
   restrict : 'E',
   replace  : true,
   scope    : false, // the default, use parent
-  template : template
+  template : template,
+  controller   : controller,
+  controllerAs : 'mainContent'
 };
 
-registerDirective( ngName, __moduleName, ddo );
+registerDirective( name, __moduleName, ddo );
+
+export default __moduleName;

@@ -1,11 +1,9 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-let ngName = 'randomuserGateway';
+let name = 'randomuserGateway';
 
-import { registerService } from 'app/core/angular/nn-register-ng-provider';
-
-export default RandomuserGatewayService;
+import { registerService } from 'nn-ng-helper';
 
 class RandomuserGatewayService {
   constructor( ctx, $http )
@@ -29,4 +27,6 @@ class RandomuserGatewayService {
   }
 }
 
-registerService( ngName, __moduleName, RandomuserGatewayService );
+registerService( name, __moduleName, RandomuserGatewayService );
+
+export default RandomuserGatewayService;

@@ -21,7 +21,7 @@
         <md-input-container>
           <label>Demo Date</label>
           <input type="date"
-                 ng-model="formsdemo.data.nnDate">
+                 ng-model="formsdemoState.data.nnDate">
         </md-input-container>
 
         <md-input-container>
@@ -29,7 +29,7 @@
           <input name="email"
                  id="email"
                  type="email"
-                 ng-model="formsdemo.data.nnEmail"
+                 ng-model="formsdemoState.data.nnEmail"
                  required>
         </md-input-container>
 
@@ -37,7 +37,7 @@
           <label>Time</label>
           <input id="nnTime"
                  type="time"
-                 ng-model="formsdemo.data.nnTime">
+                 ng-model="formsdemoState.data.nnTime">
         </md-input-container>
 
         <md-input-container>
@@ -45,7 +45,7 @@
           <input id="description"
                  name="description"
                  type="text"
-                 ng-model="formsdemo.data.nnDescription"
+                 ng-model="formsdemoState.data.nnDescription"
                  required
                  md-maxlength="30"
                  ng-model-options="{ updateOn: 'default blur', debounce: {'default': 2000, 'blur': 0} }"
@@ -62,7 +62,7 @@
           <input id="nnNumber"
                  name="nnNumber"
                  type="number"
-                 ng-model="formsdemo.data.nnNumber"
+                 ng-model="formsdemoState.data.nnNumber"
                  required
                  step="any"
                  min="12"

@@ -6,14 +6,14 @@
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h3>
-          <span>{{vm.title}}</span>
+          <span>{{randomuserState.title}}</span>
         </h3>
       </div>
     </md-toolbar>
 
     <md-content>
       <md-list>
-        <md-item ng-repeat="user in vm.users">
+        <md-item ng-repeat="user in randomuserState.users">
           <md-item-content>
 
             <div class="md-tile-left">
@@ -43,7 +43,7 @@
             </div>
 
             <div class="md-tile-right">
-              <md-button ng-click="vm.openItemMenu()"
+              <md-button ng-click="randomuserState.openItemMenu()"
                          aria-label="Open Menu">
                 <md-icon icon="lib/assets/icons/ic_drawer_24px.svg"
                          style="margin: 0 4px 0 0;">

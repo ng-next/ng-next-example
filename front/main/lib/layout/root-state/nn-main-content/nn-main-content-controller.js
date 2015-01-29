@@ -1,7 +1,7 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-export default class NnMainController {
+export default class NnMainContentController {
   constructor () {
     //noinspection BadExpressionStatementJS
     'ngInject';

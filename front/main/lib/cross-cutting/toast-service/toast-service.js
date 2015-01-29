@@ -1,14 +1,11 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-let ngName = 'toast';
+let name = 'toast';
 
-// TODO: make alias
-import { registerService } from 'app/core/angular/nn-register-ng-provider';
+import { registerService } from 'nn-ng-helper';
 
 import CustomToastController from './custom-toast-controller';
-
-export default ToastService;
 
 class ToastService {
   constructor ( $mdToast, mdToastConfig ) {
@@ -20,6 +17,8 @@ class ToastService {
   }
 
   // TODO: make separate custom toast templates (warning, error, success ...)
+  // see material angular docs on how to add make them available the config
+  // phase
 
   debug ( message, title ) {
     this.simple( message, title );
@@ -82,4 +81,6 @@ class ToastService {
   }
 }
 
-registerService( ngName, __moduleName, ToastService );
+registerService( name, __moduleName, ToastService );
+
+export default ToastService;

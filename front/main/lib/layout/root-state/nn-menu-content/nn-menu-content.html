@@ -3,32 +3,32 @@
 
   <md-button class="menu-item menu-title md-menu-item"
              ng-class="{ active: $state.includes('*.ngnextwelcome**') }"
-             ng-click="vm.goToNgNext()"
-             ng-show="vm.userIsLoggedIn()"
+             ng-click="menuContent.goToNgNext()"
+             ng-show="menuContent.userIsLoggedIn()"
              aria-label="jspm">
     Welcome
   </md-button>
 
   <!--<a class="menu-item menu-sub-item md-menu-item"-->
              <!--ng-class="{ active: $state.includes('*.ngnext.foo**') }"-->
-             <!--ng-click="vm.goToNgNextFoo()"-->
-             <!--ng-show="vm.userIsLoggedIn()"-->
+             <!--ng-click="menuContent.goToNgNextFoo()"-->
+             <!--ng-show="menuContent.userIsLoggedIn()"-->
              <!--aria-label="Foo">-->
     <!--<span>Maintainers</span>-->
   <!--</a>-->
 
   <md-button class="menu-item menu-title md-menu-item"
              ng-class="{ active: $state.includes('*.randomuser**') }"
-             ng-click="vm.goToRandomUser()"
-             ng-show="vm.userIsLoggedIn()"
+             ng-click="menuContent.goToRandomUser()"
+             ng-show="menuContent.userIsLoggedIn()"
              aria-label="jspm">
     Random User
   </md-button>
 
   <md-button class="menu-item menu-title md-menu-item"
              ng-class="{ active: $state.includes('*.randomuser**') }"
-             ng-click="vm.goToFormsDemo()"
-             ng-show="vm.userIsLoggedIn()"
+             ng-click="menuContent.goToFormsDemo()"
+             ng-show="menuContent.userIsLoggedIn()"
              aria-label="jspm">
     Forms Demo
   </md-button>

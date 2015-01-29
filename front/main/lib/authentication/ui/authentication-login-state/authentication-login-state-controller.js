@@ -8,11 +8,12 @@ export default class AuthenticationLoginStateController {
 
     this.username = '';
     this.password = '';
+    this.log = log;
 
     log.info( 'AuthenticationLoginStateController was instantiated' );
   }
 
   login () {
-    // login logic
+    this.log.info( 'Login was clicked' );
   }
 }

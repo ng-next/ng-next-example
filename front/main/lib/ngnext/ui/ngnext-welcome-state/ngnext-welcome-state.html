@@ -2,7 +2,7 @@
                class="md-whiteframe-z1">
   <md-toolbar class="md-primary">
     <h1 class="md-toolbar-tools">
-      {{ngnextWelcomeCtrl.title}}
+      {{ngnextWelcomeState.title}}
     </h1>
   </md-toolbar>
 
@@ -53,13 +53,13 @@
 
       <md-button flex
                  class="md-raised"
-                 ng-click="ngnextWelcomeCtrl.sayHiSimpleAndConsoleLog()">
+                 ng-click="ngnextWelcomeState.sayHiSimpleAndConsoleLog()">
         Say Hi on document
       </md-button>
       <md-button flex
                  class="md-raised"
-                 ng-click="ngnextWelcomeCtrl.sayHiCustom()">
-        Say Hi on {{ngnextWelcomeCtrl.customParentElementForToasts}}
+                 ng-click="ngnextWelcomeState.sayHiCustom()">
+        Say Hi on {{ngnextWelcomeState.customParentElementForToasts}}
       </md-button>
     </div>
   </md-content>

@@ -13,7 +13,7 @@
 
       <md-content layout-margin>
         <form id="loginForm"
-              ng-submit="login.submit()"
+              ng-submit="authenticationLoginState.login()"
               name="loginForm">
 
           <md-input-container>
@@ -31,7 +31,7 @@
           <!--layout-align="center center">-->
 
           <div layout="column">
-            <md-button ng-click="login.submit()"
+            <md-button type="submit"
                        aria-label="login">
               Login
             </md-button>

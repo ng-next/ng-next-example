@@ -1,5 +1,7 @@
-// TODO: make alias
-import NnNgModules from 'app/core/angular/nn-ng-modules';
+//noinspection BadExpressionStatementJS
+'format es6';
+
+import { nnNgModules } from 'nn-ng-helper';
 
 export var registerFactory = (
   ngFactoryName,
@@ -41,7 +43,7 @@ function register (
 ) {
   guardAgainstUnknownProviderType();
   callAngularRegisterProviderDynamicallyByType();
-  NnNgModules.register( ngModuleName );
+  nnNgModules.register( ngModuleName );
 
   function guardAgainstUnknownProviderType () {
     if ( type !== 'factory' &&
