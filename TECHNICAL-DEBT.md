@@ -61,3 +61,6 @@ that share code).
 
 ### convert factories to services (classes as soon as ngAnnotate handles ES6)
 ... to prepare for Angular 2.0
+
+### directives as Story Group parent states
+... to get rid of (some) html element ids
