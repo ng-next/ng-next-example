@@ -3,7 +3,7 @@
 
 let name = 'nnRootstate';
 
-import { registerDirective } from 'nn-ng-helper';
+import { registerDirective } from 'nn-ng-utils';
 
 import template from './nn-rootstate.html!text';
 

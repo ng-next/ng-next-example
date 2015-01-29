@@ -3,7 +3,7 @@
 
 let name = 'toast';
 
-import { registerService } from 'nn-ng-helper';
+import { registerService } from 'nn-ng-utils';
 
 import CustomToastController from './custom-toast-controller';
 

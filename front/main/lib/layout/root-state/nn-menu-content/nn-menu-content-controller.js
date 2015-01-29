@@ -26,7 +26,7 @@ export default class NnMenuContentController {
 
   goToRandomUser () {
     this.closeLeftNav();
-    this.$state.transitionTo( 'root.randomuserlist' );
+    this.$state.transitionTo( 'root.randomuser.list' );
   }
 
   goToFormsDemo () {

@@ -3,7 +3,7 @@
 
 let name =  'root.formsdemo';
 
-import { registerUiState } from 'nn-ng-helper';
+import { registerUiState } from 'nn-ng-utils';
 
 import controller from './formsdemo-state-controller';
 import template from './formsdemo-state.html!text';

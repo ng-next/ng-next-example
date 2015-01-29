@@ -3,7 +3,7 @@
 
 let name = 'mdToastConfig';
 
-import { registerProvider } from 'nn-ng-helper';
+import { registerProvider } from 'nn-ng-utils';
 
 import MdToastConfig from './md-toast-config';
 

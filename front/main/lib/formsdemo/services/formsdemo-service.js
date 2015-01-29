@@ -4,7 +4,7 @@
 let name = 'formsdemoService';
 
 import _ from 'lodash';
-import { registerService } from 'nn-ng-helper';
+import { registerService } from 'nn-ng-utils';
 
 class FormsdemoService {
   constructor ( $log, formsdemoGateway ) {

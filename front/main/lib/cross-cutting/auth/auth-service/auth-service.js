@@ -3,7 +3,7 @@
 
 let name = 'authService';
 
-import { registerService } from 'nn-ng-helper';
+import { registerService } from 'nn-ng-utils';
 
 class AuthService {
   constructor () {

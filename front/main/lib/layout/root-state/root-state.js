@@ -3,7 +3,7 @@
 
 let name = 'root';
 
-import { registerUiState } from 'nn-ng-helper';
+import { registerUiState } from 'nn-ng-utils';
 
 import './nn-menu/nn-menu';
 import './nn-menu-toolbar/nn-menu-toolbar';

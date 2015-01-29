@@ -3,7 +3,8 @@ System.config({
     "*": "*.js",
     "app/*": "lib/*.js",
     "github:*": "jspm_packages/github/*.js",
-    "npm:*": "jspm_packages/npm/*.js"
+    "npm:*": "jspm_packages/npm/*.js",
+    "ng-next-frontend/*": "lib/*.js"
   }
 });
 
@@ -28,7 +29,7 @@ System.config({
     "css": "github:systemjs/plugin-css@0.1.0",
     "hammer": "github:hammerjs/hammer.js@2.0.4",
     "lodash": "npm:lodash@2.4.1",
-    "nn-ng-helper": "./lib/core/angular/index",
+    "nn-ng-utils": "github:ng-next/nn-ng-utils@master",
     "test-doubles-angular": "./test-doubles/angular/index",
     "test-doubles-formsdemo-service": "./lib/formsdemo/services/test-doubles/index",
     "test-doubles-log-service": "./lib/cross-cutting/log-service/test-doubles/index",
@@ -46,13 +47,6 @@ System.config({
       "angular": "github:angular/bower-angular@1.3.10"
     },
     "github:angular/bower-material@0.7.0": {
-      "angular": "github:angular/bower-angular@1.3.10",
-      "angular-animate": "github:angular/bower-angular-animate@1.3.10",
-      "angular-aria": "github:angular/bower-angular-aria@1.3.10",
-      "css": "github:systemjs/plugin-css@0.1.0",
-      "hammer": "github:hammerjs/hammer.js@2.0.4"
-    },
-    "github:angular/bower-material@0.7.0-rc3": {
       "angular": "github:angular/bower-angular@1.3.10",
       "angular-animate": "github:angular/bower-angular-animate@1.3.10",
       "angular-aria": "github:angular/bower-angular-aria@1.3.10",

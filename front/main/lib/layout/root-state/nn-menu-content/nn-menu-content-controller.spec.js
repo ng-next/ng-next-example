@@ -29,9 +29,9 @@ describe( 'NnMenuContentController', () => {
       });
 
       it( 'should go to the correct state.', () => {
-        expect( state.transitionTo.CalledWith( 'root.randomuserlist' ))
+        expect( state.transitionTo.CalledWith( 'root.randomuser.list' ))
         .to.equal( true, 'state.transitionTo must be called with' +
-          ' "root.randomuserlist"');
+          ' "root.randomuser.list"');
       });
     });
   });

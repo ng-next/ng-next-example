@@ -3,7 +3,7 @@
 
 let name = 'root.ngnext';
 
-import { registerUiState } from 'nn-ng-helper';
+import { registerUiState } from 'nn-ng-utils';
 
 import controller from './ngnext-welcome-state-controller';
 import template from './ngnext-welcome-state.html!text';

@@ -3,7 +3,7 @@
 
 let name = 'nnMenu';
 
-import { registerDirective } from 'nn-ng-helper';
+import { registerDirective } from 'nn-ng-utils';
 
 import template from './nn-menu.html!text';
 

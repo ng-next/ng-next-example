@@ -1,9 +1,9 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-let name =  'root.randomuserlist';
+let name =  'root.randomuser.list';
 
-import { registerUiState } from 'nn-ng-helper';
+import { registerUiState } from 'nn-ng-utils';
 
 import controller from './randomuser-list-state-controller';
 import template from './randomuser-list-state.html!text';

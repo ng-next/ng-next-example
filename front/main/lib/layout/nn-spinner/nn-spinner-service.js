@@ -3,7 +3,7 @@
 
 let name = 'spinnerService';
 
-import { registerService } from 'nn-ng-helper';
+import { registerService } from 'nn-ng-utils';
 
 class SpinnerService {
   constructor () {

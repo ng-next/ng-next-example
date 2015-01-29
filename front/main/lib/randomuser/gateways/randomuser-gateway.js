@@ -3,7 +3,7 @@
 
 let name = 'randomuserGateway';
 
-import { registerService } from 'nn-ng-helper';
+import { registerService } from 'nn-ng-utils';
 
 class RandomuserGatewayService {
   constructor( ctx, $http )

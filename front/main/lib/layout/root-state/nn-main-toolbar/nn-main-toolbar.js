@@ -3,7 +3,7 @@
 
 let name = 'nnMainToolbar';
 
-import { registerDirective } from 'nn-ng-helper';
+import { registerDirective } from 'nn-ng-utils';
 
 import template from './nn-main-toolbar.html!text';
 import controller from './nn-main-toolbar-controller';

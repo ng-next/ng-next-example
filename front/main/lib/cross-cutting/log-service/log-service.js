@@ -3,7 +3,7 @@
 
 let name = 'log';
 
-import { registerService } from 'nn-ng-helper';
+import { registerService } from 'nn-ng-utils';
 
 class LogService {
   constructor ( $log, toast ) {

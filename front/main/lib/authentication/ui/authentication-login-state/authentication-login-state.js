@@ -3,7 +3,7 @@
 
 let name =  'root.authentication.login';
 
-import { registerUiState } from 'nn-ng-helper';
+import { registerUiState } from 'nn-ng-utils';
 
 import controller from './authentication-login-state-controller';
 import template from './authentication-login-state.html!text';

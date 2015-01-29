@@ -3,7 +3,7 @@
 
 let name = 'exceptionConfig';
 
-import { registerProvider } from 'nn-ng-helper';
+import { registerProvider } from 'nn-ng-utils';
 
 //import MyConfigClass from './exception-config';
 

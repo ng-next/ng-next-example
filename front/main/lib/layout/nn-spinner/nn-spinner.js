@@ -3,7 +3,7 @@
 
 let name = 'nnSpinner';
 
-import { registerDirective } from 'nn-ng-helper';
+import { registerDirective } from 'nn-ng-utils';
 
 import './nn-spinner-service';
 import template from './nn-spinner.html!text';
