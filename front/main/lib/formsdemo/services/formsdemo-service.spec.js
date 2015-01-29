@@ -4,8 +4,6 @@
 
 import 'angular';
 import 'angular-mocks';
-
-//import { ___foo___ } from 'test-doubles-angular';
 import { LogSpy, LogDummy } from 'test-doubles-log-service';
 
 import Service from './formsdemo-service';
