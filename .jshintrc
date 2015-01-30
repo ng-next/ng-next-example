@@ -1,18 +1,10 @@
 {
-  "browser" : true,
-  "phantom" : true,
-  "jquery"  : true,
   "mocha"   : true,
 
   "predef" : [
-    "MY_GLOBAL_VARIABLE",
     "__moduleName",
-    "angular",
     "sinon",
     "expect",
-    "inject",
-    "module",
-    "ngInject",
     "_"
   ],
 

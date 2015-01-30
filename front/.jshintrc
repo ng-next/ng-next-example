@@ -1,0 +1,10 @@
+{
+  "browser" : true,
+  "jquery"  : true,
+
+  "predef" : [
+    "angular",
+    "inject",
+    "module"
+  ]
+}
