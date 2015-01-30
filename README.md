@@ -1,5 +1,5 @@
 # ng-next
-ng-next angular jspm material design example
+angular jspm material-design example
 
 ng-next is AngularJS 1.x using ...
 
@@ -24,6 +24,6 @@ have the following node modules globally installed:
 - jspm, karma-cli, gulp
 
 run `npm install`
-run `npm start` and browse to `localhost:3000/`
+run `npm start` and browse to `localhost:3000`
 
-tested with just Chrome (for now).
+tested with just Google Chrome browser (for now).

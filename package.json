@@ -1,7 +1,7 @@
 {
   "name": "ng-next",
   "version": "0.0.0",
-  "description": "ng-next angular jspm material design seed example",
+  "description": "angular jspm material-design example",
   "author": "Andreas Grimm",
   "devDependencies": {
     "browser-sync": "^1.9.0",
