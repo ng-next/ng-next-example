@@ -48,7 +48,8 @@
                  ng-model="formsdemoState.data.nnDescription"
                  required
                  md-maxlength="30"
-                 ng-model-options="{ updateOn: 'default blur', debounce: {'default': 2000, 'blur': 0} }"
+                 ng-model-options="{ updateOn: 'default blur',
+                                     debounce: { 'default': 250, 'blur': 0 }}"
             >
           <div ng-messages="fromsdemoForm.description.$error">
             <div ng-message="required">This is required.</div>
