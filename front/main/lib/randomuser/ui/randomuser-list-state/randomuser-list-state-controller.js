@@ -2,8 +2,7 @@
 'format es6';
 
 export default class RandomuserListStateController {
-  constructor( users )
-  {
+  constructor ( users ) {
     //noinspection BadExpressionStatementJS
     'ngInject';
 
