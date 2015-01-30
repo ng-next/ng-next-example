@@ -5,7 +5,7 @@
              ng-class="{ active: $state.includes('*.ngnextwelcome**') }"
              ng-click="menuContent.goToNgNext()"
              ng-show="menuContent.userIsLoggedIn()"
-             aria-label="jspm">
+             aria-label="Welcome">
     Welcome
   </md-button>
 
@@ -21,7 +21,7 @@
              ng-class="{ active: $state.includes('*.randomuser**') }"
              ng-click="menuContent.goToRandomUser()"
              ng-show="menuContent.userIsLoggedIn()"
-             aria-label="jspm">
+             aria-label="Random User">
     Random User
   </md-button>
 
@@ -29,7 +29,15 @@
              ng-class="{ active: $state.includes('*.randomuser**') }"
              ng-click="menuContent.goToFormsDemo()"
              ng-show="menuContent.userIsLoggedIn()"
-             aria-label="jspm">
+             aria-label="Forms Demo">
     Forms Demo
+  </md-button>
+
+  <md-button class="menu-item menu-title md-menu-item"
+             ng-class="{ active: $state.includes('*.reddit**') }"
+             ng-click="menuContent.goToRedditPerfectloops()"
+             ng-show="menuContent.userIsLoggedIn()"
+             aria-label="Reddit Perfectloops">
+    Reddit Perfectloops
   </md-button>
 </md-content>

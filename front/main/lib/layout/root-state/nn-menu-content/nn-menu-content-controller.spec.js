@@ -19,7 +19,7 @@ describe( 'NnMenuContentController', () => {
     beforeEach(() => {
       state = new StateSpy();
       mdSideNav = mdSideNavDummyFactory;
-      authService = new authServiceDummy();
+      authService = new AuthServiceDummy();
     });
 
     describe( 'when goToRandomUser() is called', () => {
@@ -31,7 +31,32 @@ describe( 'NnMenuContentController', () => {
       it( 'should go to the correct state.', () => {
         expect( state.transitionTo.CalledWith( 'root.randomuser.list' ))
         .to.equal( true, 'state.transitionTo must be called with' +
-          ' "root.randomuser.list"');
+          ' "root.randomuser.list"' );
+      });
+    });
+  });
+
+  describe( 'given the stateProvider', () => {
+    let state;
+    let mdSideNav;
+    let authService;
+
+    beforeEach(() => {
+      state = new StateSpy();
+      mdSideNav = mdSideNavDummyFactory;
+      authService = new AuthServiceDummy();
+    });
+
+    describe( 'when goToRedditPerfectloops() is called', () => {
+      beforeEach(() => {
+        controller = new Controller( state, mdSideNav, authService );
+        controller.goToRedditPerfectloops();
+      });
+
+      it( 'should go to the correct state.', () => {
+        expect( state.transitionTo.CalledWith( 'root.reddit.perfectloops' ))
+        .to.equal( true, 'state.transitionTo must be called with' +
+          ' "root.reddit.perfectloops"' );
       });
     });
   });
@@ -43,9 +68,9 @@ describe( 'NnMenuContentController', () => {
 
     beforeEach(() => {
       mdSideNavFactory = createMdSideNavSpyFactory();
-      mdSideNavFactory.mdSideNav = new mdSideNavSpy();
+      mdSideNavFactory.mdSideNav = new MdSideNavSpy();
       state = new StateDummy();
-      authService = new authServiceDummy();
+      authService = new AuthServiceDummy();
     });
 
     describe( 'when goToRandomUser() is called', () => {
@@ -56,20 +81,20 @@ describe( 'NnMenuContentController', () => {
 
       it( 'should close the sidenav', function () {
         expect( mdSideNavFactory.mdSideNav.closeWasCalled ).to.equal( true,
-          'mdSideNave.close() must be called');
+          'mdSideNave.close() must be called' );
       } );
     });
   });
 });
 
-class authServiceDummy {
+class AuthServiceDummy {
 }
 
 function mdSideNavDummyFactory () {
-  return new mdSideNavDummy()
+  return new MdSideNavDummy();
 }
 
-class mdSideNavDummy {
+class MdSideNavDummy {
   toggle () {
     return null;
   }
@@ -89,7 +114,7 @@ function createMdSideNavSpyFactory () {
   return mdSideNavSpyFactory;
 }
 
-class mdSideNavSpy {
+class MdSideNavSpy {
   constructor () {
     this.id = null;
     this.closeWasCalled = false;

@@ -34,6 +34,11 @@ export default class NnMenuContentController {
     this.$state.transitionTo( 'root.formsdemo' );
   }
 
+  goToRedditPerfectloops () {
+    this.closeLeftNav();
+    this.$state.transitionTo( 'root.reddit.perfectloops' );
+  }
+
   userIsLoggedIn () {
     return this.authService.userIsLoggedIn();
   }

@@ -1,0 +1,23 @@
+<div layout="row">
+  <md-whiteframe flex
+                 flex-gt-lg="50"
+                 class="md-whiteframe-z1">
+
+    <md-toolbar class="md-primary">
+      <h1 class="md-toolbar-tools">
+        PerfectLoops Gifs
+      </h1>
+    </md-toolbar>
+
+    <md-content>
+      <md-card ng-repeat="gif in redditPerfectloopsState.gifs">
+        <img ng-src="{{gif.url}}" alt="{{gif.title}}">
+        <md-card-content>
+          <h2>{{gif.title}}</h2>
+        </md-card-content>
+      </md-card>
+
+    </md-content>
+  </md-whiteframe>
+</div>
+ <!--url, title-->

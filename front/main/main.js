@@ -22,6 +22,7 @@ import 'app/authentication/index';
 import 'app/ngnext/index';
 import 'app/randomuser/index';
 import 'app/formsdemo/index';
+import 'app/reddit/index';
 import configureAngular from 'app/config/index';
 
 configureAngular( getInitializedAppModule() );
