@@ -20,6 +20,7 @@ function configureUiRouter ( $rootScope, $state, $stateParams ) {
   function handleStateChangeErrors () {
     $rootScope.$on( '$stateChangeError',
       ( event, toState, toParams, fromState, fromParams, error ) => {
+        // ToDo: use log service
         console.error( 'Error: ($stateChangeError) ', error, event, toState,
         toParams, fromState, fromParams );
       } );
