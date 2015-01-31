@@ -17,11 +17,13 @@ front/test/unit/coverage
 node_modules
 jspm_packages
 
-# build
+# build artifacts
 dist
 build
 build.js
 build.js.map
+main.css
+main.css.map
 
 # deployment
 public

@@ -21,7 +21,19 @@ gulp.task( 'clean-build-artifacts', function ( cb ) {
 });
 
 gulp.task( 'clean-public', function ( cb ) {
-  del( config.publicFolderAndSubfolders, cb );
+  del( config.publicFolder + '**', cb );
+});
+
+//gulp.task( 'styles', [ 'clean-css' ], function ( done ) {
+gulp.task( 'styles', function () {
+  log( 'Compiling sass --> css, autoprefixing css' );
+  //log( 'source files: ' + config.sass );
+  //log( 'Output folder: ' + config.stylesTargetFolder );
+
+  return gulp.src( config.sass )
+  .pipe( $.sass({ style : 'compressed' }))
+  .pipe( $.autoprefixer({ browsers : [ 'last 2 version', '> 5%' ] }))
+  .pipe( gulp.dest( config.stylesTargetFolder ));
 });
 
 gulp.task( 'set-remote-mode', $.shell.task(
@@ -32,7 +44,8 @@ gulp.task( 'set-local-mode', $.shell.task(
   [ 'jspm setmode local' ], { cwd : pathToMainFolder }
 ));
 
-gulp.task( 'build', [ 'set-local-mode', 'vet' ], function () {
+//gulp.task( 'build', [ 'set-local-mode', 'vet' ], function () {
+gulp.task( 'build', [ 'set-local-mode' ], function () {
   build();
 });
 
@@ -289,7 +302,7 @@ gulp.task( 'minify', function () {
     single_quotes : true // jscs:disable
   }))
   .pipe( $.uglify())
-  .pipe( gulp.dest( 'front/main' ));
+  .pipe( gulp.dest( config.jsTargetFolder ));
 });
 
 gulp.task( 'default', function () {
