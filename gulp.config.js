@@ -1,7 +1,13 @@
 /* global module */
+/* jshint node:true */
+
+var path = require( 'path' );
+
 module.exports = function () {
-  var frontend = 'front/main/';
-  var servedFolder = 'public/';
+  var frontend               = 'front/main/';
+  var servedFolder           = 'public/';
+  var jsTargetFolder         = frontend;
+  var jsBuildFile            = 'build.js';
 
   return {
 
@@ -9,26 +15,43 @@ module.exports = function () {
      * Files Paths
      */
 
+    absolutePathToFrontend : ( path.join( process.cwd(), frontend )),
+
+    frontend               : frontend,
+
     // publically accessable folder that should be served by the webserver
-    publicFolder         : servedFolder,
+    publicFolder           : servedFolder,
 
-    // public assets folder
-    publicAssetFolder    : servedFolder + 'lib/assets',
+    publicAssetFolder      : servedFolder + 'lib/assets',
 
-    stylesTargetFolder   : frontend,
+    // output folder of the css preprocessing
+    stylesTargetFolder     : frontend,
 
-    jsTargetFolder       : frontend,
+    // output folder of the js concat and minification processing
+    jsTargetFolder         : jsTargetFolder,
+
+    /*
+     * File Names
+     */
+
+    jsBuildFile            : jsBuildFile,
 
     /*
      * Source Files
      */
 
-    sass                 : [
-      frontend + 'lib/config/styles/main.scss'
+    sass                   : [
+      //frontend + 'lib/config/styles/main.scss',
+      frontend + 'lib/**/*.scss'
+    ],
+
+    jsBuildFiles           : [
+      ( jsTargetFolder + jsBuildFile ),
+      ( jsTargetFolder + jsBuildFile.replace( '.js', '.map.js' ))
     ],
 
     // all js files to vet
-    alljs                : [
+    alljs                  : [
       'gulpfile.js',
       frontend + '**/*.js',
       '!' + frontend + 'jspm_packages/**/*',
@@ -37,30 +60,24 @@ module.exports = function () {
       '!' + frontend + 'config.js'
     ],
 
-    // all files produced by the build task
-    buildArtifacts       : [
-      this.jsTargetFolder + 'build.*'
-      // becomes functional as soon as we make use of sass
-      //,
-      //frontend + 'index.css'
-    ],
-
     // all files that should be copied to the public folder and served by
     // the webserver
-    sourceFilesToPublish : [
+    sourceFilesToPublish   : [
       frontend + 'favicon.ico',
       frontend + '*.js',
       frontend + '*.js.map',
-      frontend + 'index.*'
+      frontend + '*.css',
+      frontend + '*.css.map',
+      frontend + 'index.html'
     ],
 
     // all assets that should be copied to the public asset folder and served by
     // the webserver
-    assetFilesToPublish  : [
+    assetFilesToPublish    : [
       frontend + 'lib/assets/**/*'
     ],
 
-    frontendFilesToWatch : [
+    frontendFilesToWatch   : [
       frontend + '**/*',
       frontend + 'lib/**/*.scss',
       '!' + frontend + '**/*_scsslint_*',

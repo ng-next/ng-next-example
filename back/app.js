@@ -11,7 +11,7 @@ app.use( logger( 'dev' ));
 if ( app.get( 'env' ) === 'development' ) {
   app.use( express.static( path.join( __dirname, '../front/main' ) ) );
   app.use( '/test-doubles', express.static( path.join( __dirname, '../front/test/unit/test-doubles' ) ) );
-} else if ( app.get( 'env' ) === 'bundle-debug' ) {
+} else if ( app.get( 'env' ) === 'build-debug' ) {
   app.use( express.static( path.join( __dirname, '../public' ) ) );
   app.use( '/jspm_packages', express.static( path.join( __dirname, '../front/main/jspm_packages' ) ) );
 } else {

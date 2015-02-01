@@ -1,11 +1,17 @@
 {
   "mocha"   : true,
+  "node"    : true,
 
   "predef" : [
+    "document",
+    "window",
     "__moduleName",
     "sinon",
     "expect",
-    "_"
+    "_",
+    "angular",
+    "inject",
+    "module"
   ],
 
   "bitwise"  : true,
