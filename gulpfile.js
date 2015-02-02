@@ -1,5 +1,4 @@
-﻿// jscs:disable disallowAnonymousFunctions
-/* jshint node: true */
+﻿/* jshint node: true */
 
 var gulp             = require( 'gulp' );
 var args             = require( 'yargs' ).argv;
@@ -32,8 +31,7 @@ gulp.task( 'vet', function () {
 gulp.task( 'clean-styles', function ( done ) {
   var files = [
     config.stylesTargetFolder + '*.css',
-    config.stylesTargetFolder + '*.css.map',
-    '!' + config.frontend + 'loading.css'
+    config.stylesTargetFolder + '*.css.map'
   ];
   clean( files, done );
 });
@@ -66,7 +64,7 @@ gulp.task( 'sass-watcher', function () {
 });
 
   /*
-   * Build / Bundle
+   * Build / Bundle js, html
    */
 
 gulp.task( 'clean-js', function ( done ) {
@@ -323,18 +321,6 @@ gulp.task( 'nodemon', function ( cb ) {
   //  .on('change', ['lint'])
 });
 
-gulp.task( 'build-debug-and-reload', function () {
-  buildDebug( function () {
-    gulp.start( 'reload-browsers' );
-  });
-});
-
-gulp.task( 'build-dev-and-reload', function () {
-  buildDev( function () {
-    gulp.start( 'reload-browsers' );
-  });
-});
-
 gulp.task( 'build-and-reload', function () {
   build( function () {
     gulp.start( 'reload-browsers' );
@@ -349,10 +335,22 @@ gulp.task( 'build-and-watch', function () {
   });
 });
 
+gulp.task( 'build-debug-and-reload', function () {
+  buildDebug( function () {
+    gulp.start( 'reload-browsers' );
+  });
+});
+
 gulp.task( 'build-debug-and-watch', function () {
   process.env.NODE_ENV = 'build-debug';
   buildDebug( function () {
     runBrowsersyncAndWatchFiles( 'build-debug-and-reload' );
+  });
+});
+
+gulp.task( 'build-dev-and-reload', function () {
+  buildDev( function () {
+    gulp.start( 'reload-browsers' );
   });
 });
 
@@ -364,6 +362,7 @@ gulp.task( 'watch', [ 'unbundle' ], function () {
   /*
    * Publish tasks
    */
+
 gulp.task( 'clean-public', function ( done ) {
   clean( config.publicFolder + '**', done );
 });
