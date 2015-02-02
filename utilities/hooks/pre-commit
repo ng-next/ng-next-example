@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# exit immediately with status 1 if any command below fails
+#set -e
+#end of file: exit 0
+# .. which is not what we want here because we need to do cleanup afterwards
+
+# instead execute multiple commands in a bash script sequentially and fail if at least one of them fails
+EXIT=0
+
+if git status --porcelain | grep '^AM\|^MM' > /dev/null 2>&1
+then
+  echo 'COMMIT REJECTED. Found files that were added or modified, then staged (git add), then modified afterwards' \
+  'again. Please add these files to stage and commit again! See files with "git status" command.'
+  exit 1
+fi
+
+if git diff --cached --name-only --diff-filter=ACM | grep '.js$' > /dev/null 2>&1
+then
+  git stash -u -q --keep-index
+
+  ./node_modules/.bin/gulp lint  || EXIT=$?
+  ./node_modules/.bin/gulp jscs  || EXIT=$?
+  npm run test || EXIT=$?
+
+  #FAILING_GREP_OPTION='--color'
+  #FILES_PATTERN='\.(js|coffee)(\..+)?$'
+  #FORBIDDEN='_____FOOOOOOOOOOO_____________console.log'
+  #git diff --cached --name-only | \
+  #  grep -E $FILES_PATTERN | \
+  #  GREP_COLOR='4;5;37;41' xargs grep --with-filename -n $FORBIDDEN && \
+  #  echo 'COMMIT REJECTED Found "$FORBIDDEN" references. Please remove them before commiting' && EXIT=1
+
+  # this loses which files were already staged. (find out why!)
+  #git reset --hard
+  git stash pop -q
+fi
+
+exit $EXIT
