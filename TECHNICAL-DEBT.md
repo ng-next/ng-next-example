@@ -64,3 +64,6 @@ that share code).
 
 ### directives as Story Group parent states
 ... to get rid of (some) html element ids
+
+### ESLint "DisallowBundleInJspmConfig" plugIn
+lint that config.js can only be commited if no bundle is present

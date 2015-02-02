@@ -13,7 +13,7 @@ export default class MdToastConfig {
   getParentElement () {
     return angular.element(
       // TODO: ErrorHandling
-      document.getElementsByTagName( this.parentElementName )[0]
+      document.getElementsByTagName( this.parentElementName )[ 0 ]
     );
   }
 }

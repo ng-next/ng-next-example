@@ -2,8 +2,7 @@
 'format es6';
 
 export default class NnMainToolbarController {
-  constructor( $mdSidenav, $state, ctx )
-  {
+  constructor( $mdSidenav, $state, ctx ) {
     //noinspection BadExpressionStatementJS
     'ngInject';
 

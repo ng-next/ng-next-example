@@ -116,8 +116,7 @@ function build ( next ) {
   );
 }
 
-// , 'vet'
-gulp.task( 'build', function ( done ) {
+gulp.task( 'build', [ 'vet' ], function ( done ) {
   build( done );
 });
 
@@ -152,7 +151,7 @@ function buildDev ( next ) {
   );
 }
 
-gulp.task( 'build-dev', [ 'unbundle' ], function ( done ) {
+gulp.task( 'build-dev', [ 'unbundle', 'vet' ], function ( done ) {
   buildDev( done );
 });
 

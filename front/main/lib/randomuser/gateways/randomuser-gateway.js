@@ -6,8 +6,7 @@ let name = 'randomuserGateway';
 import { registerService } from 'nn-ng-utils';
 
 class RandomuserGatewayService {
-  constructor( ctx, $http )
-  {
+  constructor( ctx, $http ) {
     //noinspection BadExpressionStatementJS
     'ngInject';
 

@@ -15,9 +15,9 @@ import './nn-main-toolbar/nn-main-toolbar';
 import template from './root-state.html!text';
 
 var config = {
-  abstract     : true,
-  template     : template,
-  data         : {
+  abstract : true,
+  template : template,
+  data     : {
     authenticationRequired : false
   }
 };

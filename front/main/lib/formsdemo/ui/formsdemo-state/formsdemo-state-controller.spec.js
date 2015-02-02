@@ -73,7 +73,8 @@ describe( 'FormsdemoStateController', () => {
 
   //function setupAngularDependencies ( $injector ) {
   //  $rootscope = $injector.get( '$rootScope', 'formsdemo-state-controller' );
-  //  $controllerFactory = $injector.get( '$controller', 'formsdemo-state-controller' );
+  //  $controllerFactory = $injector.get( '$controller',
+  //    'formsdemo-state-controller' );
   //}
 
   //function setupScope () {

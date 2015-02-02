@@ -8,9 +8,9 @@ import { registerUiState } from 'nn-ng-utils';
 import template from './randomuser-state.html!text';
 
 let config = {
-  abstract     : true,
-  template     : template,
-  data         : {
+  abstract : true,
+  template : template,
+  data     : {
     authenticationRequired : false
   }
 };
