@@ -32,6 +32,7 @@ gulp.task( 'vet', function () {
 gulp.task( 'clean-styles', function ( done ) {
   var files = [
     config.stylesTargetFolder + '*.css',
+    config.stylesTargetFolder + '*.css.map',
     '!' + config.frontend + 'loading.css'
   ];
   clean( files, done );
@@ -41,8 +42,21 @@ gulp.task( 'styles', [ 'clean-styles' ], function () {
   log( 'Compiling sass --> css, Autoprefixing css' );
 
   return gulp.src( config.sass )
-  .pipe( $.sass({ style : 'compressed' }))
+  .pipe( $.plumber())
+  .pipe( $.sass({ style : 'compressed', errLogToConsole: true }))
   .pipe( $.autoprefixer({ browsers : [ 'last 2 version', '> 5%' ] }))
+  .pipe( gulp.dest( config.stylesTargetFolder ));
+});
+
+gulp.task( 'styles-debug', [ 'clean-styles' ], function () {
+  log( 'Compiling sass --> css (with sourcemaps), Autoprefixing css' );
+
+  return gulp.src( config.sass )
+  .pipe( $.plumber())
+  .pipe( $.sourcemaps.init())
+  .pipe( $.sass({ style : 'compressed', errLogToConsole: true }))
+  .pipe( $.autoprefixer({ browsers : [ 'last 2 version', '> 5%' ] }))
+  .pipe( $.sourcemaps.write( './' ))
   .pipe( gulp.dest( config.stylesTargetFolder ));
 });
 
@@ -107,7 +121,7 @@ gulp.task( 'build', function ( done ) {
 
 function buildDebug ( next ) {
   return runSequence(
-    'styles',
+    'styles-debug',
     'bundle-debug',
     function () {
       if ( next ) {
@@ -119,6 +133,48 @@ function buildDebug ( next ) {
 
 gulp.task( 'build-debug', [ 'vet' ], function ( done ) {
   buildDebug( done );
+});
+
+gulp.task( 'clean-standalone-html', function ( done ) {
+  var files = [
+    config.frontend + 'index-standalone.html'
+  ];
+  clean( files, done );
+});
+
+gulp.task( 'inline-sources', [ 'clean-standalone-html' ], function () {
+  return gulp.src( config.frontend + 'index.html' )
+ .pipe( $.inlineSource({ compress: false }))
+ .pipe( $.replace( '//# sourceMappingURL=traceur-runtime.js.map', '', { skipBinary: true }))
+ .pipe( $.replace( '//# sourceMappingURL=es6-module-loader.js.map', '', { skipBinary: true }))
+ .pipe( $.replace( '//# sourceMappingURL=system.js.map', '', { skipBinary: true }))
+ .pipe( $.rename( 'index-standalone.html' ))
+ .pipe( gulp.dest( config.frontend ));
+});
+
+gulp.task( 'bundle-sfx', [ 'unbundle' ], $.shell.task(
+  [ 'jspm bundle-sfx main ' + config.jsBuildFile +
+    ' --inject --skip-source-maps' ],
+  { cwd : config.absolutePathToFrontend }
+));
+
+function buildStandaloneHtml ( next ) {
+  return runSequence(
+    'styles',
+    'bundle-sfx',
+    'minify',
+    function () {
+      if ( next ) {
+        next();
+      }
+    }
+  );
+}
+
+gulp.task( 'build-standalone-html', function ( done ) {
+  log ( 'Building a stand-alone html file' );
+  log ( '*** Warning: still experimental! ***' );
+  buildStandaloneHtml( done );
 });
 
   /*
@@ -280,6 +336,13 @@ gulp.task( 'default', function () {
 });
 
 ////////////////
+
+//function errorLogger ( error ) {
+//  log( '*** Start of Error ***' );
+//  log( error );
+//  log( '*** End of Error ***' );
+//  this.emit( 'end' );
+//}
 
 function clean ( path, done ) {
   log( 'Cleaning: ' + $.util.colors.blue( path ));

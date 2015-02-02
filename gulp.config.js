@@ -36,13 +36,14 @@ module.exports = function () {
 
     jsBuildFile            : jsBuildFile,
 
+    stylesBuildFile        : 'main.css',
+
     /*
      * Source Files
      */
 
     sass                   : [
-      //frontend + 'lib/config/styles/main.scss',
-      frontend + 'lib/**/*.scss'
+      frontend + 'lib/config/styles/main.scss'
     ],
 
     jsBuildFiles           : [
