@@ -43,7 +43,8 @@ gulp.task( 'styles', [ 'clean-styles' ], function () {
 
   return gulp.src( config.sass )
   .pipe( $.plumber())
-  .pipe( $.sass({ style : 'compressed', errLogToConsole: true }))
+  .pipe( $.sass({ errLogToConsole : true }))
+  .pipe( $.minifyCss({ keepBreaks : true }))
   .pipe( $.autoprefixer({ browsers : [ 'last 2 version', '> 5%' ] }))
   .pipe( gulp.dest( config.stylesTargetFolder ));
 });
@@ -68,7 +69,7 @@ gulp.task( 'sass-watcher', function () {
    * Build / Bundle
    */
 
-gulp.task( 'clean-js-build', function ( done ) {
+gulp.task( 'clean-js', function ( done ) {
   clean( config.jsBuildFiles, done );
 });
 
@@ -83,7 +84,7 @@ gulp.task( 'bundle-debug', [ 'unbundle' ], $.shell.task(
   { cwd : config.absolutePathToFrontend }
 ));
 
-gulp.task( 'unbundle', [ 'clean-js-build' ], $.shell.task(
+gulp.task( 'unbundle', [ 'clean-js' ], $.shell.task(
   [ 'jspm unbundle' ],
   { cwd : config.absolutePathToFrontend }
 ));
@@ -106,6 +107,7 @@ function build ( next ) {
     'styles',
     'bundle',
     'minify',
+    'html',
     function () {
       if ( next ) {
         next();
@@ -123,6 +125,7 @@ function buildDebug ( next ) {
   return runSequence(
     'styles-debug',
     'bundle-debug',
+    'html',
     function () {
       if ( next ) {
         next();
@@ -135,34 +138,12 @@ gulp.task( 'build-debug', [ 'vet' ], function ( done ) {
   buildDebug( done );
 });
 
-gulp.task( 'clean-standalone-html', function ( done ) {
-  var files = [
-    config.frontend + 'index-standalone.html'
-  ];
-  clean( files, done );
-});
-
-gulp.task( 'inline-sources', [ 'clean-standalone-html' ], function () {
-  return gulp.src( config.frontend + 'index.html' )
- .pipe( $.inlineSource({ compress: false }))
- .pipe( $.replace( '//# sourceMappingURL=traceur-runtime.js.map', '', { skipBinary: true }))
- .pipe( $.replace( '//# sourceMappingURL=es6-module-loader.js.map', '', { skipBinary: true }))
- .pipe( $.replace( '//# sourceMappingURL=system.js.map', '', { skipBinary: true }))
- .pipe( $.rename( 'index-standalone.html' ))
- .pipe( gulp.dest( config.frontend ));
-});
-
-gulp.task( 'bundle-sfx', [ 'unbundle' ], $.shell.task(
-  [ 'jspm bundle-sfx main ' + config.jsBuildFile +
-    ' --inject --skip-source-maps' ],
-  { cwd : config.absolutePathToFrontend }
-));
-
-function buildStandaloneHtml ( next ) {
+function buildDev ( next ) {
   return runSequence(
-    'styles',
-    'bundle-sfx',
-    'minify',
+    'clean-styles',
+    'clean-html',
+    'styles-debug',
+    'html',
     function () {
       if ( next ) {
         next();
@@ -171,10 +152,101 @@ function buildStandaloneHtml ( next ) {
   );
 }
 
-gulp.task( 'build-standalone-html', function ( done ) {
+gulp.task( 'build-dev', [ 'unbundle' ], function ( done ) {
+  buildDev( done );
+});
+
+gulp.task( 'clean-html', function ( done ) {
+  var files = [
+    config.frontend + 'index.html'
+  ];
+  clean( files, done );
+});
+
+gulp.task( 'html-sfx', [ 'clean-html' ], function () {
+  var target = gulp.src( config.frontend + 'main.html' );
+
+  var stylesSfx = gulp.src([
+      config.frontend + 'jspm_packages/github/angular/bower-material@0.7.1/angular-material.css',
+      config.stylesTargetFolder + config.stylesBuildFile
+    ], {read: false}
+  );
+
+  var sourcesSfx = gulp.src([
+      config.frontend + 'jspm_packages/traceur-runtime.js',
+      config.frontend + config.jsBuildFile
+    ], {read: false}
+  );
+
+  return target
+    .pipe( $.inject( stylesSfx, {
+      relative   : true,
+      ignorePath : '/front/'
+    }))
+    .pipe( $.inject( sourcesSfx, {
+      relative   : true,
+      ignorePath : '/front/'
+    }))
+    .pipe( $.replace( '<link', '<link inline', { skipBinary: true }))
+    .pipe( $.replace( '<script', '<script inline', { skipBinary: true }))
+    .pipe( $.inlineSource({ compress: false }))
+    .pipe( $.replace( '//# sourceMappingURL=traceur-runtime.js.map', '', { skipBinary: true }))
+    //.pipe( $.replace( '//# sourceMappingURL=es6-module-loader.js.map', '', { skipBinary: true }))
+    //.pipe( $.replace( '//# sourceMappingURL=system.js.map', '', { skipBinary: true }))
+    .pipe( $.rename( 'index.html' ))
+    .pipe( gulp.dest( config.frontend ));
+});
+
+gulp.task( 'html', [ 'clean-html' ], function () {
+  var target = gulp.src( config.frontend + 'main.html' );
+
+  var sourcesDefault = gulp.src([
+      config.frontend + 'jspm_packages/system.js',
+      config.frontend + 'config.js',
+      config.frontend + 'bootstrap.js'
+    ], {read: false}
+  );
+
+  return target
+    .pipe( $.inject( sourcesDefault, {
+      relative   : true,
+      ignorePath : '/front/'
+    }))
+    //.pipe( $.replace( '<link', '<link inline', { skipBinary: true }))
+    //.pipe( $.replace( '<script', '<script inline', { skipBinary: true }))
+    .pipe( $.rename( 'index.html' ))
+    .pipe( gulp.dest( config.frontend ));
+});
+
+gulp.task( 'bundle-sfx', [ 'unbundle' ], $.shell.task(
+  [ 'jspm bundle-sfx main ' + config.jsBuildFile +
+    ' --inject --skip-source-maps' ],
+  { cwd : config.absolutePathToFrontend }
+));
+
+gulp.task( 'install-angular-material-css-dep-free', $.shell.task(
+  [ 'jspm install angular-material' +
+  ' -o ./../jspm-overrides/override-angular-material-css-dep-free.json' ],
+  { cwd : config.absolutePathToFrontend }
+));
+
+gulp.task( 'install-angular-material', $.shell.task(
+  [ 'jspm install angular-material' ],
+  { cwd : config.absolutePathToFrontend }
+));
+
+gulp.task( 'build-standalone-html', function () {
   log ( 'Building a stand-alone html file' );
   log ( '*** Warning: still experimental! ***' );
-  buildStandaloneHtml( done );
+
+  return runSequence(
+    'install-angular-material-css-dep-free',
+    'styles',
+    'bundle-sfx',
+    'minify',
+    'html-sfx',
+    'install-angular-material'
+  );
 });
 
   /*
@@ -191,7 +263,7 @@ gulp.task( 'browser-sync-front', function () {
   browserSync({
     proxy   : 'localhost:3000',  // local node app address
     port    : 5000,
-    //host    : 'local-62e12256-8891-442a-885c-c2a1fa812a43.dev',
+    //host    : 'local.dev',
     open    : 'external',
     notify  : true,
     browser : 'google chrome'
@@ -202,7 +274,7 @@ gulp.task( 'browser-sync-front-back', [ 'nodemon' ], function () {
   browserSync({
     proxy   : 'localhost:3000',  // local node app address
     port    : 5000,
-    //host    : 'local-62e12256-8891-442a-885c-c2a1fa812a43.dev',
+    //host    : 'local.dev',
     open    : 'external',
     notify  : true,
     browser : 'google chrome'
@@ -258,13 +330,19 @@ gulp.task( 'build-debug-and-reload', function () {
   });
 });
 
+gulp.task( 'build-dev-and-reload', function () {
+  buildDev( function () {
+    gulp.start( 'reload-browsers' );
+  });
+});
+
 gulp.task( 'build-and-reload', function () {
   build( function () {
     gulp.start( 'reload-browsers' );
   });
 });
 
-gulp.task( 'watch-and-build', function () {
+gulp.task( 'build-and-watch', function () {
   //process.env.NODE_ENV = 'production';
   process.env.NODE_ENV = 'development';
   build( function () {
@@ -272,7 +350,7 @@ gulp.task( 'watch-and-build', function () {
   });
 });
 
-gulp.task( 'watch-and-build-debug', function () {
+gulp.task( 'build-debug-and-watch', function () {
   process.env.NODE_ENV = 'build-debug';
   buildDebug( function () {
     runBrowsersyncAndWatchFiles( 'build-debug-and-reload' );
@@ -281,7 +359,7 @@ gulp.task( 'watch-and-build-debug', function () {
 
 gulp.task( 'watch', [ 'unbundle' ], function () {
   process.env.NODE_ENV = 'development';
-  runBrowsersyncAndWatchFiles( 'reload-browsers' );
+  runBrowsersyncAndWatchFiles( 'build-dev-and-reload' );
 });
 
   /*

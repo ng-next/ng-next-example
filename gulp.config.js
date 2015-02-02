@@ -79,17 +79,15 @@ module.exports = function () {
     ],
 
     frontendFilesToWatch   : [
-      frontend + '**/*',
-      frontend + 'lib/**/*.scss',
+      frontend + 'main.js',
+      frontend + 'bootstrap.js',
+      frontend + 'lib/**/*.js',
+      '!' + frontend + '**/*.spec.js',
+      frontend + 'main.html',
+      frontend + 'lib/**/*.html',
+      frontend + 'lib/config/styles/main.scss',
       '!' + frontend + '**/*_scsslint_*',
-      '!' + frontend + '**/*.css.map',
-      '!' + frontend + 'dist/**/*',
-      '!' + frontend + 'jspm_packages/**',
-      '!' + frontend + 'build.*',
-      '!' + frontend + 'index.css',
-      '!' + frontend + 'config.js',
-      '!' + frontend + 'package.json',
-      '!' + frontend + '**/*.spec.js'
+      '!' + frontend + '**/*.css.map'
     ]
   };
 };

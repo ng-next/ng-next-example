@@ -24,6 +24,7 @@ build.js
 build.js.map
 main.css
 main.css.map
+index.html
 
 # deployment
 public
