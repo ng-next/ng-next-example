@@ -9,14 +9,6 @@ System.config({
 });
 
 System.config({
-  "meta": {
-    "github:hammerjs/hammer.js@2.0.4/hammer": {
-      "format": "global"
-    }
-  }
-});
-
-System.config({
   "map": {
     "angular": "github:angular/bower-angular@1.3.11",
     "angular-animate": "github:angular/bower-angular-animate@1.3.11",
@@ -27,7 +19,6 @@ System.config({
     "angular-mocks": "github:angular/bower-angular-mocks@1.3.10",
     "angular-ui-router": "github:angular-ui/ui-router@0.2.13",
     "css": "github:systemjs/plugin-css@0.1.0",
-    "hammer": "github:hammerjs/hammer.js@2.0.4",
     "jsonp": "npm:jsonp@0.1.0",
     "lodash": "npm:lodash@2.4.1",
     "nn-ng-utils": "github:ng-next/nn-ng-utils@master",
