@@ -3,13 +3,13 @@
 
 export default function loggingExceptionHandler (
   $injector,
-  $delegate,
-  exceptionConfig
+  $delegate
+  //, exceptionConfig
 ) {
   //noinspection BadExpressionStatementJS
   'ngInject';
 
-  let appErrorPrefix = exceptionConfig.appErrorPrefix || '';
+  //let appErrorPrefix = exceptionConfig.appErrorPrefix || '';
   //let log;
 
   return function ( exception, cause ) {
@@ -39,4 +39,4 @@ export default function loggingExceptionHandler (
     //
     //log.error( msg, errorData );
   };
-};
+}
