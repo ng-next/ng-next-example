@@ -41,9 +41,9 @@ gulp.task( 'styles', [ 'clean-styles' ], function () {
 
   return gulp.src( config.sass )
   .pipe( $.plumber())
-  .pipe( $.sass({ errLogToConsole : true }))
+  .pipe( $.sass( config.sassOptions ))
   .pipe( $.minifyCss({ keepBreaks : true }))
-  .pipe( $.autoprefixer({ browsers : [ 'last 2 version', '> 5%' ] }))
+  .pipe( $.autoprefixer( config.autoprefixerOptions ))
   .pipe( gulp.dest( config.stylesTargetFolder ));
 });
 
@@ -53,8 +53,8 @@ gulp.task( 'styles-debug', [ 'clean-styles' ], function () {
   return gulp.src( config.sass )
   .pipe( $.plumber())
   .pipe( $.sourcemaps.init())
-  .pipe( $.sass({ style : 'compressed', errLogToConsole: true }))
-  .pipe( $.autoprefixer({ browsers : [ 'last 2 version', '> 5%' ] }))
+  .pipe( $.sass( config.sassOptions ))
+  .pipe( $.autoprefixer( config.autoprefixerOptions ))
   .pipe( $.sourcemaps.write( './' ))
   .pipe( gulp.dest( config.stylesTargetFolder ));
 });
@@ -89,13 +89,9 @@ gulp.task( 'unbundle', [ 'clean-js' ], $.shell.task(
 
 gulp.task( 'minify', function () {
   return gulp.src([
-    'front/main/build.js'
+    config.frontend + config.jsBuildFile
   ])
-  .pipe( $.ngAnnotate({
-    remove        : false,
-    add           : true,
-    single_quotes : true // jscs:disable
-  }))
+  .pipe( $.ngAnnotate( config.ngAnnotateOptions ))
   .pipe( $.uglify())
   .pipe( gulp.dest( config.jsTargetFolder ));
 });
@@ -155,63 +151,39 @@ gulp.task( 'build-dev', [ 'unbundle', 'vet' ], function ( done ) {
 
 gulp.task( 'clean-html', function ( done ) {
   var files = [
-    config.frontend + 'index.html'
+    config.frontend + config.htmlBuildFile
   ];
   clean( files, done );
 });
 
 gulp.task( 'html-sfx', [ 'clean-html' ], function () {
-  var target = gulp.src( config.frontend + 'main.html' );
+  var stylesToIncludeInSfxBundle = gulp
+    .src( config.stylesToIncludeInSfxBundle, { read: false });
 
-  var stylesSfx = gulp.src([
-      config.frontend + 'jspm_packages/github/angular/bower-material@0.7.1/angular-material.css',
-      config.stylesTargetFolder + config.stylesBuildFile
-    ], {read: false}
-  );
+  var jsToIncludeInSfxBundle = gulp
+    .src( config.jsToIncludeInSfxBundle, { read: false });
 
-  var sourcesSfx = gulp.src([
-      config.frontend + 'jspm_packages/traceur-runtime.js',
-      config.frontend + config.jsBuildFile
-    ], {read: false}
-  );
-
-  return target
-    .pipe( $.inject( stylesSfx, {
-      relative   : true,
-      ignorePath : '/front/'
-    }))
-    .pipe( $.inject( sourcesSfx, {
-      relative   : true,
-      ignorePath : '/front/'
-    }))
+  return gulp
+    .src( config.html )
+    .pipe( $.inject( stylesToIncludeInSfxBundle, config.injectOptions ))
+    .pipe( $.inject( jsToIncludeInSfxBundle, config.injectOptions ))
     .pipe( $.replace( '<link', '<link inline', { skipBinary: true }))
     .pipe( $.replace( '<script', '<script inline', { skipBinary: true }))
-    .pipe( $.inlineSource({ compress: false }))
-    .pipe( $.replace( '//# sourceMappingURL=traceur-runtime.js.map', '', { skipBinary: true }))
-    //.pipe( $.replace( '//# sourceMappingURL=es6-module-loader.js.map', '', { skipBinary: true }))
-    //.pipe( $.replace( '//# sourceMappingURL=system.js.map', '', { skipBinary: true }))
-    .pipe( $.rename( 'index.html' ))
+    .pipe( $.inlineSource( config.inlineSourceOptions ))
+    .pipe( $.replace( '//# sourceMappingURL=traceur-runtime.js.map', '',
+      { skipBinary: true }))
+    .pipe( $.rename( config.htmlBuildFile ))
     .pipe( gulp.dest( config.frontend ));
 });
 
 gulp.task( 'html', [ 'clean-html' ], function () {
-  var target = gulp.src( config.frontend + 'main.html' );
+  var jsToIncludeInDefaultBundle = gulp
+    .src( config.jsToIncludeInDefaultBundle, { read: false });
 
-  var sourcesDefault = gulp.src([
-      config.frontend + 'jspm_packages/system.js',
-      config.frontend + 'config.js',
-      config.frontend + 'bootstrap.js'
-    ], {read: false}
-  );
-
-  return target
-    .pipe( $.inject( sourcesDefault, {
-      relative   : true,
-      ignorePath : '/front/'
-    }))
-    //.pipe( $.replace( '<link', '<link inline', { skipBinary: true }))
-    //.pipe( $.replace( '<script', '<script inline', { skipBinary: true }))
-    .pipe( $.rename( 'index.html' ))
+  return gulp
+    .src( config.html )
+    .pipe( $.inject( jsToIncludeInDefaultBundle, config.injectOptions ))
+    .pipe( $.rename( config.htmlBuildFile ))
     .pipe( gulp.dest( config.frontend ));
 });
 
@@ -429,7 +401,7 @@ function log ( msg ) {
   if ( typeof msg === 'object' ) {
     for ( var item in msg ) {
       if ( msg.hasOwnProperty( item )) {
-        $.util.log( $.util.colors.blue( msg[ item ]));
+        $.util.log( $.util.colors.blue( msg[ item ] ));
       }
     }
   } else {
