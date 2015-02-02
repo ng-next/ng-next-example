@@ -23,7 +23,29 @@ ng-next is AngularJS 1.x using ...
 have the following node modules globally installed:
 - jspm, karma-cli, gulp
 
-run `npm install`
-run `npm start` and browse to `localhost:3000`
+`git clone git@github.com:ng-next/ng-next-example.git`
+
+`cd ng-next-example`
+
+`npm install`
+
+`gulp build`
+
+`npm start`
+
+browse to `localhost:3000`
 
 tested with just Google Chrome browser (for now).
+
+## Tests
+you must have installed Google Chrome.
+
+`npm test`
+
+or `npm run test-mocha-reporter` for a verbose GWT style output and rerunning
+tests on file changes.
+
+### running tests in Jetbrains Webstorm IDE
+currently some strange things happen when running tests within Webstom. So
+for the moment make sure to only run tests on the command line. We're working
+ on it.
