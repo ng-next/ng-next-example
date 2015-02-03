@@ -19,9 +19,8 @@ if git diff --cached --name-only --diff-filter=ACM | grep '.js$' > /dev/null 2>&
 then
   git stash -u -q --keep-index
 
-  ./node_modules/.bin/gulp lint  || EXIT=$?
-  ./node_modules/.bin/gulp jscs  || EXIT=$?
-  npm run test || EXIT=$?
+  ./node_modules/.bin/gulp vet  || EXIT=$?
+  ./node_modules/.bin/gulp unbundle  || EXIT=$?
 
   #FAILING_GREP_OPTION='--color'
   #FILES_PATTERN='\.(js|coffee)(\..+)?$'
