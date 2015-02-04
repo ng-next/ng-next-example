@@ -38,6 +38,8 @@ function constants () {
   };
 
   return {
+    // TODO: set accordingly during gulp build tasks
+    isDev          : true,
     appErrorPrefix : exceptionHandlerDecoratorConfiguration(),
     events         : events,
     imageSettings  : imageSettings,

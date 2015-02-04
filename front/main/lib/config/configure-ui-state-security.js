@@ -5,11 +5,11 @@ export default ( app ) => {
   app.run( configureUiStateSecurity );
 };
 
-function configureUiStateSecurity ( $rootScope, $state, authService ) {
+function configureUiStateSecurity ( $rootScope, $state, authService, cnst ) {
   //noinspection BadExpressionStatementJS
   'ngInject';
 
-  $rootScope.$on( '$stateChangeStart', ( event, toState ) => {
+  $rootScope.$on( cnst.events.stateChangeStart, ( event, toState ) => {
     if ( unknownUserGoesToPrivateState() ) {
       goTo( 'root.user.login' );
     }

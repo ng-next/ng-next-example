@@ -9,6 +9,7 @@ export default ( app ) => {
 function configureRoutes ( $urlRouterProvider, $locationProvider ) {
   //noinspection BadExpressionStatementJS
   'ngInject';
+
   $locationProvider.html5Mode( false );
 
   $urlRouterProvider.when( '/X', '/Y' )

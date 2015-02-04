@@ -6,14 +6,15 @@ export default ( app ) => {
 };
 
 /* @ngInject */
-function configureLogging ( $logProvider ) {
+function configureLogging ( $logProvider, cnst ) {
   //noinspection BadExpressionStatementJS
   'ngInject';
+
   toggleDebugging(); // no info or warn
 
   function toggleDebugging () {
     if ( $logProvider.debugEnabled ) {
-      $logProvider.debugEnabled( true );
+      $logProvider.debugEnabled( cnst.isDev );
     }
   }
 }

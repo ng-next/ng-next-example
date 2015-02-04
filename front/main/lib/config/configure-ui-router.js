@@ -6,9 +6,10 @@ export default ( app ) => {
 };
 
 /* @ngInject */
-function configureUiRouter ( $rootScope, $state, $stateParams ) {
+function configureUiRouter ( $rootScope, $state, $stateParams, cnst ) {
   //noinspection BadExpressionStatementJS
   'ngInject';
+
   exposeStateOnRootScope();
   handleStateChangeErrors();
 
@@ -18,7 +19,7 @@ function configureUiRouter ( $rootScope, $state, $stateParams ) {
   }
 
   function handleStateChangeErrors () {
-    $rootScope.$on( '$stateChangeError',
+    $rootScope.$on( cnst.events.stateChangeError,
       ( event, toState, toParams, fromState, fromParams, error ) => {
         // ToDo: use log service
         console.error( 'Error: ($stateChangeError) ', error, event, toState,

@@ -12,6 +12,7 @@ export default ( app ) => {
 function configureExceptions ( $provide, exceptionConfigProvider, cnst ) {
   //noinspection BadExpressionStatementJS
   'ngInject';
+
   exceptionConfigProvider.setAppErrorPrefix( cnst.appErrorPrefix );
   // TODO: automatically deactive in production (during build step)!
   $provide.decorator( '$exceptionHandler', loggingExceptionHandler );

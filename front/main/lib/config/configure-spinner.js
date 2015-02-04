@@ -6,20 +6,21 @@ export default ( app ) => {
 };
 
 /* @ngInject */
-function configureSpinner ( $rootScope, spinnerService ) { //common
+function configureSpinner ( $rootScope, cnst, spinnerService ) { //common
   //noinspection BadExpressionStatementJS
   'ngInject';
+
   spinnerService.isSpinnerVisible = true;
 
-  $rootScope.$on( '$stateChangeSuccess', () => {
+  $rootScope.$on( cnst.events.stateChangeSuccess, () => {
     spinnerService.stop();
   });
 
-  $rootScope.$on( '$stateChangeStart', () => {
+  $rootScope.$on( cnst.events.stateChangeStart, () => {
     spinnerService.start();
   });
 
-  $rootScope.$on( '$stateChangeError', () => {
+  $rootScope.$on( cnst.events.stateChangeError, () => {
     spinnerService.stop();
   });
 }

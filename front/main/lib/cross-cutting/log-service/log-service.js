@@ -6,12 +6,13 @@ let name = 'log';
 import { registerService } from 'nn-ng-utils';
 
 class LogService {
-  constructor ( $log, toast ) {
+  constructor ( $log, cnst, toast ) {
     //noinspection BadExpressionStatementJS
     'ngInject';
 
     this.$log = $log;
     this.toast = toast;
+    this.cnst = cnst;
 
     this.showToasts = true;
     this.log = logStraightToConsoleAndBypassToast();
@@ -21,29 +22,36 @@ class LogService {
     }
   }
 
-  debug ( message, data, title ) {
-    this.toast.info( message, title );
-    this.$log.info( 'Debug: ' + message, data );
-  }
-
   error ( message, data, title ) {
-    this.toast.error( message, title );
     this.$log.error( 'Error: ' + message, data );
+    this.toast.error( message, title );
   }
 
   warning ( message, data, title ) {
-    this.toast.warning( message, title );
     this.$log.warn( 'Warning: ' + message, data );
-  }
-
-  success ( message, data, title ) {
-    this.toast.success( message, title );
-    this.$log.info( 'Success: ' + message, data );
+    this.toast.warning( message, title );
   }
 
   info ( message, data, title ) {
+    if ( this.cnst.isDev ) {
+      this.$log.info( 'Info: ' + message, data );
+    }
     this.toast.info( message, title );
-    this.$log.info( 'Info: ' + message, data );
+  }
+
+  success ( message, data, title ) {
+    if ( this.cnst.isDev ) {
+      this.$log.info( 'Success: ' + message, data );
+    }
+    this.toast.success( message, title );
+  }
+
+  debug ( message, data ) {
+    if ( typeof data !== 'undefined' ) {
+      this.$log.debug( message, data );
+    } else {
+      this.$log.debug( message );
+    }
   }
 }
 
