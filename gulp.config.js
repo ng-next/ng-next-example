@@ -13,7 +13,10 @@ module.exports = function () {
   ];
   var jsBuildFile            = 'build.js';
   var jsTargetFolder         = frontend;
-  var styles                 = [ frontend + 'main.scss' ];
+  var styles                 = [
+    frontend + 'main.scss',
+    frontend + '**/*.scss'
+  ];
   var stylesBuildFile        = 'main.css';
   var stylesTargetFolder     = frontend;
   var html                   = frontend + 'main.html';
@@ -44,10 +47,15 @@ module.exports = function () {
     jsTargetFolder             : jsTargetFolder,
 
     /*
-     * File Names
+     * Build Artifact Files
      */
 
     jsBuildFile                : jsBuildFile,
+
+    jsBuildFiles               : [
+      ( jsTargetFolder + jsBuildFile ),
+      ( jsTargetFolder + jsBuildFile.replace( '.js', '.map.js' ))
+    ],
 
     stylesBuildFile            : stylesBuildFile,
 
@@ -70,14 +78,11 @@ module.exports = function () {
      * Source Files
      */
 
+    mainStyle                  : frontend + 'main.scss',
+
     styles                     : styles,
 
     html                       : html,
-
-    jsBuildFiles               : [
-      ( jsTargetFolder + jsBuildFile ),
-      ( jsTargetFolder + jsBuildFile.replace( '.js', '.map.js' ))
-    ],
 
     // all js files to vet
     alljs                      : [
@@ -88,6 +93,14 @@ module.exports = function () {
       '!' + frontend + 'build.js',
       '!' + frontend + 'config.js'
     ],
+
+    // all backend source files that trigger a server restart when changed
+    backendFilesToWatch        : [
+      backend + 'app.js'
+    ],
+
+    /*
+     * inject into html */
 
     stylesToIncludeInSfxBundle : [
       frontend + 'jspm_packages/github/angular/bower-material@0.7.1/angular-material.css', // jscs: disable
@@ -104,6 +117,9 @@ module.exports = function () {
       frontend + 'config.js',
       frontend + 'bootstrap.js'
     ],
+
+    /*
+     * copy to folder that's served to the public */
 
     // all files that should be copied to the public folder and served by
     // the webserver
@@ -122,18 +138,13 @@ module.exports = function () {
       frontend + 'lib/assets/**/*.*'
     ],
 
-    //frontendFilesToWatch       : [
-    //  frontend + 'main.js',
-    //  frontend + 'bootstrap.js',
-    //  frontend + 'lib/**/*.js',
-    //  '!' + frontend + '**/*.spec.js',
-    //  frontend + 'main.html',
-    //  frontend + 'lib/**/*.html',
-    //  frontend + 'lib/config/styles/main.scss',
-    //  '!' + frontend + '**/*_scsslint_*',
-    //  '!' + frontend + '**/*.css.map'
-    //],
+    /*
+     * BrowserSync
+     */
 
+    browserSyncReloadDelay     : 1000,
+
+    // watched files in dev mode that trigger a browser reload
     browserSyncFilesDev        : mainJs.concat(
       // main partition
         // reload browser only when styles/html build ( which gets triggered by
@@ -151,30 +162,18 @@ module.exports = function () {
         // html files are not excluded because jspm bundels them into build file
     ),
 
-    //browserSyncFilesProduction : [
-    //  frontend + 'config.js',
-    //  frontend + 'main.js',
-    //  frontend + 'bootstrap.js',
-    //  frontend + jsBuildFile,
-    //  frontend + stylesBuildFile,
-    //  frontend + htmlBuildFile
-    //],
-
+    // watched files in build modes that trigger a complete (re)build
     gulpWatchFilesBuild        : mainJs.concat(
       // main partition
-      styles, // styles are part of main partition and can be part of lib, too
       html,   // this is (currently) just the html in the main partition
       frontend + 'favicon.ico',
 
       // lib
+      styles, // styles are part of main partition and are part of lib, too
       frontend + 'lib/**/*.*',
       '!' + frontend + '**/*.spec.js'
         // style files are included because they must trigger a rebuild
     ),
-
-    backendFilesToWatch        : [
-      backend + 'app.js'
-    ],
 
     /*
      * Options

@@ -7,7 +7,6 @@ var $                = require( 'gulp-load-plugins' )({ lazy : true });
 var del              = require( 'del' );
 var runSequence      = require( 'run-sequence' );
 var browserSync      = require( 'browser-sync' );
-//var reload           = browserSync.reload;
 var port             = process.env.PORT || config.nodeServerDefaultPort;
 
   /*
@@ -32,7 +31,9 @@ gulp.task( 'vet', function () {
 gulp.task( 'clean-styles', function ( done ) {
   var files = [
     config.stylesTargetFolder + '*.css',
-    config.stylesTargetFolder + '*.css.map'
+    config.stylesTargetFolder + '*.css.map',
+    config.frontend + 'lib/**/*.css',
+    config.frontend + 'lib/**/*.css.map'
   ];
   clean( files, done );
 });
@@ -40,7 +41,7 @@ gulp.task( 'clean-styles', function ( done ) {
 gulp.task( 'styles', [ 'clean-styles' ], function () {
   log( 'Compiling sass --> css, Autoprefixing css' );
 
-  return gulp.src( config.styles )
+  return gulp.src( config.mainStyle )
   .pipe( $.plumber())
   .pipe( $.sass( config.sassOptions ))
   .pipe( $.minifyCss({ keepBreaks : true }))
@@ -51,7 +52,7 @@ gulp.task( 'styles', [ 'clean-styles' ], function () {
 gulp.task( 'styles-debug', [ 'clean-styles' ], function () {
   log( 'Compiling sass --> css (with sourcemaps), Autoprefixing css' );
 
-  return gulp.src( config.styles )
+  return gulp.src( config.mainStyle )
   .pipe( $.plumber())
   .pipe( $.sourcemaps.init())
   .pipe( $.sass( config.sassOptions ))
@@ -330,6 +331,10 @@ function serve ( nodeEnv, browserSyncWatches ) {
     .on( 'restart', rerunTasksOnRestart, function ( event ) {
       log( '*** nodemon restarted ***' );
       log( 'files changed on restart:\n' + event );
+      setTimeout( function () {
+        browserSync.notify( 'reloading now ...' );
+        browserSync.reload({ stream : false });
+      }, config.browserSyncReloadDelay );
     })
     .on( 'start', function () {
       log( '*** nodemon started ***' );
@@ -344,7 +349,7 @@ function serve ( nodeEnv, browserSyncWatches ) {
 }
 
 function startBrowserSync ( browserSyncWatches ) {
-  if ( browserSync.active ) {
+  if ( args.nosync || browserSync.active ) {
     return;
   }
 
@@ -365,9 +370,10 @@ function startBrowserSync ( browserSyncWatches ) {
     injectChanges  : true,
     logFileChanges : true,
     logLevel       : 'debug',
-    logPrefix      : 'gulp-patterns',
+    logPrefix      : 'ng-next',
     notify         : true,
-    reloadDelay    : 1000
+    reloadDelay    : 1000,
+    online         : false
   };
 
   browserSync( options );
