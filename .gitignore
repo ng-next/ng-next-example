@@ -21,10 +21,11 @@ jspm_packages
 dist
 build
 build.js
-build.js.map
 main.css
-main.css.map
 index.html
+
+#Sourecemaps
+*.map
 
 # deployment
 public

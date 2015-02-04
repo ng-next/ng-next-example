@@ -7,7 +7,8 @@ var $                = require( 'gulp-load-plugins' )({ lazy : true });
 var del              = require( 'del' );
 var runSequence      = require( 'run-sequence' );
 var browserSync      = require( 'browser-sync' );
-var reload           = browserSync.reload;
+//var reload           = browserSync.reload;
+var port             = process.env.PORT || config.nodeServerDefaultPort;
 
   /*
    * Code Style, Code Quality
@@ -39,7 +40,7 @@ gulp.task( 'clean-styles', function ( done ) {
 gulp.task( 'styles', [ 'clean-styles' ], function () {
   log( 'Compiling sass --> css, Autoprefixing css' );
 
-  return gulp.src( config.sass )
+  return gulp.src( config.styles )
   .pipe( $.plumber())
   .pipe( $.sass( config.sassOptions ))
   .pipe( $.minifyCss({ keepBreaks : true }))
@@ -50,7 +51,7 @@ gulp.task( 'styles', [ 'clean-styles' ], function () {
 gulp.task( 'styles-debug', [ 'clean-styles' ], function () {
   log( 'Compiling sass --> css (with sourcemaps), Autoprefixing css' );
 
-  return gulp.src( config.sass )
+  return gulp.src( config.styles )
   .pipe( $.plumber())
   .pipe( $.sourcemaps.init())
   .pipe( $.sass( config.sassOptions ))
@@ -59,9 +60,9 @@ gulp.task( 'styles-debug', [ 'clean-styles' ], function () {
   .pipe( gulp.dest( config.stylesTargetFolder ));
 });
 
-gulp.task( 'sass-watcher', function () {
-  gulp.watch( config.sass, [ 'styles' ]);
-});
+//gulp.task( 'sass-watcher', function () {
+//  gulp.watch( config.styles, [ 'styles' ]);
+//});
 
   /*
    * Build / Bundle js, html
@@ -96,64 +97,24 @@ gulp.task( 'minify', function () {
   .pipe( gulp.dest( config.jsTargetFolder ));
 });
 
-function build ( next ) {
-  return runSequence(
-    'styles',
-    'bundle',
-    'minify',
-    'html',
-    function () {
-      if ( next ) {
-        next();
-      }
-    }
-  );
-}
+gulp.task( 'dev', [ 'vet', 'unbundle',  'styles-debug', 'html' ]);
 
-gulp.task( 'build', [ 'vet' ], function ( done ) {
-  build( done );
+gulp.task( 'debug-build', [ 'vet', 'bundle-debug', 'styles-debug', 'html' ]);
+
+gulp.task( 'build', [ 'vet', 'styles', 'html' ], function ( done ) {
+  return runSequence( 'bundle', 'minify', function () {
+    done();
+  });
 });
 
-function buildDebug ( next ) {
-  return runSequence(
-    'styles-debug',
-    'bundle-debug',
-    'html',
-    function () {
-      if ( next ) {
-        next();
-      }
-    }
-  );
-}
-
-gulp.task( 'build-debug', [ 'vet' ], function ( done ) {
-  buildDebug( done );
-});
-
-function buildDev ( next ) {
-  return runSequence(
-    'clean-styles',
-    'clean-html',
-    'styles-debug',
-    'html',
-    function () {
-      if ( next ) {
-        next();
-      }
-    }
-  );
-}
-
-gulp.task( 'build-dev', [ 'unbundle', 'vet' ], function ( done ) {
-  buildDev( done );
+gulp.task( 'production-build', function ( done ) {
+  return runSequence( 'build', 'publish', function () {
+    done();
+  });
 });
 
 gulp.task( 'clean-html', function ( done ) {
-  var files = [
-    config.frontend + config.htmlBuildFile
-  ];
-  clean( files, done );
+  clean( config.frontend + config.htmlBuildFile, done );
 });
 
 gulp.task( 'html-sfx', [ 'clean-html' ], function () {
@@ -204,7 +165,7 @@ gulp.task( 'install-angular-material', $.shell.task(
   { cwd : config.absolutePathToFrontend }
 ));
 
-gulp.task( 'build-standalone-html', function () {
+gulp.task( 'build-standalone-html', function ( done ) {
   log ( 'Building a stand-alone html file' );
   log ( '*** Warning: still experimental! ***' );
 
@@ -214,121 +175,11 @@ gulp.task( 'build-standalone-html', function () {
     'bundle-sfx',
     'minify',
     'html-sfx',
-    'install-angular-material'
+    'install-angular-material',
+    function () {
+      done();
+    }
   );
-});
-
-  /*
-   *  Live Reload / Browser Sync
-   */
-
-function runBrowsersyncAndWatchFiles ( action ) {
-  runSequence( 'browser-sync-front', function () {
-    gulp.watch( config.frontendFilesToWatch, [ action ]);
-  });
-}
-
-gulp.task( 'browser-sync-front', function () {
-  browserSync({
-    proxy   : 'localhost:3000',  // local node app address
-    port    : 5000,
-    //host    : 'local.dev',
-    open    : 'external',
-    notify  : true,
-    browser : 'google chrome'
-  });
-});
-
-gulp.task( 'browser-sync-front-back', [ 'nodemon' ], function () {
-  browserSync({
-    proxy   : 'localhost:3000',  // local node app address
-    port    : 5000,
-    //host    : 'local.dev',
-    open    : 'external',
-    notify  : true,
-    browser : 'google chrome'
-  });
-});
-
-gulp.task( 'reload-browsers', function () {
-  setTimeout( function () {
-    browserSync.reload({ stream : false });
-  }, 250 );
-});
-
-  /*
-   *  Watch, Build, Reload Browser
-   */
-
-gulp.task( 'nodemon', function ( cb ) {
-  var called;
-  var options;
-
-  options = {
-    script : './back/app.js',
-    //  , env: {
-    //      'NODE_ENV': 'development'
-    //    }
-    watch  : [ 'back' ],
-    ext    : 'js',
-    // , ignore: ['front', 'public', '.idea', '*.spec.js']
-    ignore : [ 'node_modules/**/*', '*.spec.js' ]
-    // , nodeArgs: ['--debug-brk']
-  };
-
-  called = false;
-  return $.nodemon( options )
-    .on( 'start', function () {
-      if ( !called ) {
-        called = true;
-        cb();
-      }
-    })
-    .on( 'restart', function () {
-      setTimeout( function () {
-        reload(  { stream : false });
-      }, 1000 );
-    });
-
-  //  .on('change', ['lint'])
-});
-
-gulp.task( 'build-and-reload', function () {
-  build( function () {
-    gulp.start( 'reload-browsers' );
-  });
-});
-
-gulp.task( 'build-and-watch', function () {
-  //process.env.NODE_ENV = 'production';
-  process.env.NODE_ENV = 'development';
-  build( function () {
-    runBrowsersyncAndWatchFiles( 'build-and-reload' );
-  });
-});
-
-gulp.task( 'build-debug-and-reload', function () {
-  buildDebug( function () {
-    gulp.start( 'reload-browsers' );
-  });
-});
-
-gulp.task( 'build-debug-and-watch', function () {
-  process.env.NODE_ENV = 'build-debug';
-  buildDebug( function () {
-    runBrowsersyncAndWatchFiles( 'build-debug-and-reload' );
-  });
-});
-
-gulp.task( 'build-dev-and-reload', function () {
-  buildDev( function () {
-    gulp.start( 'reload-browsers' );
-  });
-});
-
-gulp.task( 'watch', [ 'unbundle' ], function () {
-  process.env.NODE_ENV = 'development';
-  runBrowsersyncAndWatchFiles( 'build-dev-and-reload' );
 });
 
   /*
@@ -349,18 +200,34 @@ gulp.task( 'publish-assests', function () {
   .pipe( gulp.dest( config.publicAssetFolder ));
 });
 
-gulp.task( 'publish', function () {
-  return runSequence( 'clean-public', 'publish-source', 'publish-assests' );
+gulp.task( 'publish', function ( done ) {
+  return runSequence( 'clean-public', 'publish-source', 'publish-assests',
+    function () {
+      done();
+    });
 });
 
   /*
    * Misc
    */
 
+gulp.task( 'clean',
+  [ 'clean-js', 'clean-styles', 'clean-html', 'clean-public' ]
+);
+
+gulp.task( 'default', [ 'help' ], function () {
+});
+
+gulp.task( 'help', $.taskListing );
+
 gulp.task( 'hook', function () {
   return gulp.src( 'utilities/hooks/pre-commit' )
-    .pipe( $.symlink( '.git/hooks' ));
+    .pipe( $.symlink( '.git/hooks/pre-commit' ));
 });
+
+  /*
+   * Testing
+   */
 
 gulp.task( 'test-server', function () {
   return gulp.src( 'back/app/**/*.spec.js', { read : false })
@@ -379,12 +246,132 @@ gulp.task( 'watch-test-server', function () {
     [ 'test-server' ]);
 });
 
-gulp.task( 'default', function () {
-  gulp.start( 'watch' );
+  /*
+   * Serving
+   */
+
+gulp.task( 'serve-dev', [ 'dev' ], function () {
+  serve( config.nodeEnvironments.development, getBrowserSyncWatchesDev() );
+});
+
+gulp.task( 'serve-debug-build', [ 'debug-build' ], function () {
+  serve(
+    config.nodeEnvironments.development,
+    getBrowserSyncWatchesBuild( 'debug-build' )
+  );
+});
+
+gulp.task( 'serve-build', [ 'build' ], function () {
+  serve(
+    config.nodeEnvironments.development,
+    getBrowserSyncWatchesBuild( 'build' )
+  );
+});
+
+gulp.task( 'serve-production-build', [ 'production-build' ], function () {
+  serve(
+    config.nodeEnvironments.production,
+    getBrowserSyncWatchesBuild( 'production-build' )
+  );
 });
 
 ////////////////
 
+function getBrowserSyncWatchesDev () {
+  return {
+    gulpWatch             : function browserSyncWatchTask () {
+      gulp.watch( config.styles, [ 'styles' ])
+        .on( 'change', function ( event ) {
+          changeEvent( event );
+        });
+
+      gulp.watch( config.html, [ 'html' ])
+        .on( 'change', function ( event ) {
+          changeEvent( event );
+        });
+    },
+    browserSyncWatchFiles : config.browserSyncFilesDev
+  };
+}
+
+function getBrowserSyncWatchesBuild ( buildTaskName ) {
+  return {
+    gulpWatch             : function browserSyncWatchTask () {
+      gulp.watch( config.gulpWatchFilesBuild, function () {
+        return runSequence(
+          buildTaskName,
+          function () {
+            browserSync.reload();
+          }
+        );
+      })
+        .on( 'change', function ( event ) {
+          changeEvent( event );
+        });
+    },
+    browserSyncWatchFiles : []
+  };
+}
+
+function serve ( nodeEnv, browserSyncWatches ) {
+  var nodeOptions = {
+    script    : config.nodeServerStartScript,
+    delayTime : 1,
+    env       : {
+      PORT     : port,
+      NODE_ENV : nodeEnv
+    },
+    watch     : config.backendFilesToWatch
+  };
+
+  var rerunTasksOnRestart = [];
+
+  return $.nodemon( nodeOptions )
+    .on( 'restart', rerunTasksOnRestart, function ( event ) {
+      log( '*** nodemon restarted ***' );
+      log( 'files changed on restart:\n' + event );
+    })
+    .on( 'start', function () {
+      log( '*** nodemon started ***' );
+      startBrowserSync( browserSyncWatches );
+    })
+    .on( 'crash', function () {
+      log( '*** nodemon crashed: script crashed for some reason ***' );
+    })
+    .on( 'exit', function () {
+      log( '*** nodemon exited gracefully ***' );
+    });
+}
+
+function startBrowserSync ( browserSyncWatches ) {
+  if ( browserSync.active ) {
+    return;
+  }
+
+  log( 'Starting browser-sync on port ' + port );
+
+  browserSyncWatches.gulpWatch();
+
+  var options = {
+    proxy          : 'localhost:' + port,
+    port           : 5000,
+    files          : browserSyncWatches.browserSyncWatchFiles,
+    ghostMode      : {
+      clicks   : true,
+      location : false,
+      forms    : true,
+      scroll   : true
+    },
+    injectChanges  : true,
+    logFileChanges : true,
+    logLevel       : 'debug',
+    logPrefix      : 'gulp-patterns',
+    notify         : true,
+    reloadDelay    : 1000
+  };
+
+  browserSync( options );
+}
 //function errorLogger ( error ) {
 //  log( '*** Start of Error ***' );
 //  log( error );
@@ -395,6 +382,11 @@ gulp.task( 'default', function () {
 function clean ( path, done ) {
   log( 'Cleaning: ' + $.util.colors.blue( path ));
   del ( path, done );
+}
+
+function changeEvent ( event ) {
+  var srcPattern = new RegExp( '/.*(?=/' + config.frontend + ')/' );
+  log( 'File ' + event.path.replace( srcPattern, '' ) + ' ' + event.type );
 }
 
 function log ( msg ) {
