@@ -56,7 +56,7 @@ module.exports = function () {
 
     jsBuildFiles               : [
       ( jsTargetFolder + jsBuildFile ),
-      ( jsTargetFolder + jsBuildFile.replace( '.js', '.map.js' ))
+      ( jsTargetFolder + jsBuildFile.replace( '.js', '.js.map' ))
     ],
 
     stylesBuildFile            : stylesBuildFile,
