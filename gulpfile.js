@@ -32,8 +32,8 @@ gulp.task( 'clean-styles', function ( done ) {
   var files = [
     config.stylesTargetFolder + '*.css',
     config.stylesTargetFolder + '*.css.map',
-    config.frontend + 'lib/**/*.css',
-    config.frontend + 'lib/**/*.css.map'
+    config.frontendApp + '**/*.css',
+    config.frontendApp + '**/*.css.map'
   ];
   clean( files, done );
 });
@@ -188,17 +188,17 @@ gulp.task( 'build-standalone-html', function ( done ) {
    */
 
 gulp.task( 'clean-public', function ( done ) {
-  clean( config.publicFolder + '**', done );
+  clean( config.public + '**', done );
 });
 
 gulp.task( 'publish-source', function () {
   return gulp.src( config.sourceFilesToPublish )
-  .pipe( gulp.dest( config.publicFolder ));
+  .pipe( gulp.dest( config.public ));
 });
 
 gulp.task( 'publish-assests', function () {
   return gulp.src( config.assetFilesToPublish )
-  .pipe( gulp.dest( config.publicAssetFolder ));
+  .pipe( gulp.dest( config.publicAssets ));
 });
 
 gulp.task( 'publish', function ( done ) {

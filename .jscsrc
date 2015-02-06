@@ -2,9 +2,9 @@
   "esnext": true,
   "excludeFiles": [
     "node_modules/**",
-    "back/**",
+    "back/node_modules/**",
     "front/main/jspm_packages/**",
-    "front/main/dist/**",
+    "front/main/lib/**",
     "front/main/build.js",
     "front/main/config.js",
     "front/main/es6-module-loader*.js",
@@ -14,8 +14,7 @@
     "front/test/**",
     "front/utilities/**",
     "test/**",
-    "scratch.js",
-    "./front/test/unit/common.conf.js"
+    "./front/test/unit/karma-common.conf.js"
   ],
   "requireSpacesInFunctionExpression": {
     "beforeOpeningRoundBrace": true,
