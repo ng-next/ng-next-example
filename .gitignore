@@ -11,14 +11,11 @@ pids
 *.pid
 *.seed
 
-# coverage directory used by tools like istanbul
-front/test/unit/coverage
-
 node_modules
 jspm_packages
+front/main/lib
 
 # build artifacts
-dist
 build
 build.js
 main.css
@@ -27,7 +24,7 @@ index.html
 #Sourecemaps
 *.map
 
-# deployment
+# deployment / public serving
 public
 
 # misc

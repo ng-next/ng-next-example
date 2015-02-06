@@ -1,6 +1,5 @@
 node_modules
-back
-scratch.js
 front/main/jspm_packages/**
+front/main/lib/**
 front/main/config.js
 front/main/build.js

@@ -4,10 +4,14 @@
 var path = require( 'path' );
 
 module.exports = function () {
-  var frontend               = 'front/main/';
   var frontendTest           = 'front/test/';
+  var frontend               = 'front/main/';
+  var frontendApp            = 'front/main/app/';
+  var frontendLib            = 'front/main/lib/';
   var backend                = 'back/';
-  var servedFolder           = 'public/';
+  // 'public' is a reserved word, thus 'publicFolder'
+  var publicFolder           = 'public/';
+  var publicApp              = 'public/app/';
   var mainJs                 = [
     frontend + 'main.js',
     frontend + 'bootstrap.js'
@@ -35,10 +39,14 @@ module.exports = function () {
 
     frontend                   : frontend,
 
-    // publically accessable folder that should be served by the webserver
-    publicFolder               : servedFolder,
+    frontendApp                : frontendApp,
 
-    publicAssetFolder          : servedFolder + 'lib/assets/',
+    // publically accessable folder that should be served by the webserver
+    public                     : publicFolder,
+
+    publicApp                  : publicApp,
+
+    publicAssets               : publicApp + 'assets/',
 
     // output folder of the css preprocessing
     stylesTargetFolder         : stylesTargetFolder,
@@ -93,9 +101,11 @@ module.exports = function () {
       'gulpfile.js',
       'gulp.config.js',
       frontend + '**/*.js',
-      '!' + frontend + 'jspm_packages/**/*.*',
+      '!' + frontendLib + '**/*.*',
       '!' + frontend + 'build.js',
-      '!' + frontend + 'config.js'
+      '!' + frontend + 'config.js',
+      backend + '**/*.js',
+      '!' + backend + 'node_modules/**/*.*'
     ],
 
     // all backend source files that trigger a server restart when changed
@@ -107,17 +117,17 @@ module.exports = function () {
      * inject into html */
 
     stylesToIncludeInSfxBundle : [
-      frontend + 'jspm_packages/github/angular/bower-material@0.7.1/angular-material.css', // jscs: disable
+      frontendLib + 'github/angular/bower-material@0.7.1/angular-material.css', // jscs: disable
       stylesTargetFolder + stylesBuildFile
     ],
 
     jsToIncludeInSfxBundle     : [
-      frontend + 'jspm_packages/traceur-runtime.js',
+      frontendLib + 'traceur-runtime.js',
       frontend + jsBuildFile
     ],
 
     jsToIncludeInDefaultBundle : [
-      frontend + 'jspm_packages/system.js',
+      frontendLib + 'system.js',
       frontend + 'config.js',
       frontend + 'bootstrap.js'
     ],
@@ -139,7 +149,7 @@ module.exports = function () {
     // all assets that should be copied to the public asset folder and served by
     // the webserver
     assetFilesToPublish        : [
-      frontend + 'lib/assets/**/*.*'
+      frontendApp + 'assets/**/*.*'
     ],
 
     /*
@@ -156,10 +166,10 @@ module.exports = function () {
       frontend + stylesBuildFile,
       frontend + htmlBuildFile,
       frontend + 'favicon.ico',
-
-      // lib
-      frontend + 'lib/**/*.*',
       '!' + frontend + '**/*.spec.js',
+
+      // app
+      frontendApp + '/**/*.*',
         // reload browser only when styles build ( which gets triggered by
         // individual gulp watch task ) is ready
       '!' + frontend + '**/*.scss'
@@ -172,9 +182,9 @@ module.exports = function () {
       html,   // this is (currently) just the html in the main partition
       frontend + 'favicon.ico',
 
-      // lib
-      styles, // styles are part of main partition and are part of lib, too
-      frontend + 'lib/**/*.*',
+      // app
+      styles, // styles are part of main partition and are part of app, too
+      frontendApp + '**/*.*',
       '!' + frontend + '**/*.spec.js'
         // style files are included because they must trigger a rebuild
     ),
@@ -226,23 +236,23 @@ module.exports = function () {
   function getKarmaOptions () {
     var options = {
       jspmConfig    : '/' + frontend + 'config.js',
-      jspmPackages  : '/' + frontend + 'jspm_packages/',
+      jspmPackages  : '/' + frontendLib,
       loadFiles     : [
-        frontend + 'lib/**/*.spec.js'
+        frontendApp + '**/*.spec.js'
       ],
       serveFiles    : [
-        frontend + 'lib/**/*',
+        frontendApp + '**/*',
         frontendTest + 'unit/test-doubles/**/*'
       ],
       exclude       : [
         frontend + 'main.js',
-        frontend + 'lib/cross-cutting/exception/exception-handler-service.js',
+        frontendApp + 'cross-cutting/exception/exception-handler-service.js',
         '**/*_scsslint_*'
       ],
       proxies       : {
         '/base/build.js'       : '/base/' + frontend + 'build.js',
-        '/base/jspm_packages/' : '/base/' + frontend + 'jspm_packages/',
-        '/base/lib/'           : '/base/' + frontend + 'lib/',
+        '/base/lib/'           : '/base/' + frontendLib,
+        '/base/app/'           : '/base/' + frontendApp,
         '/base/test-doubles/'  : '/base/' + frontendTest + 'unit/test-doubles/'
       },
       coverage      : {
