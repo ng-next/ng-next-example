@@ -15,7 +15,7 @@
     "css": "jspm:css@^0.1.0",
     "jsonp": "npm:jsonp@^0.1.0",
     "lodash": "jspm:lodash@^2.4.1",
-    "nn-ng-utils": "github:ng-next/nn-ng-utils@master",
+    "nn-ng-utils": "github:ng-next/nn-ng-utils@^0.1.2",
     "text": "jspm:text@^0.0.2"
   }
 }

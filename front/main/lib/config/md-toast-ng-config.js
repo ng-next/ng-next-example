@@ -1,11 +1,8 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-export default ( app ) => {
-  app.config( configureMdToast );
-};
+import { nnNgConfigurations } from 'nn-ng-utils';
 
-/* @ngInject */
 function configureMdToast ( mdToastConfigProvider ) {
   //noinspection BadExpressionStatementJS
   'ngInject';
@@ -14,3 +11,5 @@ function configureMdToast ( mdToastConfigProvider ) {
   mdToastConfigProvider.setPosition( 'bottom right' );
   mdToastConfigProvider.setParentElementName ( 'footer' );
 }
+
+nnNgConfigurations.registerForConfigPhase( configureMdToast );

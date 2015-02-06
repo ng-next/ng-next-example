@@ -1,11 +1,8 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-export default ( app ) => {
-  app.run( configureUiRouter );
-};
+import { nnNgConfigurations } from 'nn-ng-utils';
 
-/* @ngInject */
 function configureUiRouter ( $rootScope, $state, $stateParams, cnst ) {
   //noinspection BadExpressionStatementJS
   'ngInject';
@@ -27,3 +24,5 @@ function configureUiRouter ( $rootScope, $state, $stateParams, cnst ) {
       } );
   }
 }
+
+nnNgConfigurations.registerForRunPhase( configureUiRouter );

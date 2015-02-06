@@ -1,11 +1,8 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-export default ( app ) => {
-  app.config( configureRoutes );
-};
+import { nnNgConfigurations } from 'nn-ng-utils';
 
-/* @ngInject */
 function configureRoutes ( $urlRouterProvider, $locationProvider ) {
   //noinspection BadExpressionStatementJS
   'ngInject';
@@ -18,3 +15,5 @@ function configureRoutes ( $urlRouterProvider, $locationProvider ) {
   //maybe in the future pick up default ui-state configs from Story Groups
   // or override their defaults here
 }
+
+nnNgConfigurations.registerForConfigPhase( configureRoutes );

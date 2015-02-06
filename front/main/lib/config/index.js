@@ -1,25 +1,17 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-import configureRoutes from './configure-routes';
-import configureSpinner from './configure-spinner';
-import configureUiStateSecurity from './configure-ui-state-security';
-import configureUiRouter from './configure-ui-router';
-import configureMdToast from './configure-md-toast';
-import configureLogging from './configure-logging';
-import configureExceptions from './configure-exceptions';
-import configureConstants from './configure-constants';
+import { nnNgConfigurations } from 'nn-ng-utils';
+
+import configureConstants from './constants-ng-config';
+import './exceptions-ng-config';
+import './routes-ng-config';
+import './ui-state-security-ng-config';
+import './ui-router-ng-config';
+import './md-toast-ng-config';
+import './logging-ng-config';
 
 export default ( app ) => {
-  [
-    configureRoutes,
-    configureSpinner,
-    configureUiStateSecurity,
-    configureUiRouter,
-    configureMdToast,
-    configureLogging,
-    configureExceptions,
-    configureConstants
-  ]
-  .map(( configure ) => configure( app ));
+  configureConstants( app );
+  nnNgConfigurations.configureApp( app );
 };

@@ -1,11 +1,8 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-export default ( app ) => {
-  app.config( configureLogging );
-};
+import { nnNgConfigurations } from 'nn-ng-utils';
 
-/* @ngInject */
 function configureLogging ( $logProvider, cnst ) {
   //noinspection BadExpressionStatementJS
   'ngInject';
@@ -18,3 +15,5 @@ function configureLogging ( $logProvider, cnst ) {
     }
   }
 }
+
+nnNgConfigurations.registerForConfigPhase( configureLogging );

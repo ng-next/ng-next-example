@@ -1,9 +1,7 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-export default ( app ) => {
-  app.run( configureUiStateSecurity );
-};
+import { nnNgConfigurations } from 'nn-ng-utils';
 
 function configureUiStateSecurity ( $rootScope, $state, authService, cnst ) {
   //noinspection BadExpressionStatementJS
@@ -39,3 +37,5 @@ function configureUiStateSecurity ( $rootScope, $state, authService, cnst ) {
     }
   });
 }
+
+nnNgConfigurations.registerForRunPhase( configureUiStateSecurity );

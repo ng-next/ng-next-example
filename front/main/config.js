@@ -21,7 +21,7 @@ System.config({
     "css": "github:systemjs/plugin-css@0.1.0",
     "jsonp": "npm:jsonp@0.1.0",
     "lodash": "npm:lodash@2.4.1",
-    "nn-ng-utils": "github:ng-next/nn-ng-utils@0.1.1",
+    "nn-ng-utils": "github:ng-next/nn-ng-utils@0.1.2",
     "test-doubles-angular": "./test-doubles/angular/index",
     "test-doubles-formsdemo-service": "./lib/formsdemo/services/test-doubles/index",
     "test-doubles-log-service": "./lib/cross-cutting/log-service/test-doubles/index",
