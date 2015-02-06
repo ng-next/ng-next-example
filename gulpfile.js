@@ -276,7 +276,38 @@ gulp.task( 'serve-production-build', [ 'production-build' ], function () {
   );
 });
 
+  /*
+   * Testing
+   */
+
+gulp.task( 'test', [ 'vet' ], function ( done ) {
+  startTests( true, done );
+});
+
 ////////////////
+
+function startTests ( singleRun, done ) {
+  var karma = require( 'karma' ).server;
+  var excludeFiles = [];
+  //var serverTests = config.serverIntegrationTests; //TODO
+
+  //excludeFiles = serverTests;
+
+  karma.start({
+    configFile : __dirname + config.karmaConfig,
+    exclude    : excludeFiles,
+    singleRun  : Boolean( singleRun )
+  }, karmaCompleted );
+
+  function karmaCompleted ( karmaResult ) {
+    log( 'karma completed' );
+    if ( karmaResult === 1 ) {
+      done( 'karma tests failed with code: ' + karmaResult );
+    } else {
+      done();
+    }
+  }
+}
 
 function getBrowserSyncWatchesDev () {
   return {

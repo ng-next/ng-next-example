@@ -6,10 +6,10 @@
 var fs = require( 'fs' );
 var path = require( 'path' );
 var defaultConfig;
-var getCommonConfig = require( './common.conf.js' );
+var getCommonConfig = require( './karma-common.conf.js' );
 
 function commonConfigExists () {
-  return !fs.existsSync( path.resolve( __dirname, './common.conf.js' ) );
+  return !fs.existsSync( path.resolve( __dirname, './karma-common.conf.js' ));
 }
 module.exports = function ( config ) {
   if ( commonConfigExists()) {
@@ -20,7 +20,8 @@ module.exports = function ( config ) {
     defaultConfig = getCommonConfig();
   }
 
-  // config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
+  // config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN ||
+  // config.LOG_INFO || config.LOG_DEBUG
   defaultConfig.logLevel = config.LOG_INFO;
 
   config.set( defaultConfig );

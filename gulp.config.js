@@ -5,6 +5,7 @@ var path = require( 'path' );
 
 module.exports = function () {
   var frontend               = 'front/main/';
+  var frontendTest           = 'front/test/';
   var backend                = 'back/';
   var servedFolder           = 'public/';
   var mainJs                 = [
@@ -22,8 +23,9 @@ module.exports = function () {
   var html                   = frontend + 'main.html';
   var htmlBuildFile          = 'index.html';
   var htmlTargetFolder       = frontend;
+  var reports                = './reports/';
 
-  return {
+  var config = {
 
     /*
      * Files Paths
@@ -60,6 +62,8 @@ module.exports = function () {
     stylesBuildFile            : stylesBuildFile,
 
     htmlBuildFile              : htmlBuildFile,
+
+    reports                    : reports,
 
     /*
      * Node sesstings
@@ -200,6 +204,60 @@ module.exports = function () {
 
     inlineSourceOptions        : {
       compress: false
-    }
+    },
+
+    /*
+     * Testing
+     */
+
+    karmaConfig                : '/' + frontendTest + 'unit/karma.conf.js',
+
+    serverIntegrationTests     : [
+      __dirname + '/' + frontendTest + 'integration/**/*.spec.js'
+    ]
   };
+
+  config.karmaOptions = getKarmaOptions();
+
+  return config;
+
+  /////////////////////
+
+  function getKarmaOptions () {
+    var options = {
+      jspmConfig    : '/' + frontend + 'config.js',
+      jspmPackages  : '/' + frontend + 'jspm_packages/',
+      loadFiles     : [
+        frontend + 'lib/**/*.spec.js'
+      ],
+      serveFiles    : [
+        frontend + 'lib/**/*',
+        frontendTest + 'unit/test-doubles/**/*'
+      ],
+      exclude       : [
+        frontend + 'main.js',
+        frontend + 'lib/cross-cutting/exception/exception-handler-service.js',
+        '**/*_scsslint_*'
+      ],
+      proxies       : {
+        '/base/build.js'       : '/base/' + frontend + 'build.js',
+        '/base/jspm_packages/' : '/base/' + frontend + 'jspm_packages/',
+        '/base/lib/'           : '/base/' + frontend + 'lib/',
+        '/base/test-doubles/'  : '/base/' + frontendTest + 'unit/test-doubles/'
+      },
+      coverage      : {
+        dir       : reports + 'coverage',
+        reporters : [
+          { type : 'html', subdir : 'report-html' },
+          { type : 'lcov', subdir : 'report-lcov' },
+          { type : 'text-summary' /* omitting filename outputs to console */ }
+        ]
+      },
+      preprocessors : {}
+    };
+
+    options.preprocessors[ frontend + '**/!(*.spec)+(*.js)' ] = [ 'coverage' ];
+
+    return options;
+  }
 };
