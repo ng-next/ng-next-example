@@ -29,6 +29,8 @@ gulp.task( 'vet', function () {
    */
 
 gulp.task( 'clean-styles', function ( done ) {
+  log( 'Cleaning style build files' );
+
   var files = [
     config.stylesTargetFolder + '*.css',
     config.stylesTargetFolder + '*.css.map',
@@ -43,8 +45,9 @@ gulp.task( 'styles', [ 'clean-styles' ], function () {
 
   return gulp.src( config.mainStyle )
   .pipe( $.plumber())
+  .pipe( $.rename( config.stylesBuildFile ))
   .pipe( $.sass( config.sassOptions ))
-  .pipe( $.minifyCss({ keepBreaks : true }))
+  .pipe( $.csso())
   .pipe( $.autoprefixer( config.autoprefixerOptions ))
   .pipe( gulp.dest( config.stylesTargetFolder ));
 });
@@ -54,6 +57,7 @@ gulp.task( 'styles-debug', [ 'clean-styles' ], function () {
 
   return gulp.src( config.mainStyle )
   .pipe( $.plumber())
+  .pipe( $.rename( config.stylesBuildFile ))
   .pipe( $.sourcemaps.init())
   .pipe( $.sass( config.sassOptions ))
   .pipe( $.autoprefixer( config.autoprefixerOptions ))
@@ -70,19 +74,26 @@ gulp.task( 'styles-debug', [ 'clean-styles' ], function () {
    */
 
 gulp.task( 'clean-js', function ( done ) {
+  log( 'Cleaning javascript build files' );
+
   clean( config.jsBuildFiles, done );
 });
 
-gulp.task( 'bundle', [ 'unbundle' ], $.shell.task(
-  [ 'jspm bundle main + css + text ' + config.jsBuildFile +
-    ' --inject --skip-source-maps' ],
-  { cwd : config.absolutePathToFrontend }
-));
+gulp.task( 'bundle', [ 'unbundle' ], $.shell.task([
+  'jspm bundle ' + config.jspmLibsToBundle + ' ' + config.jsBuildLibFile +
+    ' --inject  --skip-source-maps',
+  'jspm bundle main ' + config.jspmLibsToSubtract + ' ' +
+    config.jsBuildMainFile + ' --inject --skip-source-maps'
+  ], { cwd : config.absolutePathToFrontend })
+);
 
-gulp.task( 'bundle-debug', [ 'unbundle' ], $.shell.task(
-  [ 'jspm bundle main + css + text ' + config.jsBuildFile + ' --inject' ],
-  { cwd : config.absolutePathToFrontend }
-));
+gulp.task( 'bundle-debug', [ 'unbundle' ], $.shell.task([
+  'jspm bundle ' + config.jspmLibsToBundle + ' ' + config.jsBuildLibFile +
+    ' --inject',
+  'jspm bundle main ' + config.jspmLibsToSubtract + ' ' +
+    config.jsBuildMainFile + ' --inject'
+  ], { cwd : config.absolutePathToFrontend })
+);
 
 gulp.task( 'unbundle', [ 'clean-js' ], $.shell.task(
   [ 'jspm unbundle' ],
@@ -90,10 +101,17 @@ gulp.task( 'unbundle', [ 'clean-js' ], $.shell.task(
 ));
 
 gulp.task( 'minify', function () {
+  log( 'Minifying (ngAnnotating and uglifying) javascript files' );
+
+  var appJsFilter = $.filter( config.jsBuildMainFile );
+
   return gulp.src([
-    config.frontend + config.jsBuildFile
+    config.frontend + config.jsBuildMainFile,
+    config.frontend + config.jsBuildLibFile
   ])
+  .pipe( appJsFilter )
   .pipe( $.ngAnnotate( config.ngAnnotateOptions ))
+  .pipe( appJsFilter.restore())
   .pipe( $.uglify())
   .pipe( gulp.dest( config.jsTargetFolder ));
 });
@@ -103,22 +121,22 @@ gulp.task( 'dev', [ 'vet', 'unbundle',  'styles-debug', 'html' ]);
 gulp.task( 'debug-build', [ 'vet', 'bundle-debug', 'styles-debug', 'html' ]);
 
 gulp.task( 'build', [ 'vet', 'styles', 'html' ], function ( done ) {
-  return runSequence( 'bundle', 'minify', function () {
-    done();
-  });
+  return runSequence( 'bundle', 'minify', done );
 });
 
 gulp.task( 'production-build', function ( done ) {
-  return runSequence( 'build', 'publish', function () {
-    done();
-  });
+  return runSequence( 'build', 'publish', done );
 });
 
 gulp.task( 'clean-html', function ( done ) {
+  log( 'Cleaning html build files' );
+
   clean( config.frontend + config.htmlBuildFile, done );
 });
 
 gulp.task( 'html-sfx', [ 'clean-html' ], function () {
+  log( 'Building html self extracting files' );
+
   var stylesToIncludeInSfxBundle = gulp
     .src( config.stylesToIncludeInSfxBundle, { read: false });
 
@@ -139,6 +157,8 @@ gulp.task( 'html-sfx', [ 'clean-html' ], function () {
 });
 
 gulp.task( 'html', [ 'clean-html' ], function () {
+  log( 'Building html files' );
+
   var jsToIncludeInDefaultBundle = gulp
     .src( config.jsToIncludeInDefaultBundle, { read: false });
 
@@ -150,7 +170,7 @@ gulp.task( 'html', [ 'clean-html' ], function () {
 });
 
 gulp.task( 'bundle-sfx', [ 'unbundle' ], $.shell.task(
-  [ 'jspm bundle-sfx main ' + config.jsBuildFile +
+  [ 'jspm bundle-sfx main ' + config.jsBuildMainFile +
     ' --inject --skip-source-maps' ],
   { cwd : config.absolutePathToFrontend }
 ));
@@ -177,9 +197,7 @@ gulp.task( 'build-standalone-html', function ( done ) {
     'minify',
     'html-sfx',
     'install-angular-material',
-    function () {
-      done();
-    }
+    done
   );
 });
 
@@ -188,24 +206,28 @@ gulp.task( 'build-standalone-html', function ( done ) {
    */
 
 gulp.task( 'clean-public', function ( done ) {
+  log( 'Cleaning public folder' );
+
   clean( config.public + '**', done );
 });
 
 gulp.task( 'publish-source', function () {
+  log( 'Copying source files to public folder' );
+
   return gulp.src( config.sourceFilesToPublish )
   .pipe( gulp.dest( config.public ));
 });
 
-gulp.task( 'publish-assests', function () {
+gulp.task( 'publish-assets', function () {
+  log( 'Copying asset files to public folder' );
+
   return gulp.src( config.assetFilesToPublish )
   .pipe( gulp.dest( config.publicAssets ));
 });
 
 gulp.task( 'publish', function ( done ) {
-  return runSequence( 'clean-public', 'publish-source', 'publish-assests',
-    function () {
-      done();
-    });
+  return runSequence( 'clean-public', 'publish-source', 'publish-assets',
+    done );
 });
 
   /*
@@ -222,6 +244,8 @@ gulp.task( 'default', [ 'help' ], function () {
 gulp.task( 'help', $.taskListing );
 
 gulp.task( 'hook', function () {
+  log( 'Creating git pre-commit hook in .git/hooks folder' );
+
   return gulp.src( 'utilities/hooks/pre-commit' )
     .pipe( $.symlink( '.git/hooks/pre-commit' ));
 });
@@ -231,6 +255,9 @@ gulp.task( 'hook', function () {
    */
 
 gulp.task( 'test-server', function () {
+  log( 'Running tests for backend' );
+  log( '*** Warning. Still experimental ***' );
+
   return gulp.src( 'back/app/**/*.spec.js', { read : false })
     .pipe( $.mocha({
       reporter : 'spec',
@@ -242,6 +269,9 @@ gulp.task( 'test-server', function () {
 });
 
 gulp.task( 'watch-test-server', function () {
+  log( 'Running tests for backend and watching for file changes' );
+  log( '*** Warning. Still experimental ***' );
+
   return gulp.watch(
     [ 'back/app/**/*.js' ],
     [ 'test-server' ]);
@@ -252,10 +282,14 @@ gulp.task( 'watch-test-server', function () {
    */
 
 gulp.task( 'serve-dev', [ 'dev' ], function () {
+  log( 'Serving dev' );
+
   serve( config.nodeEnvironments.development, getBrowserSyncWatchesDev() );
 });
 
 gulp.task( 'serve-debug-build', [ 'debug-build' ], function () {
+  log( 'Serving debug-build' );
+
   serve(
     config.nodeEnvironments.development,
     getBrowserSyncWatchesBuild( 'debug-build' )
@@ -263,6 +297,8 @@ gulp.task( 'serve-debug-build', [ 'debug-build' ], function () {
 });
 
 gulp.task( 'serve-build', [ 'build' ], function () {
+  log( 'Serving build' );
+
   serve(
     config.nodeEnvironments.development,
     getBrowserSyncWatchesBuild( 'build' )
@@ -270,6 +306,8 @@ gulp.task( 'serve-build', [ 'build' ], function () {
 });
 
 gulp.task( 'serve-production-build', [ 'production-build' ], function () {
+  log( 'Serving production build' );
+
   serve(
     config.nodeEnvironments.production,
     getBrowserSyncWatchesBuild( 'production-build' )
@@ -281,6 +319,8 @@ gulp.task( 'serve-production-build', [ 'production-build' ], function () {
    */
 
 gulp.task( 'test', [ 'vet' ], function ( done ) {
+  log( 'Running tests' );
+
   startTests( true, done );
 });
 

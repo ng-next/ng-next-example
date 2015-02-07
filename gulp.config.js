@@ -16,18 +16,33 @@ module.exports = function () {
     frontend + 'main.js',
     frontend + 'bootstrap.js'
   ];
-  var jsBuildFile            = 'build.js';
+  var jsBuildMainFile        = 'app.js';
+  var jsBuildLibFile         = 'lib.js';
   var jsTargetFolder         = frontend;
   var styles                 = [
     frontend + 'main.scss',
     frontend + '**/*.scss'
   ];
-  var stylesBuildFile        = 'main.css';
+  var stylesBuildFile        = 'app.css';
   var stylesTargetFolder     = frontend;
   var html                   = frontend + 'main.html';
   var htmlBuildFile          = 'index.html';
   var htmlTargetFolder       = frontend;
   var reports                = './reports/';
+  var jspmLibs               = [
+    'text',
+    'css',
+    'angular',
+    'angular-animate',
+    'angular-aria',
+    'angular-cookies',
+    'angular-material',
+    'angular-messages',
+    'angular-ui-router',
+    'jsonp',
+    'lodash',
+    'nn-ng-utils'
+  ];
 
   var config = {
 
@@ -60,11 +75,14 @@ module.exports = function () {
      * Build Artifact Files
      */
 
-    jsBuildFile                : jsBuildFile,
+    jsBuildMainFile            : jsBuildMainFile,
+    jsBuildLibFile             : jsBuildLibFile,
 
     jsBuildFiles               : [
-      ( jsTargetFolder + jsBuildFile ),
-      ( jsTargetFolder + jsBuildFile.replace( '.js', '.js.map' ))
+      ( jsTargetFolder + jsBuildMainFile ),
+      ( jsTargetFolder + jsBuildMainFile.replace( '.js', '.js.map' )),
+      ( jsTargetFolder + jsBuildLibFile ),
+      ( jsTargetFolder + jsBuildLibFile.replace( '.js', '.js.map' ))
     ],
 
     stylesBuildFile            : stylesBuildFile,
@@ -72,6 +90,14 @@ module.exports = function () {
     htmlBuildFile              : htmlBuildFile,
 
     reports                    : reports,
+
+    /*
+     * jspm
+     */
+
+    jspmLibsToSubtract         : jspmLibsToSubtract( jspmLibs ),
+
+    jspmLibsToBundle           : jspmLibsToBundle( jspmLibs ),
 
     /*
      * Node sesstings
@@ -102,7 +128,8 @@ module.exports = function () {
       'gulp.config.js',
       frontend + '**/*.js',
       '!' + frontendLib + '**/*.*',
-      '!' + frontend + 'build.js',
+      '!' + frontend + jsBuildMainFile,
+      '!' + frontend + jsBuildLibFile,
       '!' + frontend + 'config.js',
       backend + '**/*.js',
       '!' + backend + 'node_modules/**/*.*'
@@ -123,7 +150,8 @@ module.exports = function () {
 
     jsToIncludeInSfxBundle     : [
       frontendLib + 'traceur-runtime.js',
-      frontend + jsBuildFile
+      frontend + jsBuildMainFile,
+      frontend + jsBuildLibFile
     ],
 
     jsToIncludeInDefaultBundle : [
@@ -250,7 +278,7 @@ module.exports = function () {
         '**/*_scsslint_*'
       ],
       proxies       : {
-        '/base/build.js'       : '/base/' + frontend + 'build.js',
+        //'/base/build.js'       : '/base/' + frontend + 'build.js',
         '/base/lib/'           : '/base/' + frontendLib,
         '/base/app/'           : '/base/' + frontendApp,
         '/base/test-doubles/'  : '/base/' + frontendTest + 'unit/test-doubles/'
@@ -269,5 +297,31 @@ module.exports = function () {
     options.preprocessors[ frontend + '**/!(*.spec)+(*.js)' ] = [ 'coverage' ];
 
     return options;
+  }
+
+  function jspmLibsToSubtract ( jspmLibs ) {
+    var libsToSubtract = '';
+    var arrayLength = jspmLibs.length;
+
+    for ( var i = 0; i < arrayLength; i += 1 ) {
+      libsToSubtract += ' - ' + jspmLibs[ i ];
+    }
+
+    return libsToSubtract;
+  }
+
+  function jspmLibsToBundle ( jspmLibs ) {
+    var libsToBundle = '';
+    var arrayLength = jspmLibs.length;
+
+    if ( arrayLength >= 1 ) {
+      libsToBundle += jspmLibs[ 0 ];
+    }
+
+    for ( var i = 1; i < arrayLength; i += 1 ) {
+      libsToBundle += ' + ' + jspmLibs[ i ];
+    }
+
+    return libsToBundle;
   }
 };

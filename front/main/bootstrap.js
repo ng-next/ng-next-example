@@ -1,5 +1,5 @@
 System.import( 'main' )
 .then( function () {
-  System.import( 'main.css!' );
+  System.import( 'app.css!' );
 })
 .catch( console.error.bind( console ));
