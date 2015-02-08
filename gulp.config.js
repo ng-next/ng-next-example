@@ -16,18 +16,19 @@ module.exports = function () {
     frontend + 'main.js',
     frontend + 'bootstrap.js'
   ];
+  var buildFolder            = frontend;
   var jsBuildMainFile        = 'app.js';
   var jsBuildLibFile         = 'lib.js';
-  var jsTargetFolder         = frontend;
+  var jsTargetFolder         = buildFolder;
   var styles                 = [
     frontend + 'main.scss',
     frontend + '**/*.scss'
   ];
   var stylesBuildFile        = 'app.css';
-  var stylesTargetFolder     = frontend;
+  var stylesTargetFolder     = buildFolder;
   var html                   = frontend + 'main.html';
   var htmlBuildFile          = 'index.html';
-  var htmlTargetFolder       = frontend;
+  var htmlTargetFolder       = buildFolder;
   var reports                = './reports/';
   var jspmLibs               = [
     'text',
@@ -64,12 +65,9 @@ module.exports = function () {
     publicAssets               : publicApp + 'assets/',
 
     // output folder of the css preprocessing
-    stylesTargetFolder         : stylesTargetFolder,
+    buildFolder                : buildFolder,
 
     htmlTargetFolder           : htmlTargetFolder,
-
-    // output folder of the js concat and minification processing
-    jsTargetFolder             : jsTargetFolder,
 
     /*
      * Build Artifact Files
@@ -143,20 +141,24 @@ module.exports = function () {
     /*
      * inject into html */
 
-    stylesToIncludeInSfxBundle : [
+    stylesToIncludeInHtmlSfx   : [
       frontendLib + 'github/angular/bower-material@0.7.1/angular-material.css', // jscs: disable
       stylesTargetFolder + stylesBuildFile
     ],
 
-    jsToIncludeInSfxBundle     : [
+    jsToIncludeInHtmlSfx       : [
       frontendLib + 'traceur-runtime.js',
-      frontend + jsBuildMainFile,
-      frontend + jsBuildLibFile
+      frontend + jsBuildMainFile
     ],
 
     jsToIncludeInDefaultBundle : [
+      frontendLib + 'traceur-runtime.js',
       frontendLib + 'system.js',
       frontend + 'config.js',
+      // loading js build files manually (instead of using jspm'd --inject'
+      // because we need to revision file names
+      frontend + jsBuildLibFile,
+      frontend + jsBuildMainFile,
       frontend + 'bootstrap.js'
     ],
 
@@ -167,10 +169,11 @@ module.exports = function () {
     // the webserver
     sourceFilesToPublish       : [
       frontend + 'favicon.ico',
-      frontend + '*.js',
-      frontend + '*.js.map',
-      frontend + '*.css',
-      frontend + '*.css.map',
+      frontend + 'config.js',
+      frontend + jsBuildLibFile,
+      frontend + jsBuildMainFile,
+      frontend + 'bootstrap.js',
+      frontend + stylesBuildFile,
       frontend + 'index.html'
     ],
 

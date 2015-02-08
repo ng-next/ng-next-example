@@ -32,8 +32,8 @@ gulp.task( 'clean-styles', function ( done ) {
   log( 'Cleaning style build files' );
 
   var files = [
-    config.stylesTargetFolder + '*.css',
-    config.stylesTargetFolder + '*.css.map',
+    config.buildFolder + '*.css',
+    config.buildFolder + '*.css.map',
     config.frontendApp + '**/*.css',
     config.frontendApp + '**/*.css.map'
   ];
@@ -49,7 +49,7 @@ gulp.task( 'styles', [ 'clean-styles' ], function () {
   .pipe( $.sass( config.sassOptions ))
   .pipe( $.csso())
   .pipe( $.autoprefixer( config.autoprefixerOptions ))
-  .pipe( gulp.dest( config.stylesTargetFolder ));
+  .pipe( gulp.dest( config.buildFolder ));
 });
 
 gulp.task( 'styles-debug', [ 'clean-styles' ], function () {
@@ -62,7 +62,7 @@ gulp.task( 'styles-debug', [ 'clean-styles' ], function () {
   .pipe( $.sass( config.sassOptions ))
   .pipe( $.autoprefixer( config.autoprefixerOptions ))
   .pipe( $.sourcemaps.write( './' ))
-  .pipe( gulp.dest( config.stylesTargetFolder ));
+  .pipe( gulp.dest( config.buildFolder ));
 });
 
 //gulp.task( 'sass-watcher', function () {
@@ -81,17 +81,15 @@ gulp.task( 'clean-js', function ( done ) {
 
 gulp.task( 'bundle', [ 'unbundle' ], $.shell.task([
   'jspm bundle ' + config.jspmLibsToBundle + ' ' + config.jsBuildLibFile +
-    ' --inject  --skip-source-maps',
+    ' --skip-source-maps',
   'jspm bundle main ' + config.jspmLibsToSubtract + ' ' +
-    config.jsBuildMainFile + ' --inject --skip-source-maps'
+    config.jsBuildMainFile + ' --skip-source-maps'
   ], { cwd : config.absolutePathToFrontend })
 );
 
 gulp.task( 'bundle-debug', [ 'unbundle' ], $.shell.task([
-  'jspm bundle ' + config.jspmLibsToBundle + ' ' + config.jsBuildLibFile +
-    ' --inject',
-  'jspm bundle main ' + config.jspmLibsToSubtract + ' ' +
-    config.jsBuildMainFile + ' --inject'
+  'jspm bundle ' + config.jspmLibsToBundle + ' ' + config.jsBuildLibFile,
+  'jspm bundle main ' + config.jspmLibsToSubtract + ' ' + config.jsBuildMainFile
   ], { cwd : config.absolutePathToFrontend })
 );
 
@@ -113,15 +111,82 @@ gulp.task( 'minify', function () {
   .pipe( $.ngAnnotate( config.ngAnnotateOptions ))
   .pipe( appJsFilter.restore())
   .pipe( $.uglify())
-  .pipe( gulp.dest( config.jsTargetFolder ));
+  .pipe( gulp.dest( config.buildFolder ));
 });
 
-gulp.task( 'dev', [ 'vet', 'unbundle',  'styles-debug', 'html' ]);
+gulp.task( 'dev', function ( done ) {
+  return runSequence( 'clean', 'unbundle', 'vet', 'styles-debug', 'html',
+    done );
+});
 
-gulp.task( 'debug-build', [ 'vet', 'bundle-debug', 'styles-debug', 'html' ]);
+gulp.task( 'debug-build', function ( done ) {
+  return runSequence( 'clean', 'unbundle', 'vet', 'styles-debug',
+    'bundle-debug', 'html', done );
+});
 
-gulp.task( 'build', [ 'vet', 'styles', 'html' ], function ( done ) {
-  return runSequence( 'bundle', 'minify', done );
+gulp.task( 'rev', function () {
+  var filesToRevision = [
+    config.public + config.jsBuildMainFile,
+    config.public + config.jsBuildLibFile,
+    config.public + config.stylesBuildFile,
+    config.public + 'bootstrap.js'
+  ];
+  var filesToRevisionFilter = $.filter([
+    config.jsBuildMainFile,
+    config.jsBuildLibFile,
+    config.stylesBuildFile,
+    'bootstrap.js'
+  ]);
+  var filesToReplaceWithin = [
+    config.public + config.htmlBuildFile,
+    config.public + 'bootstrap.js'
+  ];
+  //var filesToReplaceWithinFilter = [
+  //  config.htmlBuildFile,
+  //  'bootstrap.js'
+  //];
+  //var manifestFilter = $.filter([
+  //  'rev-manifest.json'
+  //]);
+
+  return gulp.src( filesToRevision.concat( filesToReplaceWithin ))
+  .pipe( filesToRevisionFilter )
+  .pipe( $.rev())
+  .pipe( gulp.dest( config.public ))
+  .pipe( filesToRevisionFilter.restore())
+
+  // using rev-replace in unfiltered mode, substitutes in the new file names
+  // in *every* file of the stream. so from here on, only write out rev-replaced
+  // files when a filesToReplaceWithin-filter is applied!
+  // this should be the last step in the pipeline!
+  .pipe( $.revReplace())
+
+  //.pipe( $.rev.manifest())
+  //.pipe( manifestFilter )
+  //.pipe( gulp.dest( config.public ))
+  //.pipe( manifestFilter.restore())
+
+  //.pipe( $.filter( filesToReplaceWithinFilter ))
+  // TODO: why is gulp-rev-replace not working inside another filter ??
+    //.pipe( $.revReplace())
+  .pipe( gulp.dest( config.public ));
+  //.pipe( filesToReplaceWithinFilter.restore());
+});
+
+gulp.task( 'rev-and-clean', [ 'rev' ], function ( done ) {
+  var filesToRevision = [
+    config.public + config.jsBuildMainFile,
+    config.public + config.jsBuildLibFile,
+    config.public + config.stylesBuildFile,
+    config.public + 'bootstrap.js'
+  ];
+
+  clean( filesToRevision, done );
+});
+
+gulp.task( 'build', function ( done ) {
+  return runSequence( 'clean', 'unbundle', 'vet', 'styles', 'bundle', 'minify',
+    'html', done );
 });
 
 gulp.task( 'production-build', function ( done ) {
@@ -138,10 +203,10 @@ gulp.task( 'html-sfx', [ 'clean-html' ], function () {
   log( 'Building html self extracting files' );
 
   var stylesToIncludeInSfxBundle = gulp
-    .src( config.stylesToIncludeInSfxBundle, { read: false });
+    .src( config.stylesToIncludeInHtmlSfx, { read: false });
 
   var jsToIncludeInSfxBundle = gulp
-    .src( config.jsToIncludeInSfxBundle, { read: false });
+    .src( config.jsToIncludeInHtmlSfx, { read: false });
 
   return gulp
     .src( config.html )
@@ -153,7 +218,7 @@ gulp.task( 'html-sfx', [ 'clean-html' ], function () {
     .pipe( $.replace( '//# sourceMappingURL=traceur-runtime.js.map', '',
       { skipBinary: true }))
     .pipe( $.rename( config.htmlBuildFile ))
-    .pipe( gulp.dest( config.frontend ));
+    .pipe( gulp.dest( config.buildFolder ));
 });
 
 gulp.task( 'html', [ 'clean-html' ], function () {
@@ -171,7 +236,7 @@ gulp.task( 'html', [ 'clean-html' ], function () {
 
 gulp.task( 'bundle-sfx', [ 'unbundle' ], $.shell.task(
   [ 'jspm bundle-sfx main ' + config.jsBuildMainFile +
-    ' --inject --skip-source-maps' ],
+    ' --skip-source-maps' ],
   { cwd : config.absolutePathToFrontend }
 ));
 
@@ -227,7 +292,7 @@ gulp.task( 'publish-assets', function () {
 
 gulp.task( 'publish', function ( done ) {
   return runSequence( 'clean-public', 'publish-source', 'publish-assets',
-    done );
+    'rev-and-clean', done );
 });
 
   /*

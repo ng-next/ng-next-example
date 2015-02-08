@@ -4,7 +4,7 @@
   "description": "angular jspm material-design example's frontend modules",
   "registry": "jspm",
   "dependencies": {
-    "angular": "^1.3.8",
+    "angular": "^1.3.12",
     "angular-animate": "^1.3.8",
     "angular-aria": "^1.3.8",
     "angular-cookies": "^1.3.8",

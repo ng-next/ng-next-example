@@ -17,9 +17,9 @@ front/main/lib
 
 # build artifacts
 build
-lib.js
-app.js
-app.css
+lib*.js
+app*.js
+app*.css
 index.html
 
 #Sourecemaps
