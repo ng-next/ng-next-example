@@ -1,9 +1,7 @@
 {
   "name": "ng-next-backend",
-  "version": "0.0.0",
-  "description": "angular jspm material-design example's backend modules",
+  "description": "angular jspm material-design example's backend packages",
   "author": "Andreas Grimm",
-  "devDependencies": {},
   "dependencies": {
     "express": "^4.10.7",
     "morgan": "^1.5.1"

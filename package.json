@@ -1,6 +1,6 @@
 {
   "name": "ng-next",
-  "version": "0.0.0",
+  "version": "0.1.0-alpha.0",
   "description": "angular jspm material-design example",
   "author": "Andreas Grimm",
   "devDependencies": {
@@ -10,6 +10,7 @@
     "del": "^1.1.1",
     "gulp": "^3.8.10",
     "gulp-autoprefixer": "^2.1.0",
+    "gulp-bump": "^0.1.13",
     "gulp-csso": "^1.0.0",
     "gulp-eslint": "^0.2.2",
     "gulp-filter": "^2.0.0",
@@ -62,13 +63,10 @@
   },
   "scripts": {
     "start": "node ./back/app.js",
-    "test": "karma start ./front/test/unit/karma.conf.js --browsers Chrome --singleRun",
+    "test": "gulp test",
     "postinstall": "npm run install-frontend && npm run install-backend",
     "install-frontend": "cd front/main && jspm install && cd ../..",
-    "install-backend": "cd back && npm i && cd ..",
-    "test-mocha-reporter": "karma start ./front/test/unit/karma.conf.js --reporters mocha --browsers Chrome",
-    "test-unit-ci": "karma start ./front/test/unit/karma.conf-ci.js",
-    "test-default-reporter": "karma start ./front/test/unit/karma.conf.js --browsers Chrome"
+    "install-backend": "cd back && npm i && cd .."
   },
   "dependencies": {}
 }

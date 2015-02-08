@@ -4,6 +4,7 @@
 var path = require( 'path' );
 
 module.exports = function () {
+  var root                   = './';
   var frontendTest           = 'front/test/';
   var frontend               = 'front/main/';
   var frontendApp            = 'front/main/app/';
@@ -47,9 +48,14 @@ module.exports = function () {
 
   var config = {
 
+    packages                   : [
+      './package.json'
+    ],
+
     /*
      * Files Paths
      */
+    root                       : root,
 
     absolutePathToFrontend     : ( path.join( process.cwd(), frontend )),
 
