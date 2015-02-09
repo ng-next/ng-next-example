@@ -184,9 +184,20 @@ gulp.task( 'rev-and-clean', [ 'rev' ], function ( done ) {
   clean( filesToRevision, done );
 });
 
+gulp.task( 'disable-debug-modes', function () {
+  return gulp.src([
+    config.jsBuildMainFile
+  ])
+  //jscs: disable
+  .pipe( $.replace( /\/\* nn-is-development \*\/ function isDev\(\)\{return true;} \/\* nn-is-development \*\//, // jshint ignore:line
+  //jscs: enable
+    'true', { skipBinary: true }))
+  .pipe( gulp.dest( config.jsBuildMainFile ));
+});
+
 gulp.task( 'build', function ( done ) {
   return runSequence( 'clean', 'unbundle', 'vet', 'styles', 'bundle', 'minify',
-    'html', done );
+    'disable-debug-modes', 'html', done );
 });
 
 gulp.task( 'production-build', function ( done ) {

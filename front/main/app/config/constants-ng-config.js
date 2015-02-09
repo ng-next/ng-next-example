@@ -39,7 +39,7 @@ function constants () {
 
   return {
     // TODO: set accordingly during gulp build tasks
-    isDev          : true,
+    isDev          : isDev(),
     appErrorPrefix : exceptionHandlerDecoratorConfiguration(),
     events         : events,
     imageSettings  : imageSettings,
@@ -47,6 +47,8 @@ function constants () {
     version        : '0.0.1' // can this be generated from package.json during
                              // build ?
   };
+
+  /* nn-is-development */ function isDev(){return true;} /* nn-is-development */ //jscs:disable
 
   function exceptionHandlerDecoratorConfiguration () {
     return '[NN Error] ';
