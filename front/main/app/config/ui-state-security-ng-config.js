@@ -32,6 +32,7 @@ function configureUiStateSecurity ( $rootScope, $state, authService, cnst ) {
     }
 
     function goTo ( targetState ) {
+      // TODO: cancel spinner
       $state.transitionTo( targetState );
       event.preventDefault();
     }
