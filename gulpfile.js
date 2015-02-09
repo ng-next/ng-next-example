@@ -355,6 +355,12 @@ gulp.task( 'test', [ 'vet' ], function ( done ) {
   startTests( true, done );
 });
 
+gulp.task( 'autotest', [ 'vet' ], function ( done ) {
+  log( 'Running tests continuously' );
+
+  startTests( false, done );
+});
+
 gulp.task( 'test-server', function () {
   log( 'Running tests for backend' );
   log( '*** Warning. Still experimental ***' );
