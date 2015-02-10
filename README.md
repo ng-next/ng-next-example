@@ -20,7 +20,7 @@ ng-next is AngularJS 1.x using ...
 ... trying to make it easy to migrate to Angular 2.x at some point in the future.
 
 ## Installation
-have the following node modules globally installed:
+have the following node modules installed globally:
 - jspm, karma-cli, gulp
 
 `git clone git@github.com:ng-next/ng-next-example.git`
@@ -29,21 +29,24 @@ have the following node modules globally installed:
 
 `npm install`
 
-`gulp build`
+`gulp serve-dev`
+
+tested with just Google Chrome browser (for now).
+
+### build-standalone-html
+build everything into a single html file.
+
+`gulp build-standalone-html`
 
 `npm start`
 
 browse to `localhost:3000`
 
-tested with just Google Chrome browser (for now).
-
 ## Tests
-you must have installed Google Chrome.
+you must have installed Google Chrome (using PhantomJS causes errors executing
+Traceur-transpiled ES6 code)
 
-`npm test`
-
-or `npm run test-mocha-reporter` for a verbose GWT style output and rerunning
-tests on file changes.
+`gulp test`
 
 ### running tests in Jetbrains Webstorm IDE
 currently some strange things happen when running tests within Webstom. So
