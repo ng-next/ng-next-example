@@ -198,8 +198,8 @@ gulp.task( 'disable-ng-debug-modes', function () {
 });
 
 gulp.task( 'build', function ( done ) {
-  return runSequence( 'clean', 'vet', 'styles', 'bundle', 'minify',
-    'disable-ng-debug-modes', 'html', done );
+  return runSequence( 'clean', 'vet', 'styles', 'disable-ng-debug-modes',
+    'bundle', 'minify', 'html', done );
 });
 
 gulp.task( 'production-build', function ( done ) {
@@ -259,14 +259,15 @@ gulp.task( 'bundle-sfx', [ 'unbundle' ], $.shell.task(
 //  );
 //});
 
-gulp.task( 'build-standalone-html', function ( done ) {
+gulp.task( 'build-standalone-html', [ 'clean' ], function ( done ) {
   log ( 'Building a stand-alone html file' );
   log ( '*** Warning: still experimental! ***' );
 
   return runSequence(
     'styles',
+    'disable-ng-debug-modes',
     'bundle-sfx',
-    'minify',
+    //'minify',
     'html-sfx',
     done
   );
