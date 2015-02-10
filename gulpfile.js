@@ -47,7 +47,7 @@ gulp.task( 'styles', [ 'clean-styles' ], function () {
   .pipe( $.plumber())
   .pipe( $.rename( config.stylesBuildFile ))
   .pipe( $.sass( config.sassOptions ))
-  .pipe( $.csso())
+  //.pipe( $.csso()) //not needed anymore as systemjs-builder compresses css
   .pipe( $.autoprefixer( config.autoprefixerOptions ))
   .pipe( gulp.dest( config.buildFolder ));
 });
@@ -116,11 +116,11 @@ gulp.task( 'minify', function () {
 
 gulp.task( 'dev', function ( done ) {
   return runSequence( 'clean', 'unbundle', 'vet', 'styles-debug', 'html',
-    done );
+    'enable-ng-debug-modes', done );
 });
 
 gulp.task( 'debug-build', function ( done ) {
-  return runSequence( 'clean', 'unbundle', 'vet', 'styles-debug',
+  return runSequence( 'clean', 'vet', 'styles-debug', 'enable-ng-debug-modes',
     'bundle-debug', 'html', done );
 });
 
@@ -128,13 +128,11 @@ gulp.task( 'rev', function () {
   var filesToRevision = [
     config.public + config.jsBuildMainFile,
     config.public + config.jsBuildLibFile,
-    config.public + config.stylesBuildFile,
     config.public + 'bootstrap.js'
   ];
   var filesToRevisionFilter = $.filter([
     config.jsBuildMainFile,
     config.jsBuildLibFile,
-    config.stylesBuildFile,
     'bootstrap.js'
   ]);
   var filesToReplaceWithin = [
@@ -177,16 +175,31 @@ gulp.task( 'rev-and-clean', [ 'rev' ], function ( done ) {
   var filesToRevision = [
     config.public + config.jsBuildMainFile,
     config.public + config.jsBuildLibFile,
-    config.public + config.stylesBuildFile,
     config.public + 'bootstrap.js'
   ];
 
   clean( filesToRevision, done );
 });
 
+gulp.task( 'enable-ng-debug-modes', function () {
+  return gulp.src( config.jsConstantsNgConfig )
+  .pipe( $.replace( /\/\* nn-is-development \*\/ true/,
+    'true', { skipBinary: true }))
+  .pipe( $.rename( config.jsBuildConstantsNgConfig ))
+  .pipe( gulp.dest( './' ));
+});
+
+gulp.task( 'disable-ng-debug-modes', function () {
+  return gulp.src( config.jsConstantsNgConfig )
+  .pipe( $.replace( /\/\* nn-is-development \*\/ true/,
+    'false', { skipBinary: true }))
+  .pipe( $.rename( config.jsBuildConstantsNgConfig ))
+  .pipe( gulp.dest( './' ));
+});
+
 gulp.task( 'build', function ( done ) {
-  return runSequence( 'clean', 'unbundle', 'vet', 'styles', 'bundle', 'minify',
-    'html', done );
+  return runSequence( 'clean', 'vet', 'styles', 'bundle', 'minify',
+    'disable-ng-debug-modes', 'html', done );
 });
 
 gulp.task( 'production-build', function ( done ) {
@@ -202,17 +215,12 @@ gulp.task( 'clean-html', function ( done ) {
 gulp.task( 'html-sfx', [ 'clean-html' ], function () {
   log( 'Building html self extracting files' );
 
-  var stylesToIncludeInSfxBundle = gulp
-    .src( config.stylesToIncludeInHtmlSfx, { read: false });
-
   var jsToIncludeInSfxBundle = gulp
     .src( config.jsToIncludeInHtmlSfx, { read: false });
 
   return gulp
     .src( config.html )
-    .pipe( $.inject( stylesToIncludeInSfxBundle, config.injectOptions ))
     .pipe( $.inject( jsToIncludeInSfxBundle, config.injectOptions ))
-    .pipe( $.replace( '<link', '<link inline', { skipBinary: true }))
     .pipe( $.replace( '<script', '<script inline', { skipBinary: true }))
     .pipe( $.inlineSource( config.inlineSourceOptions ))
     .pipe( $.replace( '//# sourceMappingURL=traceur-runtime.js.map', '',
@@ -240,28 +248,26 @@ gulp.task( 'bundle-sfx', [ 'unbundle' ], $.shell.task(
   { cwd : config.absolutePathToFrontend }
 ));
 
-gulp.task( 'install-angular-material-css-dep-free', $.shell.task(
-  [ 'jspm install angular-material' +
-  ' -o ./../jspm-overrides/override-angular-material-css-dep-free.json' ],
-  { cwd : config.absolutePathToFrontend }
-));
-
-gulp.task( 'install-angular-material', $.shell.task(
-  [ 'jspm install angular-material' ],
-  { cwd : config.absolutePathToFrontend }
-));
+//gulp.task( 'bundle-sfx', [ 'unbundle' ], function ( done ) {
+//  runSequence( 'set-debug-modes',
+//    $.shell.task(
+//      [ 'jspm bundle-sfx main ' + config.jsBuildMainFile +
+//        ' --skip-source-maps' ],
+//      { cwd : config.absolutePathToFrontend }
+//    ),
+//    done
+//  );
+//});
 
 gulp.task( 'build-standalone-html', function ( done ) {
   log ( 'Building a stand-alone html file' );
   log ( '*** Warning: still experimental! ***' );
 
   return runSequence(
-    'install-angular-material-css-dep-free',
     'styles',
     'bundle-sfx',
     'minify',
     'html-sfx',
-    'install-angular-material',
     done
   );
 });

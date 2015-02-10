@@ -12,6 +12,7 @@ import 'angular-animate';
 import 'angular-messages';
 import 'angular-aria';
 import 'angular-material';
+import 'angular-material/angular-material.css!css';
 import { nnNgModules as angularModuleNameContainer } from 'nn-ng-utils';
 registerAngularCoreModules();
 
@@ -23,6 +24,7 @@ import 'app/ngnext/index';
 import 'app/randomuser/index';
 import 'app/formsdemo/index';
 import 'app/reddit/index';
+import 'app.css!css';
 import configureAngular from 'app/config/index';
 
 configureAngular( getInitializedAppModule() );

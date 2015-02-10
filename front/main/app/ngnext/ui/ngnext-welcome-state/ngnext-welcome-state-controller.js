@@ -14,13 +14,16 @@ export default class NgnextWelcomeStateController {
     this.customParentElementForToasts = mdToastConfig.parentElementName;
   }
 
-  sayHiCustom () {
-    this.toast.infoCustom(
-      `Hi from ${this.customParentElementForToasts} element !`
+  displayWarningMessage () {
+    this.log.warning(
+      `Warning from ${this.customParentElementForToasts} element !`
     );
   }
 
-  sayHiSimpleAndConsoleLog () {
-    this.log.warning( 'Hi from document !' );
+  displayDebugMessage () {
+    this.log.debug( 'Debug message from document (default)' );
+    this.toast.info(
+      `When in angular debug mode you'll see a debug console.log as well`
+    );
   }
 }

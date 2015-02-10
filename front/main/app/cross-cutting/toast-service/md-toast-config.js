@@ -1,6 +1,8 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
+import angular from 'angular';
+
 export default class MdToastConfig {
   // TODO: refactor to use options object and guard clauses
   constructor ( hideDelay, position, parentElementName ) {

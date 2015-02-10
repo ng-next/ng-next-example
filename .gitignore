@@ -21,6 +21,7 @@ lib*.js
 app*.js
 app*.css
 index.html
+front/main/app/config/constants-ng-config.js
 
 #Sourecemaps
 *.map
