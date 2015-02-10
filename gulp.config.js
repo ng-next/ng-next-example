@@ -4,34 +4,34 @@
 var path = require( 'path' );
 
 module.exports = function () {
-  var root                   = './';
-  var frontendTest           = 'front/test/';
-  var frontend               = 'front/main/';
-  var frontendApp            = 'front/main/app/';
-  var frontendLib            = 'front/main/lib/';
-  var backend                = 'back/';
+  var root                     = './';
+  var frontendTest             = 'front/test/';
+  var frontend                 = 'front/main/';
+  var frontendApp              = 'front/main/app/';
+  var frontendLib              = 'front/main/lib/';
+  var backend                  = 'back/';
   // 'public' is a reserved word, thus 'publicFolder'
-  var publicFolder           = 'public/';
-  var publicApp              = 'public/app/';
-  var mainJs                 = [
+  var publicFolder             = 'public/';
+  var publicApp                = 'public/app/';
+  var mainJs                   = [
     frontend + 'main.js',
     frontend + 'bootstrap.js'
   ];
-  var buildFolder            = frontend;
-  var jsBuildMainFile        = 'app.js';
-  var jsBuildLibFile         = 'lib.js';
-  var jsTargetFolder         = buildFolder;
-  var styles                 = [
+  var buildFolder              = frontend;
+  var jsBuildMainFile          = 'app.js';
+  var jsBuildLibFile           = 'lib.js';
+  var jsBuildConstantsNgConfig = frontendApp + 'config/constants-ng-config.js';
+  var jsTargetFolder           = buildFolder;
+  var styles                   = [
     frontend + 'main.scss',
     frontend + '**/*.scss'
   ];
-  var stylesBuildFile        = 'app.css';
-  var stylesTargetFolder     = buildFolder;
-  var html                   = frontend + 'main.html';
-  var htmlBuildFile          = 'index.html';
-  var htmlTargetFolder       = buildFolder;
-  var reports                = './reports/';
-  var jspmLibs               = [
+  var stylesBuildFile          = 'app.css';
+  var html                     = frontend + 'main.html';
+  var htmlBuildFile            = 'index.html';
+  var htmlTargetFolder         = buildFolder;
+  var reports                  = './reports/';
+  var jspmLibs                 = [
     'text',
     'css',
     'angular',
@@ -82,11 +82,19 @@ module.exports = function () {
     jsBuildMainFile            : jsBuildMainFile,
     jsBuildLibFile             : jsBuildLibFile,
 
+    jsConstantsNgConfig        : frontendApp +
+      'config/constants-ng-config.pre.js',
+
+    jsBuildConstantsNgConfig   : jsBuildConstantsNgConfig,
+
     jsBuildFiles               : [
       ( jsTargetFolder + jsBuildMainFile ),
       ( jsTargetFolder + jsBuildMainFile.replace( '.js', '.js.map' )),
       ( jsTargetFolder + jsBuildLibFile ),
       ( jsTargetFolder + jsBuildLibFile.replace( '.js', '.js.map' ))
+      // TODO: include again !!!!!!!!!!!!!!!!!!!!!!!!
+      //,
+      //jsBuildConstantsNgConfig
     ],
 
     stylesBuildFile            : stylesBuildFile,
@@ -147,11 +155,6 @@ module.exports = function () {
     /*
      * inject into html */
 
-    stylesToIncludeInHtmlSfx   : [
-      frontendLib + 'github/angular/bower-material@0.7.1/angular-material.css', // jscs: disable
-      stylesTargetFolder + stylesBuildFile
-    ],
-
     jsToIncludeInHtmlSfx       : [
       frontendLib + 'traceur-runtime.js',
       frontend + jsBuildMainFile
@@ -179,7 +182,6 @@ module.exports = function () {
       frontend + jsBuildLibFile,
       frontend + jsBuildMainFile,
       frontend + 'bootstrap.js',
-      frontend + stylesBuildFile,
       frontend + 'index.html'
     ],
 

@@ -10,6 +10,7 @@ function configureLogging ( $logProvider, cnst ) {
   toggleDebugging(); // no info or warn
 
   function toggleDebugging () {
+    //console.log( 'angular debug mode is: ' + cnst.isDev );
     if ( $logProvider.debugEnabled ) {
       $logProvider.debugEnabled( cnst.isDev );
     }

@@ -7,11 +7,7 @@
     "window",
     "__moduleName",
     "sinon",
-    "expect",
-    "_",
-    "angular",
-    "inject",
-    "module"
+    "expect"
   ],
 
   "bitwise"  : true,

@@ -53,13 +53,13 @@
 
       <md-button flex
                  class="md-raised"
-                 ng-click="ngnextWelcomeState.sayHiSimpleAndConsoleLog()">
-        Say Hi on document
+                 ng-click="ngnextWelcomeState.displayDebugMessage()">
+        Debug from document
       </md-button>
       <md-button flex
                  class="md-raised"
-                 ng-click="ngnextWelcomeState.sayHiCustom()">
-        Say Hi on {{ngnextWelcomeState.customParentElementForToasts}}
+                 ng-click="ngnextWelcomeState.displayWarningMessage()">
+        Warn from {{ngnextWelcomeState.customParentElementForToasts}}
       </md-button>
     </div>
   </md-content>
