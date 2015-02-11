@@ -93,7 +93,7 @@ gulp.task( 'bundle-debug', [ 'unbundle' ], $.shell.task([
   ], { cwd : config.absolutePathToFrontend })
 );
 
-gulp.task( 'unbundle', [ 'clean-js' ], $.shell.task(
+gulp.task( 'unbundle', $.shell.task(
   [ 'jspm unbundle' ],
   { cwd : config.absolutePathToFrontend }
 ));
@@ -264,6 +264,7 @@ gulp.task( 'build-standalone-html', [ 'clean' ], function ( done ) {
   log ( '*** Warning: still experimental! ***' );
 
   return runSequence(
+    'clean',
     'styles',
     'disable-ng-debug-modes',
     'bundle-sfx',
