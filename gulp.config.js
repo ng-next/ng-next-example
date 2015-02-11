@@ -134,7 +134,10 @@ module.exports = function () {
 
     // all js files to vet
     jsToVet                    : [
-      '**/*.js'
+      '**/*.js',
+      '!node_modules/**',
+      '!back/node_modules/**',
+      '!front/main/lib/**'
     ],
 
     // all backend source files that trigger a server restart when changed
