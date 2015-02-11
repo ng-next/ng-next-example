@@ -18,7 +18,7 @@ System.config({
     "angular-messages": "npm:angular-messages@1.3.36",
     "angular-mocks": "github:angular/bower-angular-mocks@1.3.10",
     "angular-ui-router": "github:angular-ui/ui-router@0.2.13",
-    "css": "github:systemjs/plugin-css@0.1.4",
+    "css": "github:systemjs/plugin-css@0.1.5",
     "jsonp": "npm:jsonp@0.1.0",
     "lodash": "npm:lodash@2.4.1",
     "nn-ng-utils": "github:ng-next/nn-ng-utils@0.1.3",
@@ -95,6 +95,10 @@ System.config({
       "fs": "github:jspm/nodelibs-fs@0.1.1"
     },
     "github:systemjs/plugin-css@0.1.4": {
+      "clean-css": "npm:clean-css@3.0.10",
+      "fs": "github:jspm/nodelibs-fs@0.1.1"
+    },
+    "github:systemjs/plugin-css@0.1.5": {
       "clean-css": "npm:clean-css@3.0.10",
       "fs": "github:jspm/nodelibs-fs@0.1.1"
     },

@@ -267,7 +267,7 @@ gulp.task( 'build-standalone-html', [ 'clean' ], function ( done ) {
     'styles',
     'disable-ng-debug-modes',
     'bundle-sfx',
-    //'minify',
+    'minify',
     'html-sfx',
     done
   );
