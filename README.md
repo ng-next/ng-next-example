@@ -1,3 +1,6 @@
+[![Code Climate](https://codeclimate.com/github/ng-next/ng-next-example/badges/gpa.svg)](https://codeclimate.com/github/ng-next/ng-next-example)
+[![Test Coverage](https://codeclimate.com/github/ng-next/ng-next-example/badges/coverage.svg)](https://codeclimate.com/github/ng-next/ng-next-example)
+
 # ng-next
 angular jspm material-design example
 
