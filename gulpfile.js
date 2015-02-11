@@ -16,9 +16,9 @@ var port             = process.env.PORT || config.nodeServerDefaultPort;
 gulp.task( 'vet', function () {
   log( 'Analyzing source with JSHint and JSCS' );
 
-  return gulp.src( config.alljs )
+  return gulp.src( config.jsToVet )
   .pipe( $.if( args.verbose, $.print()))
-  .pipe( $.jscs())
+  .pipe( $.jscs({ configPath : '.jscsrc' }))
   .pipe( $.jshint( '.jshintrc' ))
   .pipe( $.jshint.reporter( 'jshint-stylish', { verbose: true }))
   .pipe( $.jshint.reporter( 'fail' ));

@@ -1,20 +1,13 @@
 {
+  "maxErrors": 10,
   "esnext": true,
   "excludeFiles": [
     "node_modules/**",
     "back/node_modules/**",
-    "front/main/jspm_packages/**",
     "front/main/lib/**",
-    "front/main/build.js",
     "front/main/config.js",
-    "front/main/es6-module-loader*.js",
-    "front/main/system*.js",
-    "front/main/traceur*.js",
-    "front/main/traceur-runtime*.js",
-    "front/test/**",
-    "front/utilities/**",
-    "test/**",
-    "./front/test/unit/karma-common.conf.js"
+    "front/main/app.js",
+    "public/**"
   ],
   "requireSpacesInFunctionExpression": {
     "beforeOpeningRoundBrace": true,
@@ -95,5 +88,5 @@
   },
   "validateIndentation": 2,
   "validateParameterSeparator": ", ",
-  "safeContextKeyword": ["that","vm", "provider", "service", "svc"]
+  "safeContextKeyword": ["that", "vm", "provider", "service", "svc"]
 }

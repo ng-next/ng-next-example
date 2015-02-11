@@ -13,8 +13,8 @@ module.exports = function () {
 
     files            : [
       //Usually files are included in karma via the files: [] configuration.
-      // When using karma-jspm, one should not also include files in this configuration
-      // ... except for stuff that should run before anything else ;)
+      // When using karma-jspm, one should not also include files in this
+      // configuration .. except for stuff that should run before anything else
       'front/test/unit/test-main.js'
     ],
     exclude          : gulpConf.karmaOptions.exclude,

@@ -91,10 +91,8 @@ module.exports = function () {
       ( jsTargetFolder + jsBuildMainFile ),
       ( jsTargetFolder + jsBuildMainFile.replace( '.js', '.js.map' )),
       ( jsTargetFolder + jsBuildLibFile ),
-      ( jsTargetFolder + jsBuildLibFile.replace( '.js', '.js.map' ))
-      // TODO: include again !!!!!!!!!!!!!!!!!!!!!!!!
-      //,
-      //jsBuildConstantsNgConfig
+      ( jsTargetFolder + jsBuildLibFile.replace( '.js', '.js.map' )),
+      jsBuildConstantsNgConfig
     ],
 
     stylesBuildFile            : stylesBuildFile,
@@ -135,16 +133,8 @@ module.exports = function () {
     html                       : html,
 
     // all js files to vet
-    alljs                      : [
-      'gulpfile.js',
-      'gulp.config.js',
-      frontend + '**/*.js',
-      '!' + frontendLib + '**/*.*',
-      '!' + frontend + jsBuildMainFile,
-      '!' + frontend + jsBuildLibFile,
-      '!' + frontend + 'config.js',
-      backend + '**/*.js',
-      '!' + backend + 'node_modules/**/*.*'
+    jsToVet                    : [
+      '**/*.js'
     ],
 
     // all backend source files that trigger a server restart when changed

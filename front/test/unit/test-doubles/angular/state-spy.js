@@ -8,7 +8,7 @@ export default class StateSpy {
 
     this.transitionTo.CalledWith = stateName => {
       return ( this._transitionToWasCalled && this._stateName === stateName );
-    }
+    };
   }
 
   transitionTo ( stateName ) {

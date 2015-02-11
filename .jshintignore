@@ -1,5 +1,6 @@
-node_modules
-front/main/jspm_packages/**
+node_modules/**
+back/node_modules/**
 front/main/lib/**
 front/main/config.js
-front/main/build.js
+front/main/app.js
+public/**
