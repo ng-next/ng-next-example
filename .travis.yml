@@ -1,0 +1,21 @@
+language: node_js
+
+node_js:
+- '0.10'
+
+notifications:
+  slack:
+    secure: fqTLLWtCUt4JoOp1/OVbjO92XgL5Uf5Q6GUiUXbtzkqYbO5SP+WKMPY43LcOvLt11P+Oj2D9NlraT3eAzJP7Qmq0bICL0xK2ys0mGj3mlfPVKFmvBxy+XAyRUE9Xr1kaCBhVo8akcgxVOhfIuBH/tcIJm5Qp7Au+B7pwpKYGuHo=
+
+before_install:
+- npm install -g jspm gulp
+
+install:
+- npm install
+- gulp production-build
+
+#before_script:
+#
+#after_script:
+#
+#after_success:

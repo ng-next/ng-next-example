@@ -3,4 +3,5 @@ back/node_modules/**
 front/main/lib/**
 front/main/config.js
 front/main/app.js
+front/main/lib.js
 public/**

@@ -3,6 +3,12 @@
   "version": "0.1.0-alpha.1",
   "description": "angular jspm material-design example",
   "author": "Andreas Grimm",
+  "author": "Andreas Grimm <schaeferitsolutions@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ng-next/ng-next-example.git"
+  },
+  "homepage": "https://github.com/ng-next/ng-next-example",
   "devDependencies": {
     "browser-sync": "^1.9.0",
     "chai": "^1.10.0",
@@ -52,8 +58,6 @@
     "mocha": "^2.1.0",
     "mocha-clean": "^0.4.0",
     "nock": "^0.56.0",
-    "path": "^0.11.14",
-    "phantomjs": "^1.9.15",
     "run-sequence": "^1.0.2",
     "should": "^4.5.0",
     "sinon": "^1.12.2",

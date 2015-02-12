@@ -13,10 +13,10 @@ System.config({
     "angular": "github:angular/bower-angular@1.3.13",
     "angular-animate": "github:angular/bower-angular-animate@1.3.13",
     "angular-aria": "github:angular/bower-angular-aria@1.3.13",
-    "angular-cookies": "github:angular/bower-angular-cookies@1.3.10",
+    "angular-cookies": "github:angular/bower-angular-cookies@1.3.13",
     "angular-material": "github:angular/bower-material@0.7.1",
     "angular-messages": "npm:angular-messages@1.3.36",
-    "angular-mocks": "github:angular/bower-angular-mocks@1.3.10",
+    "angular-mocks": "github:angular/bower-angular-mocks@1.3.13",
     "angular-ui-router": "github:angular-ui/ui-router@0.2.13",
     "css": "github:systemjs/plugin-css@0.1.5",
     "jsonp": "npm:jsonp@0.1.0",
@@ -38,19 +38,26 @@ System.config({
     "github:angular/bower-angular-cookies@1.3.10": {
       "angular": "github:angular/bower-angular@1.3.13"
     },
+    "github:angular/bower-angular-cookies@1.3.13": {
+      "angular": "github:angular/bower-angular@1.3.13"
+    },
     "github:angular/bower-angular-mocks@1.3.10": {
+      "angular": "github:angular/bower-angular@1.3.13"
+    },
+    "github:angular/bower-angular-mocks@1.3.13": {
       "angular": "github:angular/bower-angular@1.3.13"
     },
     "github:angular/bower-material@0.7.1": {
       "angular": "github:angular/bower-angular@1.3.13",
       "angular-animate": "github:angular/bower-angular-animate@1.3.13",
-      "angular-aria": "github:angular/bower-angular-aria@1.3.13"
+      "angular-aria": "github:angular/bower-angular-aria@1.3.13",
+      "css": "github:systemjs/plugin-css@0.1.5"
     },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
     },
     "github:jspm/nodelibs-buffer@0.1.0": {
-      "buffer": "npm:buffer@3.0.1"
+      "buffer": "npm:buffer@3.0.2"
     },
     "github:jspm/nodelibs-events@0.1.0": {
       "events-browserify": "npm:events-browserify@0.0.1"
@@ -115,6 +122,11 @@ System.config({
       "util": "npm:util@0.10.3"
     },
     "npm:buffer@3.0.1": {
+      "base64-js": "npm:base64-js@0.0.8",
+      "ieee754": "npm:ieee754@1.1.4",
+      "is-array": "npm:is-array@1.0.1"
+    },
+    "npm:buffer@3.0.2": {
       "base64-js": "npm:base64-js@0.0.8",
       "ieee754": "npm:ieee754@1.1.4",
       "is-array": "npm:is-array@1.0.1"
