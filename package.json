@@ -70,7 +70,8 @@
     "test": "gulp test",
     "postinstall": "npm run install-frontend && npm run install-backend",
     "install-frontend": "cd front/main && jspm install && cd ../..",
-    "install-backend": "cd back && npm i && cd .."
+    "install-backend": "cd back && npm i && cd ..",
+    "deploy": "./utilities/deploy-ghpages.sh"
   },
   "dependencies": {}
 }

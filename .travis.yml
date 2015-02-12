@@ -4,12 +4,15 @@ node_js:
 notifications:
   slack:
     secure: fqTLLWtCUt4JoOp1/OVbjO92XgL5Uf5Q6GUiUXbtzkqYbO5SP+WKMPY43LcOvLt11P+Oj2D9NlraT3eAzJP7Qmq0bICL0xK2ys0mGj3mlfPVKFmvBxy+XAyRUE9Xr1kaCBhVo8akcgxVOhfIuBH/tcIJm5Qp7Au+B7pwpKYGuHo=
+env:
+  global:
+  - GH_REF: github.com/ng-next/ng-next-example.git
+  - secure: "A74LGdlBBIZVJ9iJF2A2haacx59wQDWP/sewArCa5p2lhZ11bojDzaaQWB//d4JcstL/vHiBVavzowZQjfOFHaA+WmKycH2n2TzssOBpqTxY4I8pMeUZBlrCl1hEgbrpLoOXXokqk64KtorFJ3sYPolrjNDxfIblh9PPNzdrioA="
 before_install:
 - npm install -g jspm gulp
 - jspm config endpoints.github.auth $GH_TOKEN
 install:
 - npm install
 - gulp production-build
-env:
-  global:
-  - secure: "A74LGdlBBIZVJ9iJF2A2haacx59wQDWP/sewArCa5p2lhZ11bojDzaaQWB//d4JcstL/vHiBVavzowZQjfOFHaA+WmKycH2n2TzssOBpqTxY4I8pMeUZBlrCl1hEgbrpLoOXXokqk64KtorFJ3sYPolrjNDxfIblh9PPNzdrioA="
+after_success:
+- npm run deploy
