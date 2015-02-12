@@ -1,4 +1,4 @@
-﻿/* jshint node: true */
+/* jshint node: true */
 
 var gulp             = require( 'gulp' );
 var args             = require( 'yargs' ).argv;
