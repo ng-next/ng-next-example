@@ -31,7 +31,7 @@ module.exports = function () {
     //preprocessors    : gulpConf.karmaOptions.preprocessors,
 
     // https://npmjs.org/browse/keyword/karma-launcher
-    browsers         : [ 'Chrome' ],
+    browsers         : [ 'PhantomJS' ],
 
     singleRun        : false,
 
