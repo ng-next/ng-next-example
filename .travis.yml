@@ -16,4 +16,5 @@ install:
 - npm install
 - gulp production-build
 after_success:
+- chmod +x ./utilities/deploy-ghpages.sh
 - npm run deploy
