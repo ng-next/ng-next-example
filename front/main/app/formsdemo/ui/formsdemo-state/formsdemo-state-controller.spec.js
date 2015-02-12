@@ -81,7 +81,7 @@ describe( 'FormsdemoStateController', () => {
   //  scope = $rootscope.$new();
   //}
 
-  // inject more ctrl deps .......↓ here
+  // inject more ctrl deps ....... here
   //function setupController ( scope ) {
     //$controllerFactory( controllerFunction, {
     //  $scope       : scope,
