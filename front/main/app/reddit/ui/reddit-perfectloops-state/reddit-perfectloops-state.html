@@ -10,6 +10,13 @@
     </md-toolbar>
 
     <md-content>
+      <md-content class="md-padding">
+        <h3>This example is an implementation of Glen Maddern's excellent
+            jspm introduction over at his
+          <a href="http://glenmaddern.com/articles/javascript-in-2015">blog.</a>
+        </h3>
+      </md-content>
+      <br/>
       <md-card ng-repeat="gif in redditPerfectloopsState.gifs">
         <img ng-src="{{gif.url}}" alt="{{gif.title}}">
         <md-card-content>
@@ -20,4 +27,3 @@
     </md-content>
   </md-whiteframe>
 </div>
- <!--url, title-->
