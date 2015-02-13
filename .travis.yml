@@ -14,7 +14,7 @@ before_install:
 - jspm config endpoints.github.auth $JSPM_GH_AUTH
 install:
 - npm install
-- gulp production-build
 after_success:
+- gulp gh-pages-build
 - chmod +x ./utilities/deploy-ghpages.sh
 - npm run deploy
