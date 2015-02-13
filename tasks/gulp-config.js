@@ -72,6 +72,8 @@ module.exports = function () {
 
     publicAssets               : publicApp + 'assets/',
 
+    publicLib                  : publicFolder + 'lib/',
+
     // output folder of the css preprocessing
     buildFolder                : buildFolder,
 
@@ -139,7 +141,7 @@ module.exports = function () {
       '**/*.js',
       '!node_modules/**',
       '!back/node_modules/**',
-      '!front/main/lib/**'
+      '!' + frontendLib + '**'
     ],
 
     // all backend source files that trigger a server restart when changed

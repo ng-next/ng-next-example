@@ -2,7 +2,8 @@
 'use strict';
 
 var defaultConfig;
-var gulpConf = require( './../../../gulp.config' )();
+// TODO: link module
+var gulpConf = require( './../../../tasks/gulp-config' )();
 
 module.exports = function () {
   defaultConfig = {
