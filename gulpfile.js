@@ -219,7 +219,8 @@ gulp.task( 'gh-pages-build', function ( done ) {
     'build',
     'publish',
     'publish-lib',
-    'set-gh-pages-base-href',
+    // no longer needed. changed to a custom domain
+    //'set-gh-pages-base-href',
     done
   );
 });
