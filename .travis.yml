@@ -15,6 +15,6 @@ before_install:
 install:
 - npm install
 after_success:
-- gulp gh-pages-build
+- gulp build-gh-pages
 - chmod +x ./utilities/deploy-ghpages.sh
 - npm run deploy
