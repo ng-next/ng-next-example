@@ -63,6 +63,8 @@ module.exports = function () {
 
     frontendApp                : frontendApp,
 
+    frontendLib                : frontendLib,
+
     // publically accessable folder that should be served by the webserver
     public                     : publicFolder,
 

@@ -298,9 +298,16 @@ gulp.task( 'publish-assets', function () {
   .pipe( gulp.dest( config.publicAssets ));
 });
 
+gulp.task( 'publish-lib', function () {
+  log( 'Copying 3rdParty library files to public folder' );
+
+  return gulp.src( config.frontendLib + '**' )
+  .pipe( gulp.dest( config.public + 'lib/' ));
+});
+
 gulp.task( 'publish', function ( done ) {
   return runSequence( 'clean-public', 'publish-source', 'publish-assets',
-    'rev-and-clean', done );
+    'publish-lib', 'rev-and-clean', done );
 });
 
   /*
