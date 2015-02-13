@@ -109,3 +109,13 @@ gulp.task( 'publish', function ( done ) {
     done
   );
 });
+
+gulp.task( 'publish-gh-pages', function ( done ) {
+  runSequence(
+    'clean-public',
+    'publish-source',
+    'publish-assets',
+    'publish-lib',
+    done
+  );
+});

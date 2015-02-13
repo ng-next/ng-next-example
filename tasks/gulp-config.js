@@ -179,7 +179,8 @@ module.exports = function () {
       frontend + jsBuildLibFile,
       frontend + jsBuildMainFile,
       frontend + 'bootstrap.js',
-      frontend + 'index.html'
+      frontend + 'index.html',
+      frontend + '*.js.map'
     ],
 
     // all assets that should be copied to the public asset folder and served by

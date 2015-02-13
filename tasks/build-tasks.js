@@ -154,8 +154,7 @@ gulp.task( 'build-gh-pages', function ( done ) {
 
   runSequence(
     'build-debug',
-    'publish',
-    'publish-lib',
+    'publish-gh-pages',
     // no longer needed. changed to a custom domain
     //'set-gh-pages-base-href',
     done

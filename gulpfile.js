@@ -7,6 +7,7 @@ require( 'require-dir' )( './tasks' );
  * - serve-debug-build / build-debug
  * - serve-production / build-production
  * - build-standalone-html (*** experimental ***)
+ * - build-gh-pages (debug-build for github pages deployment)
  * - test / autotest (frontend unit tests)
  * - bump
  *   --type=pre will bump the prerelease version *.*.*-x
