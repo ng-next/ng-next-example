@@ -206,6 +206,24 @@ gulp.task( 'production-build', function ( done ) {
   return runSequence( 'build', 'publish', done );
 });
 
+gulp.task( 'set-gh-pages-base-href', function () {
+  return gulp
+    .src( config.public + config.htmlBuildFile )
+    .pipe( $.replace( '<base href="/">', '<base href="/ng-next-example/">',
+      { skipBinary: true }))
+    .pipe( gulp.dest( config.public ));
+});
+
+gulp.task( 'gh-pages-build', function ( done ) {
+  return runSequence(
+    'build',
+    'publish',
+    'publish-lib',
+    'set-gh-pages-base-href',
+    done
+  );
+});
+
 gulp.task( 'clean-html', function ( done ) {
   log( 'Cleaning html build files' );
 
@@ -299,15 +317,15 @@ gulp.task( 'publish-assets', function () {
 });
 
 gulp.task( 'publish-lib', function () {
-  log( 'Copying 3rdParty library files to public folder' );
+  log( 'Copying 3rdParty loader library files to public folder' );
 
-  return gulp.src( config.frontendLib + '**' )
+  return gulp.src( config.frontendLib + '*.*' )
   .pipe( gulp.dest( config.public + 'lib/' ));
 });
 
 gulp.task( 'publish', function ( done ) {
   return runSequence( 'clean-public', 'publish-source', 'publish-assets',
-    'publish-lib', 'rev-and-clean', done );
+    'rev-and-clean', done );
 });
 
   /*
@@ -364,13 +382,13 @@ gulp.task( 'bump', function () {
    * Testing
    */
 
-gulp.task( 'test', [ 'vet' ], function ( done ) {
+gulp.task( 'test', function ( done ) {
   log( 'Running tests' );
 
   startTests( true, done );
 });
 
-gulp.task( 'autotest', [ 'vet' ], function ( done ) {
+gulp.task( 'autotest', function ( done ) {
   log( 'Running tests continuously' );
 
   startTests( false, done );
