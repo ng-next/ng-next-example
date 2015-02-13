@@ -1,6 +1,7 @@
 #!/bin/bash
 
 cd public
+echo "ng-next.com" > CNAME
 git init
 git config user.name "Andreas Grimm"
 git config user.email "schaeferitsolutions@gmail.com"
