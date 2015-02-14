@@ -49,19 +49,11 @@ gulp.task( 'bundle-sfx', [ 'unbundle' ], $.shell.task(
 //});
 
 gulp.task( 'enable-ng-debug-modes', function () {
-  return gulp.src( config.jsConstantsNgConfig )
-  .pipe( $.replace( /\/\* nn-is-development \*\/ true/,
-    'true', { skipBinary: true }))
-  .pipe( $.rename( config.jsBuildConstantsNgConfig ))
-  .pipe( gulp.dest( './' ));
+  return setNgDebugModes( true );
 });
 
 gulp.task( 'disable-ng-debug-modes', function () {
-  return gulp.src( config.jsConstantsNgConfig )
-  .pipe( $.replace( /\/\* nn-is-development \*\/ true/,
-    'false', { skipBinary: true }))
-  .pipe( $.rename( config.jsBuildConstantsNgConfig ))
-  .pipe( gulp.dest( './' ));
+  return setNgDebugModes( false );
 });
 
 gulp.task( 'minify', function () {
@@ -160,3 +152,13 @@ gulp.task( 'build-gh-pages', function ( done ) {
     done
   );
 });
+
+///////////////////////////
+
+function setNgDebugModes ( isDebug ) {
+  return gulp.src( config.jsConstantsNgConfig )
+  .pipe( $.replace( /\/\* nn-is-development \*\/ true/,
+    isDebug.toString(), { skipBinary: true }))
+  .pipe( $.rename( config.jsBuildConstantsNgConfig ))
+  .pipe( gulp.dest( './' ));
+}
