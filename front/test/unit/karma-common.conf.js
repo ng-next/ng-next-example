@@ -10,6 +10,7 @@ module.exports = function () {
     basePath         : '../../..',
 
     // https://npmjs.org/browse/keyword/karma-adapter
+    //frameworks       : [ 'mocha', 'chai', 'sinon-chai', 'jspm', 'traceur' ],
     frameworks       : [ 'mocha', 'chai', 'sinon-chai', 'jspm' ],
 
     files            : [
@@ -17,6 +18,8 @@ module.exports = function () {
       // When using karma-jspm, one should not also include files in this
       // configuration .. except for stuff that should run before anything else
       'front/test/unit/test-main.js'
+      //,
+      //'node_modules/6to5/browser-polyfill.js'
     ],
     exclude          : gulpConf.karmaOptions.exclude,
 
@@ -36,19 +39,58 @@ module.exports = function () {
 
     singleRun        : false,
 
-    // https://npmjs.org/browse/keyword/karma-reporter
-    //reporters        : [ 'progress' ],
-
     /*
      * coverage reporter doesn't yet support ES6 code
      * TODO: run coverage on transpiled code
      */
 
-    reporters        : [ 'progress', 'coverage' ],
+    // https://npmjs.org/browse/keyword/karma-reporter
+    reporters        : [ 'progress' ],
+    //reporters        : [ 'progress', 'coverage' ],
+
+    //coverageReporter : {
+    //  dir       : gulpConf.karmaOptions.coverage.dir,
+    //  reporters : gulpConf.karmaOptions.coverage.reporters
+    //},
+
     coverageReporter : {
-      dir       : gulpConf.karmaOptions.coverage.dir,
-      reporters : gulpConf.karmaOptions.coverage.reporters
+      // configure the reporter to use isparta for JavaScript coverage
+      //instrumenters: { isparta : require('isparta') },
+      //instrumenter: {
+      //  '**/*.js': 'isparta'
+      //},
+      //
+      //instrumenterOptions: {
+      //  isparta: {
+      //    to5 : { experimental: true }
+      //  }
+      //},
+      //
+      //reporters : gulpConf.karmaOptions.coverage.reporters
+      //[
+      //  {
+      //    type: 'text',
+      //    subdir: normalizationBrowserName
+      //  },
+      //  {
+      //    type: 'html',
+            // TODO: chagne dir !!
+      //    dir: 'coverage/',
+      //    subdir: normalizationBrowserName
+      //  }
+      //]
     },
+
+    //'6to5Preprocessor': {
+    //  options : { experimental: true }
+    //},
+    //
+    //traceurPreprocessor: {
+    //  options : {
+    //    sourceMaps : false,
+    //    modules    : 'instantiate'
+    //  }
+    //},
 
     mochaReporter    : {
     },
@@ -67,3 +109,7 @@ module.exports = function () {
 
   return defaultConfig;
 };
+
+//function normalizationBrowserName ( browser ) {
+//  return browser.toLowerCase().split( /[ /-]/ )[0];
+//}

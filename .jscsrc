@@ -8,7 +8,8 @@
     "front/main/config.js",
     "front/main/app.js",
     "front/main/lib.js",
-    "public/**"
+    "public/**",
+    "reports/**"
   ],
   "requireSpacesInFunctionExpression": {
     "beforeOpeningRoundBrace": true,

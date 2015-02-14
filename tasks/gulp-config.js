@@ -278,7 +278,7 @@ module.exports = function () {
         frontendApp + '**/*.spec.js'
       ],
       serveFiles    : [
-        frontendApp + '**/*',
+        frontendApp + '**/!(*.spec)+(*.js)',
         frontendTest + 'unit/test-doubles/**/*'
       ],
       exclude       : [
@@ -303,6 +303,10 @@ module.exports = function () {
       preprocessors : {}
     };
 
+    //options.preprocessors[ frontendApp + '**/*.js)' ] =
+    //  [ 'traceur' ];
+    options.preprocessors[ frontendApp + '**/*.js)' ] =
+      [ '6to5' ];
     options.preprocessors[ frontendApp + '**/!(*.spec)+(*.js)' ] =
       [ 'coverage' ];
 
