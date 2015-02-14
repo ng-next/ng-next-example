@@ -4,6 +4,9 @@ node_js:
 notifications:
   slack:
     secure: fqTLLWtCUt4JoOp1/OVbjO92XgL5Uf5Q6GUiUXbtzkqYbO5SP+WKMPY43LcOvLt11P+Oj2D9NlraT3eAzJP7Qmq0bICL0xK2ys0mGj3mlfPVKFmvBxy+XAyRUE9Xr1kaCBhVo8akcgxVOhfIuBH/tcIJm5Qp7Au+B7pwpKYGuHo=
+addons:
+  code_climate:
+    repo_token: fb3478a949e8256ee2401c2b843d189dae34b756bfaf0ad7cec1a75ad5f7017b
 env:
   global:
   - GH_REF: github.com/ng-next/ng-next-example.git
@@ -18,3 +21,5 @@ after_success:
 - gulp build-gh-pages
 - chmod +x ./utilities/deploy-ghpages.sh
 - npm run deploy
+after_script:
+- cat ./reports/coverage/report-lcov/lcov.info | codeclimate

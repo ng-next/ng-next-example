@@ -26,6 +26,9 @@ front/main/app/config/constants-ng-config.js
 #Sourecemaps
 *.map
 
+#reports
+reports
+
 # deployment / public serving
 public
 

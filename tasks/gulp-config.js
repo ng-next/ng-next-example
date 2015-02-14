@@ -303,7 +303,8 @@ module.exports = function () {
       preprocessors : {}
     };
 
-    options.preprocessors[ frontend + '**/!(*.spec)+(*.js)' ] = [ 'coverage' ];
+    options.preprocessors[ frontendApp + '**/!(*.spec)+(*.js)' ] =
+      [ 'coverage' ];
 
     return options;
   }

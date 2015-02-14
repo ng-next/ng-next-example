@@ -37,17 +37,17 @@ module.exports = function () {
     singleRun        : false,
 
     // https://npmjs.org/browse/keyword/karma-reporter
-    reporters        : [ 'progress' ],
+    //reporters        : [ 'progress' ],
 
     /*
      * coverage reporter doesn't yet support ES6 code
      * TODO: run coverage on transpiled code
      */
 
-    //reporters        : [ 'progress', 'coverage' ],
+    reporters        : [ 'progress', 'coverage' ],
     coverageReporter : {
-    //  dir       : gulpConf.karmaOptions.coverage.dir,
-    //  reporters : gulpConf.karmaOptions.coverage.reporters
+      dir       : gulpConf.karmaOptions.coverage.dir,
+      reporters : gulpConf.karmaOptions.coverage.reporters
     },
 
     mochaReporter    : {
