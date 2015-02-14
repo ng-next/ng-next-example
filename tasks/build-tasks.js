@@ -153,7 +153,7 @@ gulp.task( 'build-gh-pages', function ( done ) {
   log( 'Building for GitHub Pages deployment' );
 
   runSequence(
-    'build-debug',
+    'build',
     'publish-gh-pages',
     // no longer needed. changed to a custom domain
     //'set-gh-pages-base-href',
