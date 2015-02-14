@@ -21,7 +21,7 @@ System.config({
     "css": "github:systemjs/plugin-css@0.1.5",
     "jsonp": "npm:jsonp@0.1.0",
     "lodash": "npm:lodash@2.4.1",
-    "nn-ng-utils": "github:ng-next/nn-ng-utils@0.1.3",
+    "nn-ng-utils": "github:ng-next/nn-ng-utils@0.1.5",
     "test-doubles-angular": "./test-doubles/angular/index",
     "test-doubles-formsdemo-service": "./app/formsdemo/services/test-doubles/index",
     "test-doubles-log-service": "./app/cross-cutting/log-service/test-doubles/index",
@@ -96,6 +96,12 @@ System.config({
     },
     "github:jspm/nodelibs-util@0.1.0": {
       "util": "npm:util@0.10.3"
+    },
+    "github:ng-next/nn-ng-utils@0.1.4": {
+      "angular": "github:angular/bower-angular@1.3.13"
+    },
+    "github:ng-next/nn-ng-utils@0.1.5": {
+      "angular": "github:angular/bower-angular@1.3.13"
     },
     "github:systemjs/plugin-css@0.1.3": {
       "clean-css": "npm:clean-css@3.0.10",
