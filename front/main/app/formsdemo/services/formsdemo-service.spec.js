@@ -47,25 +47,25 @@ describe( 'FormsdemoService', () => {
       });
 
       it( 'should get the data from formsdemoGateway.', done => {
-        resolvingFormsdemoGatewayStub.resolveGetData()
-        .then(() => {
-          expect( service.data )
-          .to.deep.equal( resolvingFormsdemoGatewayStub.data );
-          done();
-        });
-
-        // example of chai-as-promised
-        //return db.find({ type: 'User' }).should.eventually.have.length(3);
+        resolvingFormsdemoGatewayStub.getData().should.be.fulfilled
+          .then(() => {
+            expect( service.data )
+            .to.deep.equal( resolvingFormsdemoGatewayStub.data );
+          }).should.notify( done );
       });
     });
   });
 
   describe( 'given formsdemoGateway that rejects with an error', () => {
+    let gatewayError;
     let rejectingFormsdemoGatewayStub;
     let logSpy;
 
     beforeEach(() => {
-      rejectingFormsdemoGatewayStub = new RejectingFormsdemoGatewayStub();
+      gatewayError = 'Formsdemo webservice is down!';
+      rejectingFormsdemoGatewayStub = new RejectingFormsdemoGatewayStub(
+        Error( gatewayError )
+      );
       logSpy = new LogSpy();
     });
 
@@ -75,53 +75,40 @@ describe( 'FormsdemoService', () => {
       });
 
       it( 'should log error "Error retrieving data".', done => {
-        rejectingFormsdemoGatewayStub.rejectGetData()
+        rejectingFormsdemoGatewayStub.getData().should.be.rejected
         .then(() => {
           expect( service.data ).to.deep.equal( {} );
-          expect( logSpy.errorCalledWith( 'Error retrieving data' ))
-          .to.equal( true, 'must log error' );
-          done();
-        }).catch(() => done() );
+          expect( logSpy.errorCalledWith(
+            'Error retrieving data',
+            gatewayError
+          )).to.equal( true, 'must log error' );
+        }).should.notify( done );
       });
     });
   });
   /////////////////////////////////////////////////////////////////////
+
+  // TODO: exlude test sub-folders from bundle (or maybe just all .td.js files)
 
   class ResolvingFormsdemoGatewayStub {
     constructor () {
       this.data = {
         foo : 'bar'
       };
-      this.getDataResolveFunc = undefined;
     }
 
     getData () {
-      return new Promise(( resolve ) => {
-        this.getDataResolveFunc = resolve;
-      });
-    }
-
-    resolveGetData () {
-      return Promise.resolve()
-      .then( this.getDataResolveFunc( this.data ));
+      return Promise.resolve( this.data );
     }
   }
 
   class RejectingFormsdemoGatewayStub {
-    constructor () {
-      this.getDataRejectFunc = undefined;
+    constructor ( errorToThrow ) {
+      this.errorToThrow = errorToThrow;
     }
 
     getData () {
-      return new Promise(( resolve, reject ) => {
-        this.getDataRejectFunc = reject;
-      });
-    }
-
-    rejectGetData () {
-      return Promise.resolve()
-      .then( this.getDataRejectFunc( Error(
-        'Formsdemo webservice is down!' )));
+      return Promise.reject( this.errorToThrow );
     }
   }
 

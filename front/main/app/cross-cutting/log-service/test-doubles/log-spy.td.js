@@ -7,6 +7,7 @@ export default class LogSpy {
     this.debugMessage = undefined;
     this.errorCalled = false;
     this.errorMessage = undefined;
+    this.errorErrorMessage = undefined;
   }
 
   debug ( message ) {
@@ -14,9 +15,13 @@ export default class LogSpy {
     this.debugMessage = message;
   }
 
-  error ( message ) {
+  error ( message, error ) {
     this.errorCalled = true;
     this.errorMessage = message;
+
+    if ( error && error.message ) {
+      this.errorErrorMessage = error.message;
+    }
   }
 
   debugCalledWith ( debugMessage ) {
@@ -24,8 +29,14 @@ export default class LogSpy {
       ( this.debugMessage === debugMessage );
   }
 
-  errorCalledWith ( errorMessage ) {
-    return this.errorCalled &&
-      ( this.errorMessage === errorMessage );
+  errorCalledWith ( message, errorMessage ) {
+    let result = this.errorCalled &&
+      ( this.errorMessage === message );
+
+    if ( errorMessage ) {
+      result = result && ( this.errorErrorMessage === errorMessage );
+    }
+
+    return result;
   }
 }

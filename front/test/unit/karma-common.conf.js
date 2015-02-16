@@ -11,7 +11,13 @@ module.exports = function () {
 
     // https://npmjs.org/browse/keyword/karma-adapter
     //frameworks       : [ 'mocha', 'chai', 'sinon-chai', 'jspm', 'traceur' ],
-    frameworks       : [ 'mocha', 'chai', 'sinon-chai', 'jspm' ],
+    frameworks       : [
+      'mocha',
+      'chai',
+      'chai-as-promised',
+      'sinon-chai',
+      'jspm'
+    ],
 
     files            : [
       //Usually files are included in karma via the files: [] configuration.

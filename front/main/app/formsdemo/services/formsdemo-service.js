@@ -23,7 +23,7 @@ class FormsdemoService {
         this.data.nnTime = new Date( this.data.nnTime );
       }
     }).catch( error => {
-      $log.error( 'foo', error );
+      $log.error( 'Error retrieving data', error );
     });
 
     $log.debug( 'FormsdemoService was instantiated' );
