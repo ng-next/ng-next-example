@@ -43,7 +43,8 @@ module.exports = function () {
     'angular-ui-router',
     'jsonp',
     'lodash',
-    'nn-ng-utils'
+    'nn-ng-utils',
+    'angular-xeditable'
   ];
 
   var config = {

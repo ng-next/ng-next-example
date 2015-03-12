@@ -1,0 +1,17 @@
+{
+  "directories": {
+    "lib": "dist"
+  },
+  "main": "js/xeditable",
+  "shim": {
+    "js/xeditable": {
+      "deps": [
+          "angular"
+        ]
+    }
+  },
+  "registry": "jspm",
+  "dependencies": {
+    "angular": "^1.3.0"
+  }
+}

@@ -11,5 +11,9 @@ export default class FormsdemoStateController {
 
     this.data = formsdemoService.data;
     log.debug( 'FormsdemoController was instantiated' );
+
+    this.user = {
+      name : 'foo user name'
+    };
   }
 }

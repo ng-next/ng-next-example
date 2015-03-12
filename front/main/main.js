@@ -13,6 +13,9 @@ import 'angular-messages';
 import 'angular-aria';
 import 'angular-material';
 import 'angular-material/angular-material.css!css';
+import 'bootstrap';
+import 'vitalets/angular-xeditable';
+import 'vitalets/angular-xeditable/css/xeditable.css!css';
 import { nnNgModules as angularModuleNameContainer } from 'nn-ng-utils';
 registerAngularCoreModules();
 
@@ -32,7 +35,7 @@ bootstrap();
 
 function registerAngularCoreModules () {
   angularModuleNameContainer.registerCore( [ 'ui.router', 'ngCookies',
-    'ngAnimate', 'ngMaterial', 'ngMessages', 'ngAria'
+    'ngAnimate', 'ngMaterial', 'ngMessages', 'ngAria', 'xeditable'
   ] );
 }
 

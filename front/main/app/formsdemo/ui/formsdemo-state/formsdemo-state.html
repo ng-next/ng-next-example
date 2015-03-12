@@ -9,76 +9,11 @@
                  id="formsdemoFromWidget"
                  class="md-whiteframe-z1">
 
-    <form name="fromsdemoForm">
-      <md-toolbar class="md-primary">
-        <h1 class="md-toolbar-tools">
-          FormDemo Data
-        </h1>
-      </md-toolbar>
+        <div>
+          <a href="#" editable-text="formsdemoState.user.name">
+          {{ formsdemoState.user.name || "empty" }}</a>
+        </div>
 
-      <md-content class="md-padding">
-
-        <md-input-container>
-          <label>Demo Date</label>
-          <input type="date"
-                 ng-model="formsdemoState.data.nnDate">
-        </md-input-container>
-
-        <md-input-container>
-          <label>Email</label>
-          <input name="email"
-                 id="email"
-                 type="email"
-                 ng-model="formsdemoState.data.nnEmail"
-                 required>
-        </md-input-container>
-
-        <md-input-container>
-          <label>Time</label>
-          <input id="nnTime"
-                 type="time"
-                 ng-model="formsdemoState.data.nnTime">
-        </md-input-container>
-
-        <md-input-container>
-          <label>Description</label>
-          <input id="description"
-                 name="description"
-                 type="text"
-                 ng-model="formsdemoState.data.nnDescription"
-                 required
-                 md-maxlength="30"
-                 ng-model-options="{ updateOn: 'default blur',
-                                     debounce: { 'default': 250, 'blur': 0 }}"
-            >
-          <div ng-messages="fromsdemoForm.description.$error">
-            <div ng-message="required">This is required.</div>
-            <div ng-message="md-maxlength">The description has to be less than
-             30 characters long.</div>
-          </div>
-        </md-input-container>
-
-        <md-input-container>
-          <label>A number</label>
-          <input id="nnNumber"
-                 name="nnNumber"
-                 type="number"
-                 ng-model="formsdemoState.data.nnNumber"
-                 required
-                 step="any"
-                 min="12"
-                 max="24"
-            >
-          <div ng-messages="fromsdemoForm.nnNumber.$error">
-            <div ng-message="required">Please specify a number</div>
-            <div ng-message="min">must be at least 12</div>
-            <div ng-message="max">must be less than 25</div>
-          </div>
-
-        </md-input-container>
-
-      </md-content>
-    </form>
   </md-whiteframe>
 
   <md-whiteframe hide
