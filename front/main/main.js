@@ -14,8 +14,10 @@ import 'angular-aria';
 import 'angular-material';
 import 'angular-material/angular-material.css!css';
 import 'bootstrap';
-import 'vitalets/angular-xeditable';
-import 'vitalets/angular-xeditable/css/xeditable.css!css';
+import 'bootstrap/css/bootstrap.css!css';
+import 'bootstrap/css/bootstrap-theme.css!css';
+import 'angular-xeditable';
+import 'angular-xeditable/dist/css/xeditable.css!css';
 import { nnNgModules as angularModuleNameContainer } from 'nn-ng-utils';
 registerAngularCoreModules();
 

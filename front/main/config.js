@@ -18,6 +18,7 @@ System.config({
     "angular-messages": "npm:angular-messages@1.3.36",
     "angular-mocks": "github:angular/bower-angular-mocks@1.3.13",
     "angular-ui-router": "github:angular-ui/ui-router@0.2.13",
+    "angular-xeditable": "github:vitalets/angular-xeditable@0.1.8",
     "bootstrap": "github:twbs/bootstrap@3.3.2",
     "css": "github:systemjs/plugin-css@0.1.6",
     "jsonp": "npm:jsonp@0.1.0",
@@ -27,7 +28,6 @@ System.config({
     "test-doubles-formsdemo-service": "./app/formsdemo/services/test-doubles/index",
     "test-doubles-log-service": "./app/cross-cutting/log-service/test-doubles/index",
     "text": "github:systemjs/plugin-text@0.0.2",
-    "vitalets/angular-xeditable": "github:vitalets/angular-xeditable@0.1.8",
     "github:angular-ui/ui-router@0.2.13": {
       "angular": "github:angular/bower-angular@1.3.14"
     },
