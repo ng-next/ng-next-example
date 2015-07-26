@@ -61,6 +61,31 @@ describe( 'NnMenuContentController', () => {
     });
   });
 
+  describe( 'given the stateProvider', () => {
+    let state;
+    let mdSideNav;
+    let authService;
+
+    beforeEach(() => {
+      state = new StateSpy();
+      mdSideNav = mdSideNavDummyFactory;
+      authService = new AuthServiceDummy();
+    });
+
+    describe( 'when goToMovieList() is called', () => {
+      beforeEach(() => {
+        controller = new Controller( state, mdSideNav, authService );
+        controller.goToMovieList();
+      });
+
+      it( 'should go to the correct state.', () => {
+        expect( state.transitionTo.CalledWith( 'root.movie.list' ))
+        .to.equal( true, 'state.transitionTo must be called with' +
+          ' "root.movie.list"' );
+      });
+    });
+  });
+
   describe( 'given a sideNav', () => {
     let mdSideNavFactory;
     let state;

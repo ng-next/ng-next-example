@@ -40,4 +40,12 @@
              aria-label="Reddit Perfectloops">
     Reddit Perfectloops
   </md-button>
+
+  <md-button class="menu-item menu-title md-menu-item"
+             ng-class="{ active: $state.includes('*.movie**') }"
+             ng-click="menuContent.goToMovieList()"
+             ng-show="menuContent.userIsLoggedIn()"
+             aria-label="Movie Database">
+    Movie Database
+  </md-button>
 </md-content>
