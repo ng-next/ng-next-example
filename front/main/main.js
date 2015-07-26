@@ -21,6 +21,7 @@ import 'app/ngnext/index';
 import 'app/randomuser/index';
 import 'app/formsdemo/index';
 import 'app/reddit/index';
+import 'app/movie/index';
 import 'app.css!css';
 import configureAngular from 'app/config/index';
 
