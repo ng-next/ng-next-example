@@ -1,10 +1,9 @@
 //noinspection BadExpressionStatementJS
 'format es6';
 
-let APP_NAME = 'app';
+const APP_NAME = 'app';
 
-export default {};
-
+// import external modules
 import angular from 'angular';
 import 'angular-ui-router';
 import 'angular-cookies';
@@ -14,8 +13,6 @@ import 'angular-aria';
 import 'angular-material';
 import 'angular-material/angular-material.css!css';
 import { nnNgModules as angularModuleNameContainer } from 'nn-ng-utils';
-registerAngularCoreModules();
-
 // import custom app modules
 import 'app/cross-cutting/index';
 import 'app/layout/index';
@@ -27,6 +24,7 @@ import 'app/reddit/index';
 import 'app.css!css';
 import configureAngular from 'app/config/index';
 
+registerAngularCoreModules();
 configureAngular( getInitializedAppModule() );
 bootstrap();
 
