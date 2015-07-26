@@ -44,7 +44,7 @@ function constants () {
     imageSettings  : imageSettings,
     keyCodes       : keyCodes,
     version        : '0.0.1' // can this be generated from package.json during
-                             // build ?
+    // build ?
   };
 
   function exceptionHandlerDecoratorConfiguration () {

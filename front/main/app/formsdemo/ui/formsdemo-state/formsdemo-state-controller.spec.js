@@ -19,8 +19,8 @@ describe( 'FormsdemoStateController', () => {
   //var state;
 
   //beforeEach( inject(( $injector ) => {
-    //setupAngularDependencies( $injector );
-    //setupScope();
+  //  setupAngularDependencies( $injector );
+  //  setupScope();
   //}));
 
   describe( 'given formsdemoService with data', () => {
@@ -83,10 +83,10 @@ describe( 'FormsdemoStateController', () => {
 
   // inject more ctrl deps ....... here
   //function setupController ( scope ) {
-    //$controllerFactory( controllerFunction, {
-    //  $scope       : scope,
-    //  $state       : state,
-    //  bogenGateway : bogenGateway
-    //});
+  //  $controllerFactory( controllerFunction, {
+  //    $scope       : scope,
+  //    $state       : state,
+  //    bogenGateway : bogenGateway
+  //  });
   //}
 });
