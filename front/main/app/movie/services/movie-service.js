@@ -11,6 +11,12 @@ class MovieService {
     'ngInject';
 
     this.ctx = ctx;
+    this.movies = this.getFakeMovies();
+  }
+
+  createMovie ( newMovie ) {
+    this.movies.push( newMovie );
+    return this.ctx.$q.resolve( newMovie );
   }
 
   getDefaultImage () {
@@ -21,6 +27,12 @@ class MovieService {
   }
 
   getAll () {
+    let promise = this.ctx.$q.resolve( this.movies );
+
+    return promise;
+  }
+
+  getFakeMovies () {
     let fakeMovies = [
       {
         title    : 'King Kong',
@@ -34,17 +46,15 @@ class MovieService {
       }
     ];
 
-    for ( var i = 0; i < 23; i = i + 1 ) {
-      fakeMovies.push({
+    for ( var i = 0; i < 6; i = i + 1 ) {
+      fakeMovies.push( {
         title    : 'foo',
         director : 'bar',
         images   : [ this.getDefaultImage() ]
       });
     }
 
-    let promise = this.ctx.$q.resolve( fakeMovies );
-
-    return promise;
+    return fakeMovies;
   }
 }
 
