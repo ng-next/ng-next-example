@@ -1,1 +1,23 @@
-<h1>foo</h1>
+<div layout="column">
+  <md-content layout-padding>
+    <h1>Add a new movie</h1>
+    <br/>
+    <form name="movieForm">
+
+      <div layout layout-sm="column">
+        <md-input-container flex>
+          <label>Title</label>
+          <input ng-model="movieNew.title">
+        </md-input-container>
+        <md-input-container flex>
+          <label>Director</label>
+          <input ng-model="movieNew.director">
+        </md-input-container>
+      </div>
+    </form>
+    <section layout="row" layout-sm="column" layout-align="center center">
+      <md-button class="md-raised md-primary">Save</md-button>
+      <md-button class="md-raised md-warn">Cancel</md-button>
+    </section>
+  </md-content>
+</div>
