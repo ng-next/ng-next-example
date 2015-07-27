@@ -78,6 +78,68 @@ describe( 'MovieDetailStateController', () => {
         });
       });
     });
+
+    describe( 'and given a non-failing movieService', () => {
+      let resolvingMovieServiceSpy;
+      let logDummy;
+
+      beforeEach(() => {
+        logDummy = new LogDummy();
+        resolvingMovieServiceSpy = new ResolvingMovieServiceSpy();
+      });
+
+      describe( 'when calling saveMovie() with an existing movie', () => {
+        let stateDummy;
+
+        beforeEach(() => {
+          stateDummy = new StateDummy();
+          controller = new Controller( stateDummy, logDummy,
+            resolvingMovieServiceSpy, movie );
+
+          controller.saveMovie( movie );
+        });
+
+        it( 'should call movieService update() with the movie', done => {
+          resolvingMovieServiceSpy.updateMovie( movie ).should.be.fulfilled
+            .then(() => {
+              expect( resolvingMovieServiceSpy
+                .updateMovieCalledWith( movie ))
+                .to.equal( true, 'movieService.createMovie() must be called' +
+                ' with the existing movie' );
+            }).should.notify( done );
+        });
+      });
+    });
+
+    describe( 'and given a stateProvider', () => {
+      let stateSpy;
+      let logDummy;
+      let movieServiceDummy;
+
+      beforeEach(() => {
+        stateSpy = new StateSpy();
+        logDummy = new LogDummy();
+        movieServiceDummy = new MovieServiceDummy();
+      });
+
+      describe( 'when calling saveMovie()', () => {
+        beforeEach(() => {
+          controller = new Controller( stateSpy, logDummy, movieServiceDummy,
+            movie );
+          controller.saveMovie();
+        });
+
+        it( 'should navigate to the movie list afterwrards.', done => {
+          const stateName = 'root.movie.list';
+
+          movieServiceDummy.updateMovie().should.be.fulfilled
+            .then(() => {
+              expect( stateSpy.transitionTo.CalledWith( stateName )).to.equal(
+                true, 'state.transitionTo must be called with ' + stateName );
+            }).should.notify( done );
+        });
+      });
+    });
   });
 
   describe( 'given no existing movie', () => {

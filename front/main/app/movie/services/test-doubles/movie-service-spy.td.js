@@ -5,6 +5,7 @@ export class ResolvingMovieServiceSpy {
   constructor () {
     this.getAllCalled = false;
     this.createMovieCalled = false;
+    this.updateMovieCalled = false;
     this.movies = [
       { name : 'foo' }
     ];
@@ -21,8 +22,18 @@ export class ResolvingMovieServiceSpy {
     return Promise.resolve( this.movie );
   }
 
+  updateMovie ( movie ) {
+    this.updateMovieCalled = true;
+    this.movie = movie;
+    return Promise.resolve( this.movie );
+  }
+
   createMovieCalledWith ( expectedMovie ) {
     return this.createMovieCalled && ( this.movie === expectedMovie );
+  }
+
+  updateMovieCalledWith ( expectedMovie ) {
+    return this.updateMovieCalled && ( this.movie === expectedMovie );
   }
 }
 
@@ -50,6 +61,10 @@ export class MovieServiceDummy {
   }
 
   createMovie () {
+    return Promise.resolve( null );
+  }
+
+  updateMovie () {
     return Promise.resolve( null );
   }
 }
