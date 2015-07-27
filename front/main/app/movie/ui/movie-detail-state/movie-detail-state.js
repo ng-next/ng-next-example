@@ -10,10 +10,10 @@ import template from './movie-detail-state.html!text';
 
 const config = {
   abstract     : false,
-  url          : '^/movies/{id}',
+  url          : '^/movies/{id:int}',
   template     : template,
   controller   : controller,
-  controllerAs : 'movieNew',
+  controllerAs : 'movieCtrl',
   data         : {
     authenticationRequired : false
   },

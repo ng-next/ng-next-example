@@ -13,7 +13,7 @@ const config = {
   url          : '^/new-movie',
   template     : template,
   controller   : controller,
-  controllerAs : 'movieNew',
+  controllerAs : 'movieCtrl',
   data         : {
     authenticationRequired : false
   },

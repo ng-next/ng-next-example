@@ -4,22 +4,22 @@
     <br/>
 
     <form name="movieForm"
-          ng-submit="movieNew.createMovie( movieNew.data )">
+          ng-submit="movieCtrl.createMovie( movieCtrl.data )">
 
       <div layout layout-sm="column">
         <md-input-container flex>
           <label>Title</label>
-          <input ng-model="movieNew.data.title">
+          <input ng-model="movieCtrl.data.title">
         </md-input-container>
         <md-input-container flex>
           <label>Director</label>
-          <input ng-model="movieNew.data.director">
+          <input ng-model="movieCtrl.data.director">
         </md-input-container>
       </div>
       <div layout layout-sm="column">
         <md-input-container flex>
           <label>Year</label>
-          <input ng-model="movieNew.data.year">
+          <input ng-model="movieCtrl.data.year">
         </md-input-container>
       </div>
       <div layout="row" layout-sm="column" layout-align="end center">
