@@ -16,13 +16,21 @@ export default class MovieDetailStateController {
     return !this.data.id;
   }
 
-  saveMovie ( newMovie ) {
-    this.movieService.createMovie( newMovie )
+  saveMovie ( movie ) {
+    let action;
+
+    if ( this.isCreateMode() ) {
+      action = 'createMovie';
+    } else {
+      action = 'updateMovie';
+    }
+
+    this.movieService[ action ]( movie )
       .then(() => {
         this.$state.transitionTo( 'root.movie.list' );
       })
       .catch( error => {
-        this.log.error( 'Error saving the new movie.', error );
+        this.log.error( 'Error saving the movie.', error );
       });
   }
 }

@@ -44,6 +44,40 @@ describe( 'MovieDetailStateController', () => {
           .to.equal( false, 'must not be in create mode' );
       });
     });
+
+    describe( 'and given a movieService that rejects with an error', () => {
+      let movieServiceError;
+      let rejectingMovieServiceSpy;
+      let logSpy;
+      let stateDummy;
+
+      beforeEach(() => {
+        movieServiceError = 'fake webservice is down!';
+        rejectingMovieServiceSpy = new RejectingMovieServiceSpy(
+          Error( movieServiceError )
+        );
+        logSpy = new LogSpy();
+        stateDummy = new StateDummy();
+      });
+
+      describe( 'when calling saveMovie() with an existing movie', () => {
+        beforeEach(() => {
+          controller = new Controller( stateDummy, logSpy,
+            rejectingMovieServiceSpy, movie );
+          controller.saveMovie( movie );
+        });
+
+        it( 'should log error "Error saving the movie."', done => {
+          rejectingMovieServiceSpy.updateMovie().should.be.rejected
+          .then(() => {
+            expect( logSpy.errorCalledWith(
+              'Error saving the movie.',
+              movieServiceError
+            )).to.equal( true, 'must log error' );
+          }).should.notify( done );
+        });
+      });
+    });
   });
 
   describe( 'given no existing movie', () => {
@@ -92,14 +126,14 @@ describe( 'MovieDetailStateController', () => {
         beforeEach(() => {
           controller = new Controller( stateDummy, logSpy,
             rejectingMovieServiceSpy, movie );
-          controller.saveMovie({});
+          controller.saveMovie( movie );
         });
 
-        it( 'should log error "Error saving the new movie."', done => {
+        it( 'should log error "Error saving the movie."', done => {
           rejectingMovieServiceSpy.createMovie().should.be.rejected
           .then(() => {
             expect( logSpy.errorCalledWith(
-              'Error saving the new movie.',
+              'Error saving the movie.',
               movieServiceError
             )).to.equal( true, 'must log error' );
           }).should.notify( done );

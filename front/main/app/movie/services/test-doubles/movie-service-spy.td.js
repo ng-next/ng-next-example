@@ -38,6 +38,10 @@ export class RejectingMovieServiceSpy {
   createMovie () {
     return Promise.reject( this.errorToThrow );
   }
+
+  updateMovie () {
+    return Promise.reject( this.errorToThrow );
+  }
 }
 
 export class MovieServiceDummy {
