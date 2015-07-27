@@ -2,8 +2,10 @@
 'format es6';
 
 export default class MovieDetailStateController {
-  constructor () {
+  constructor ( movie ) {
     //noinspection BadExpressionStatementJS
     'ngInject';
+
+    this.data = movie;
   }
 }

@@ -10,8 +10,17 @@ import Controller from './movie-detail-state-controller';
 describe( 'MovieDetailStateController', () => {
   let controller;
 
-  it( 'when newed up it should instantiate.', () => {
-    controller = new Controller();
-    expect( typeof controller ).to.equal( 'object' );
+  describe( 'given a movie', () => {
+    let movie;
+
+    beforeEach(() => {
+      movie = { id: 1337 };
+      controller = new Controller( movie );
+    });
+
+    it( 'should keep a reference to the movie', () => {
+      expect( controller.data )
+        .to.deep.equal( movie, 'must keep a reference to the movie' );
+    });
   });
 });
