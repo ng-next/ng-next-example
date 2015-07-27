@@ -21,4 +21,8 @@ export default class MovieListStateController {
   createNewMovie () {
     this.state.transitionTo( 'root.movie.detailnew' );
   }
+
+  goToMovie( movie ) {
+    this.state.transitionTo( 'root.movie.detail', movie );
+  }
 }
