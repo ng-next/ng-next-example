@@ -4,6 +4,7 @@
 let name = 'movieService';
 
 import { registerService } from 'nn-ng-utils';
+import _ from 'lodash';
 
 class MovieService {
   constructor ( ctx ) {
@@ -32,9 +33,17 @@ class MovieService {
     return promise;
   }
 
+  getOne ( id ) {
+    let movie = _.find( this.movies, movie => movie.id === parseInt( id ));
+    let promise = this.ctx.$q.resolve( movie );
+
+    return promise;
+  }
+
   getFakeMovies () {
     let fakeMovies = [
       {
+        id       : 1,
         title    : 'King Kong',
         director : 'John Guillermin',
         year     : 1976,
@@ -46,8 +55,9 @@ class MovieService {
       }
     ];
 
-    for ( var i = 0; i < 6; i = i + 1 ) {
+    for ( var i = 2; i < 5; i = i + 1 ) {
       fakeMovies.push( {
+        id       : i,
         title    : 'foo',
         director : 'bar',
         images   : [ this.getDefaultImage() ]
