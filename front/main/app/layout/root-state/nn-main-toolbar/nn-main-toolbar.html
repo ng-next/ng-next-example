@@ -6,12 +6,15 @@
 
     <!--TODO "hide-gt-??" (menuIsLockedOpenStartingFrom) must be configurable-->
     <!--along with menu's md-is-locked-open="$media('gt-md')"-->
-    <md-button ng-click="mainToolbar.toggleNav()"
-               hide-gt-sm
+
+    <md-button hide-gt-sm
+               ng-click="mainToolbar.toggleNav()"
+               class="md-icon-button"
                aria-label="Toggle Menu">
-      <!--<div class="il-icon-hamburger"></div>-->
-      <md-icon icon="app/assets/icons/hamburger_24px.svg"></md-icon>
+      <md-icon md-svg-icon="app/assets/icons/hamburger_24px.svg"></md-icon>
+      <div class="md-ripple-container"></div>
     </md-button>
+
     <div flex>
       <!-- TODO: Display "Story/Feature Group -> Story/Feature" -->
     </div>
