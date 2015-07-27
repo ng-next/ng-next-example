@@ -4,9 +4,19 @@
                  class="md-whiteframe-z1">
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h3>
-          <span>My Movie Collection</span>
-        </h3>
+        <div layout="row" flex="" class="fill-height">
+          <h3>My Movie Collection</h3>
+          <span flex></span>
+          <md-button ng-click="movieList.createNewMovie()"
+                     class="md-icon-button"
+                     aria-label="Create New Movie">
+            <md-icon class="s24"
+                     md-svg-icon="app/assets/icons/add.svg">
+                     aria-label="Create New Movie Icon"
+            </md-icon>
+            <div class="md-ripple-container"></div>
+          </md-button>
+        </div>
       </div>
     </md-toolbar>
 
@@ -16,7 +26,8 @@
       <div ng-repeat="movie in ::movieList.data"
            flex-sm="100" flex-gt-sm="33" flex-gt-md="25" flex-gt-lg="15">
         <md-card>
-          <img data-ng-src="{{ ::movie.images[ 0 ] }}" alt="{{ ::movie.title }}">
+          <img data-ng-src="{{ ::movie.images[ 0 ] }}"
+               alt="{{ ::movie.title }}">
           <md-card-content>
             <h3>{{ ::movie.title}}</h3>
             <h4>{{ ::movie.year }}</h4>
