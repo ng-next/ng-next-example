@@ -24,3 +24,9 @@ export class RejectingMovieServiceSpy {
     return Promise.reject( this.errorToThrow );
   }
 }
+
+export class MovieServiceDummy {
+  getAll () {
+    return Promise.resolve( null );
+  }
+}

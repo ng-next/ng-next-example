@@ -2,10 +2,11 @@
 'format es6';
 
 export default class MovieListStateController {
-  constructor ( $log, movieService ) {
+  constructor ( $state, $log, movieService ) {
     //noinspection BadExpressionStatementJS
     'ngInject';
 
+    this.state = $state;
     this.data = {};
 
     movieService.getAll()
@@ -15,5 +16,9 @@ export default class MovieListStateController {
       .catch( error => {
         $log.error( 'Error retrieving data', error );
       });
+  }
+
+  createNewMovie () {
+    this.state.transitionTo( 'root.movie.detailnew' );
   }
 }

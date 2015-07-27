@@ -5,8 +5,9 @@
 import 'angular';
 import 'angular-mocks';
 import { LogSpy, LogDummy } from 'test-doubles-log-service';
-import { ResolvingMovieServiceSpy, RejectingMovieServiceSpy } from
-  '../../services/test-doubles/movie-service-spy.td';
+import { ResolvingMovieServiceSpy, RejectingMovieServiceSpy, MovieServiceDummy }
+  from '../../services/test-doubles/movie-service-spy.td';
+import { StateDummy, StateSpy } from 'test-doubles-angular';
 import Controller from './movie-list-state-controller';
 
 describe( 'MovieListStateController', () => {
@@ -16,6 +17,7 @@ describe( 'MovieListStateController', () => {
     let movieServiceError;
     let rejectingMovieServiceSpy;
     let logSpy;
+    let stateDummy;
 
     beforeEach(() => {
       movieServiceError = 'fake webservice is down!';
@@ -23,11 +25,13 @@ describe( 'MovieListStateController', () => {
         Error( movieServiceError )
       );
       logSpy = new LogSpy();
+      stateDummy = new StateDummy();
     });
 
     describe( 'when instantiating', () => {
       beforeEach(() => {
-        controller = new Controller( logSpy, rejectingMovieServiceSpy );
+        controller = new Controller( stateDummy, logSpy,
+          rejectingMovieServiceSpy );
       });
 
       it( 'should log error "Error retrieving data".', done => {
@@ -46,15 +50,17 @@ describe( 'MovieListStateController', () => {
   describe( 'given a movieService successfully loading data', () => {
     let movieService;
     let logDummy;
+    let stateDummy;
 
     beforeEach(() => {
       logDummy = new LogDummy();
+      stateDummy = new StateDummy();
       movieService = new ResolvingMovieServiceSpy();
     });
 
     describe( 'when instantiating', () => {
       beforeEach(() => {
-        controller = new Controller( logDummy, movieService );
+        controller = new Controller( stateDummy, logDummy, movieService );
       });
 
       it( 'should get all movies from movie service', done => {
@@ -66,6 +72,32 @@ describe( 'MovieListStateController', () => {
             expect( controller.data ).to.equal( movieService.movies,
               'must bind to movies' );
           }).should.notify( done );
+      });
+    });
+  });
+
+  describe( 'given the stateProvider', () => {
+    let stateSpy;
+    let movieServiceDummy;
+    let logDummy;
+
+    beforeEach(() => {
+      stateSpy = new StateSpy();
+      logDummy = new LogDummy();
+      movieServiceDummy = new MovieServiceDummy();
+    });
+
+    describe( 'when createNewMovie() is called', () => {
+      beforeEach(() => {
+        controller = new Controller( stateSpy, logDummy, movieServiceDummy );
+        controller.createNewMovie();
+      });
+
+      it( 'should transition to the correct state.', () => {
+        const stateName = 'root.movie.detailnew';
+
+        expect( stateSpy.transitionTo.CalledWith( stateName ))
+        .to.equal( true, 'state.transitionTo must be called with' + stateName );
       });
     });
   });
