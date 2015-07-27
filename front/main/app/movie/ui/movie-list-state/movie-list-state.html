@@ -26,8 +26,10 @@
       <div ng-repeat="movie in ::movieList.data"
            flex-sm="100" flex-gt-sm="33" flex-gt-md="25" flex-gt-lg="15">
         <md-card>
-          <img data-ng-src="{{ ::movie.images[ 0 ] }}"
-               alt="{{ ::movie.title }}">
+          <a href="#" ng-click="movieList.goToMovie( movie )">
+            <img data-ng-src="{{ ::movie.images[ 0 ] }}"
+                           alt="{{ ::movie.title }}">
+          </a>
           <md-card-content>
             <h3>{{ ::movie.title}}</h3>
             <h4>{{ ::movie.year }}</h4>
