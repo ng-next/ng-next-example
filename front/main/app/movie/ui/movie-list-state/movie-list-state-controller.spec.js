@@ -100,26 +100,5 @@ describe( 'MovieListStateController', () => {
         .to.equal( true, 'state.transitionTo must be called with' + stateName );
       });
     });
-
-    describe( 'when goToMovie() is called', () => {
-      let movie;
-
-      beforeEach(() => {
-        controller = new Controller( stateSpy, logDummy, movieServiceDummy );
-        movie = {
-          id : 1337
-        };
-        controller.goToMovie( movie );
-      });
-
-      it( 'should transition to the correct state.', () => {
-        const stateName = 'root.movie.detail';
-
-        expect( stateSpy.transitionTo.CalledWithParams( stateName,
-          { id: 1337 } ))
-        .to.equal( true, 'state.transitionTo must be called with ' + stateName +
-          ' ' + '{id: 1337}' );
-      });
-    });
   });
 });

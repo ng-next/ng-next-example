@@ -26,7 +26,7 @@
       <div ng-repeat="movie in ::movieList.data"
            flex-sm="100" flex-gt-sm="33" flex-gt-md="25" flex-gt-lg="15">
         <md-card>
-          <a href="#" ng-click="movieList.goToMovie( movie )">
+          <a ui-sref="root.movie.detail({ id : movie.id })">
             <img data-ng-src="{{ ::movie.images[ 0 ] }}"
                            alt="{{ ::movie.title }}">
           </a>
