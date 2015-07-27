@@ -5,16 +5,16 @@ const name =  'root.movie.detailnew';
 
 import { registerUiState } from 'nn-ng-utils';
 
-//import controller from './movie-detailnew-state-controller';
+import controller from './movie-detailnew-state-controller';
 import template from './movie-detailnew-state.html!text';
 
 const config = {
-  abstract : false,
-  url      : '^/movies/new',
-  template : template,
-  //controller   : controller,
-  //controllerAs : 'MovieNew',
-  data     : {
+  abstract     : false,
+  url          : '^/movies/new',
+  template     : template,
+  controller   : controller,
+  controllerAs : 'movieNew',
+  data         : {
     authenticationRequired : false
   }
 };
