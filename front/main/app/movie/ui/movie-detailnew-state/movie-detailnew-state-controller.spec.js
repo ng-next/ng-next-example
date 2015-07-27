@@ -8,6 +8,7 @@ import Controller from './movie-detailnew-state-controller';
 import { LogSpy, LogDummy } from 'test-doubles-log-service';
 import { RejectingMovieServiceSpy, ResolvingMovieServiceSpy }
   from '../../services/test-doubles/movie-service-spy.td';
+import { StateDummy, StateSpy } from 'test-doubles-angular';
 
 describe( 'MovieDetailNewStateController', () => {
   let controller;
@@ -16,6 +17,7 @@ describe( 'MovieDetailNewStateController', () => {
     let movieServiceError;
     let rejectingMovieServiceSpy;
     let logSpy;
+    let stateDummy;
 
     beforeEach(() => {
       movieServiceError = 'fake webservice is down!';
@@ -23,11 +25,13 @@ describe( 'MovieDetailNewStateController', () => {
         Error( movieServiceError )
       );
       logSpy = new LogSpy();
+      stateDummy = new StateDummy();
     });
 
     describe( 'when calling create() with a new movie', () => {
       beforeEach(() => {
-        controller = new Controller( logSpy, rejectingMovieServiceSpy );
+        controller = new Controller( stateDummy, logSpy,
+          rejectingMovieServiceSpy );
         controller.createMovie({});
       });
 
@@ -44,31 +48,60 @@ describe( 'MovieDetailNewStateController', () => {
   });
 
   describe( 'given a non-failing movieService', () => {
-    let movieService;
+    let resolvingMovieService;
     let logDummy;
 
     beforeEach(() => {
       logDummy = new LogDummy();
-      movieService = new ResolvingMovieServiceSpy();
+      resolvingMovieService = new ResolvingMovieServiceSpy();
     });
 
     describe( 'when calling create() with a new movie', () => {
+      let stateDummy;
       let newMovie;
 
       beforeEach(() => {
-        controller = new Controller( logDummy, movieService );
+        stateDummy = new StateDummy();
+        controller = new Controller( stateDummy, logDummy,
+          resolvingMovieService );
         newMovie = { title: 'foo' };
 
         controller.createMovie( newMovie );
       });
 
       it( 'should call movieService create() with the newMovie', done => {
-        movieService.createMovie( newMovie ).should.be.fulfilled
+        resolvingMovieService.createMovie( newMovie ).should.be.fulfilled
           .then(() => {
-            expect( movieService.createMovieCalledWith( newMovie ))
+            expect( resolvingMovieService.createMovieCalledWith( newMovie ))
               .to.equal( true, 'movieService.createMovie() must be called' +
               ' with the correct newMovie' );
           }).should.notify( done );
+      });
+    });
+
+    describe( 'and given a stateProvider', () => {
+      let stateSpy;
+
+      beforeEach(() => {
+        stateSpy = new StateSpy();
+      });
+
+      describe( 'when calling createMovie()', () => {
+        beforeEach(() => {
+          controller = new Controller( stateSpy, logDummy,
+            resolvingMovieService );
+          controller.createMovie();
+        });
+
+        it( 'should navigate to the movie list afterwrards.', done => {
+          const stateName = 'root.movie.list';
+
+          resolvingMovieService.createMovie().should.be.fulfilled
+            .then(() => {
+              expect( stateSpy.transitionTo.CalledWith( stateName )).to.equal(
+                true, 'state.transitionTo must be called with ' + stateName );
+            }).should.notify( done );
+        });
       });
     });
   });
