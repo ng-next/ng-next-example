@@ -15,28 +15,34 @@ describe( 'MovieDetailStateController', () => {
 
   describe( 'given a movie', () => {
     let movie;
-    let stateDummy;
-    let logDummy;
-    let movieServiceDummy;
 
     beforeEach(() => {
       movie = { id: 1337 };
-      stateDummy = new StateDummy();
-      logDummy = new LogDummy();
-      movieServiceDummy = new MovieServiceDummy();
-
-      controller = new Controller( stateDummy, logDummy, movieServiceDummy,
-        movie );
     });
 
-    it( 'should keep a reference to the movie', () => {
-      expect( controller.data )
-        .to.deep.equal( movie, 'must keep a reference to the movie' );
-    });
+    describe( 'when instatiating', () => {
+      let stateDummy;
+      let logDummy;
+      let movieServiceDummy;
 
-    it( 'should not be in create mode', () => {
-      expect( controller.isCreateMode() )
-        .to.equal( false, 'must not be in create mode' );
+      beforeEach(() => {
+        stateDummy = new StateDummy();
+        logDummy = new LogDummy();
+        movieServiceDummy = new MovieServiceDummy();
+
+        controller = new Controller( stateDummy, logDummy, movieServiceDummy,
+          movie );
+      });
+
+      it( 'should keep a reference to the movie', () => {
+        expect( controller.data )
+          .to.deep.equal( movie, 'must keep a reference to the movie' );
+      });
+
+      it( 'should not be in create mode', () => {
+        expect( controller.isCreateMode() )
+          .to.equal( false, 'must not be in create mode' );
+      });
     });
   });
 
@@ -45,6 +51,26 @@ describe( 'MovieDetailStateController', () => {
 
     beforeEach(() => {
       movie = {};
+    });
+
+    describe( 'when instatiating', () => {
+      let stateDummy;
+      let logDummy;
+      let movieServiceDummy;
+
+      beforeEach(() => {
+        stateDummy = new StateDummy();
+        logDummy = new LogDummy();
+        movieServiceDummy = new MovieServiceDummy();
+
+        controller = new Controller( stateDummy, logDummy, movieServiceDummy,
+          movie );
+      });
+
+      it( 'should be in create mode', () => {
+        expect( controller.isCreateMode() )
+          .to.equal( true, 'must not be in create mode' );
+      });
     });
 
     describe( 'and given a movieService that rejects with an error', () => {
