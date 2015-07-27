@@ -1,7 +1,9 @@
 <div layout="column">
   <md-content layout-padding>
-    <h1>Add a new movie</h1>
-    <br/>
+    <div ng-if="!movieCtrl.data.id">
+      <h1>Add a new movie</h1>
+      <br/>
+    </div>
 
     <form name="movieForm"
           ng-submit="movieCtrl.createMovie( movieCtrl.data )">
