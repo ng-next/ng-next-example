@@ -1,1 +1,31 @@
-<h1>foo</h1>
+<div layout="row">
+
+  <md-whiteframe flex
+                 class="md-whiteframe-z1">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h3>
+          <span>My Movie Collection</span>
+        </h3>
+      </div>
+    </md-toolbar>
+
+    <md-content layout-gt-sm="row"
+                layout-wrap>
+
+      <div ng-repeat="movie in ::movieList.data"
+           flex-sm="100" flex-gt-sm="33" flex-gt-md="25" flex-gt-lg="15">
+        <md-card>
+          <img data-ng-src="{{ ::movie.images[ 0 ] }}" alt="{{ ::movie.title }}">
+          <md-card-content>
+            <h3>{{ ::movie.title}}</h3>
+            <h4>{{ ::movie.year }}</h4>
+            <h4>Director: {{ ::movie.director}}</h4>
+          </md-card-content>
+        </md-card>
+      </div>
+
+    </md-content>
+  </md-whiteframe>
+
+</div>
