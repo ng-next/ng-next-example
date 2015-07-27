@@ -88,11 +88,11 @@ describe( 'MovieDetailStateController', () => {
         stateDummy = new StateDummy();
       });
 
-      describe( 'when calling create() with a new movie', () => {
+      describe( 'when calling saveMovie() with a new movie', () => {
         beforeEach(() => {
           controller = new Controller( stateDummy, logSpy,
             rejectingMovieServiceSpy, movie );
-          controller.createMovie({});
+          controller.saveMovie({});
         });
 
         it( 'should log error "Error saving the new movie."', done => {
@@ -116,7 +116,7 @@ describe( 'MovieDetailStateController', () => {
         resolvingMovieServiceSpy = new ResolvingMovieServiceSpy();
       });
 
-      describe( 'when calling create() with a new movie', () => {
+      describe( 'when calling saveMovie() with a new movie', () => {
         let stateDummy;
         let newMovie;
 
@@ -126,7 +126,7 @@ describe( 'MovieDetailStateController', () => {
             resolvingMovieServiceSpy, movie );
           newMovie = { title: 'foo' };
 
-          controller.createMovie( newMovie );
+          controller.saveMovie( newMovie );
         });
 
         it( 'should call movieService create() with the newMovie', done => {
@@ -152,11 +152,11 @@ describe( 'MovieDetailStateController', () => {
         movieServiceDummy = new MovieServiceDummy();
       });
 
-      describe( 'when calling createMovie()', () => {
+      describe( 'when calling saveMovie()', () => {
         beforeEach(() => {
           controller = new Controller( stateSpy, logDummy, movieServiceDummy,
             movie );
-          controller.createMovie();
+          controller.saveMovie();
         });
 
         it( 'should navigate to the movie list afterwrards.', done => {

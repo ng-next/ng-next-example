@@ -15,7 +15,8 @@ export default class MovieDetailStateController {
   isCreateMode () {
     return !this.data.id;
   }
-  createMovie ( newMovie ) {
+
+  saveMovie ( newMovie ) {
     this.movieService.createMovie( newMovie )
       .then(() => {
         this.$state.transitionTo( 'root.movie.list' );
