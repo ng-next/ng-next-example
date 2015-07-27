@@ -115,9 +115,10 @@ describe( 'MovieListStateController', () => {
       it( 'should transition to the correct state.', () => {
         const stateName = 'root.movie.detail';
 
-        expect( stateSpy.transitionTo.CalledWith( stateName, movie ))
+        expect( stateSpy.transitionTo.CalledWithParams( stateName,
+          { id: 1337 } ))
         .to.equal( true, 'state.transitionTo must be called with ' + stateName +
-          ' ' + JSON.stringify( movie ));
+          ' ' + '{id: 1337}' );
       });
     });
   });

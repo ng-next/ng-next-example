@@ -23,6 +23,6 @@ export default class MovieListStateController {
   }
 
   goToMovie( movie ) {
-    this.state.transitionTo( 'root.movie.detail', movie );
+    this.state.transitionTo( 'root.movie.detail', { id : movie.id });
   }
 }
