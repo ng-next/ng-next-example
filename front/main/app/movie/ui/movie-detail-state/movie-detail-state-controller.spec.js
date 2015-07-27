@@ -47,7 +47,7 @@ describe( 'MovieDetailStateController', () => {
       movie = {};
     });
 
-    describe( 'given a movieService that rejects with an error', () => {
+    describe( 'and given a movieService that rejects with an error', () => {
       let movieServiceError;
       let rejectingMovieServiceSpy;
       let logSpy;
@@ -81,7 +81,7 @@ describe( 'MovieDetailStateController', () => {
       });
     });
 
-    describe( 'given a non-failing movieService', () => {
+    describe( 'and given a non-failing movieService', () => {
       let resolvingMovieServiceSpy;
       let logDummy;
 
@@ -115,7 +115,7 @@ describe( 'MovieDetailStateController', () => {
       });
     });
 
-    describe( 'given a stateProvider', () => {
+    describe( 'and given a stateProvider', () => {
       let stateSpy;
       let logDummy;
       let movieServiceDummy;
