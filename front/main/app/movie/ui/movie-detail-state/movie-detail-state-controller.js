@@ -12,6 +12,9 @@ export default class MovieDetailStateController {
     this.data = movie;
   }
 
+  isCreateMode () {
+    return !this.data.id;
+  }
   createMovie ( newMovie ) {
     this.movieService.createMovie( newMovie )
       .then(() => {

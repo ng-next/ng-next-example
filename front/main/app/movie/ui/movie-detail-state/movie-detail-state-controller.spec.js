@@ -33,6 +33,11 @@ describe( 'MovieDetailStateController', () => {
       expect( controller.data )
         .to.deep.equal( movie, 'must keep a reference to the movie' );
     });
+
+    it( 'should not be in create mode', () => {
+      expect( controller.isCreateMode() )
+        .to.equal( false, 'must not be in create mode' );
+    });
   });
 
   describe( 'given no existing movie', () => {

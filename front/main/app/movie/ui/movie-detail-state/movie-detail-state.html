@@ -1,6 +1,6 @@
 <div layout="column">
   <md-content layout-padding>
-    <div ng-if="!movieCtrl.data.id">
+    <div ng-if="movieCtrl.isCreateMode()">
       <h1>Add a new movie</h1>
       <br/>
     </div>
