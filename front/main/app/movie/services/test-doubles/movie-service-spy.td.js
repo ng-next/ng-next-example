@@ -44,4 +44,8 @@ export class MovieServiceDummy {
   getAll () {
     return Promise.resolve( null );
   }
+
+  createMovie () {
+    return Promise.resolve( null );
+  }
 }
