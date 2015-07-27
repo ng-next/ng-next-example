@@ -16,6 +16,8 @@ class MovieService {
   }
 
   createMovie ( newMovie ) {
+    let newId = _.max( this.movies, 'id' ).id + 1;
+    newMovie.id = newId;
     this.movies.push( newMovie );
     return this.ctx.$q.resolve( newMovie );
   }
