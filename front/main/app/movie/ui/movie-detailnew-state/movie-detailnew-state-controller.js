@@ -12,6 +12,9 @@ export default class MovieDetailnewStateController {
 
   createMovie ( newMovie ) {
     this.movieService.createMovie( newMovie )
+      .then( movie => {
+        return movie;
+      })
       .catch( error => {
         this.log.error( 'Error saving the new movie.', error );
       });

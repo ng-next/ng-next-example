@@ -5,8 +5,8 @@
 import 'angular';
 import 'angular-mocks';
 import Controller from './movie-detailnew-state-controller';
-import { LogSpy } from 'test-doubles-log-service';
-import { RejectingMovieServiceSpy }
+import { LogSpy, LogDummy } from 'test-doubles-log-service';
+import { RejectingMovieServiceSpy, ResolvingMovieServiceSpy }
   from '../../services/test-doubles/movie-service-spy.td';
 
 describe( 'MovieDetailNewStateController', () => {
@@ -26,13 +26,9 @@ describe( 'MovieDetailNewStateController', () => {
     });
 
     describe( 'when calling create() with a new movie', () => {
-      let newMovie;
-
       beforeEach(() => {
         controller = new Controller( logSpy, rejectingMovieServiceSpy );
-        newMovie = { title: 'foo' };
-
-        controller.createMovie( newMovie );
+        controller.createMovie({});
       });
 
       it( 'should log error "Error saving the new movie."', done => {
@@ -43,6 +39,36 @@ describe( 'MovieDetailNewStateController', () => {
             movieServiceError
           )).to.equal( true, 'must log error' );
         }).should.notify( done );
+      });
+    });
+  });
+
+  describe( 'given a non-failing movieService', () => {
+    let movieService;
+    let logDummy;
+
+    beforeEach(() => {
+      logDummy = new LogDummy();
+      movieService = new ResolvingMovieServiceSpy();
+    });
+
+    describe( 'when calling create() with a new movie', () => {
+      let newMovie;
+
+      beforeEach(() => {
+        controller = new Controller( logDummy, movieService );
+        newMovie = { title: 'foo' };
+
+        controller.createMovie( newMovie );
+      });
+
+      it( 'should call movieService create() with the newMovie', done => {
+        movieService.createMovie( newMovie ).should.be.fulfilled
+          .then(() => {
+            expect( movieService.createMovieCalledWith( newMovie ))
+              .to.equal( true, 'movieService.createMovie() must be called' +
+              ' with the correct newMovie' );
+          }).should.notify( done );
       });
     });
   });

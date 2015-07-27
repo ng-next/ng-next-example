@@ -4,6 +4,7 @@
 export class ResolvingMovieServiceSpy {
   constructor () {
     this.getAllCalled = false;
+    this.createMovieCalled = false;
     this.movies = [
       { name : 'foo' }
     ];
@@ -12,6 +13,16 @@ export class ResolvingMovieServiceSpy {
   getAll () {
     this.getAllCalled = true;
     return Promise.resolve( this.movies );
+  }
+
+  createMovie ( newMovie ) {
+    this.createMovieCalled = true;
+    this.movie = newMovie;
+    return Promise.resolve( this.movie );
+  }
+
+  createMovieCalledWith ( expectedMovie ) {
+    return this.createMovieCalled && ( this.movie === expectedMovie );
   }
 }
 
