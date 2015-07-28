@@ -4,6 +4,7 @@
 export class ResolvingMovieServiceSpy {
   constructor () {
     this.getAllCalled = false;
+    this.getOneCalled = false;
     this.createMovieCalled = false;
     this.updateMovieCalled = false;
     this.deleteMovieCalled = false;
@@ -15,6 +16,12 @@ export class ResolvingMovieServiceSpy {
   getAll () {
     this.getAllCalled = true;
     return Promise.resolve( this.movies );
+  }
+
+  getOne ( id ) {
+    this.getOneCalled = true;
+    this.id = id;
+    return Promise.resolve( this.movies[ 0 ] );
   }
 
   createMovie ( newMovie ) {
@@ -63,6 +70,10 @@ export class ResolvingMovieServiceSpy {
   deleteMovieCalledWith ( expectedMovie ) {
     return this.deleteMovieCalled && ( this.movie === expectedMovie );
   }
+
+  getOneCalledWith ( expectedId ) {
+    return this.getOneCalled && ( this.id === expectedId );
+  }
 }
 
 export class ResolvingRealtimeMovieServiceStub {
@@ -87,6 +98,10 @@ export class RejectingMovieServiceSpy {
   }
 
   getAll () {
+    return Promise.reject( this.errorToThrow );
+  }
+
+  getOne () {
     return Promise.reject( this.errorToThrow );
   }
 

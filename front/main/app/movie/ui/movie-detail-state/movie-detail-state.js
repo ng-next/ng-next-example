@@ -7,6 +7,7 @@ import { registerUiState } from 'nn-ng-utils';
 
 import controller from './movie-detail-state-controller';
 import template from './movie-detail-state.html!text';
+import resolveMovie from './get-movie';
 
 const config = {
   abstract     : false,
@@ -18,15 +19,7 @@ const config = {
     authenticationRequired : false
   },
   resolve      : {
-    movie : ( movieService, $stateParams ) => {
-      //noinspection BadExpressionStatementJS
-      'ngInject';
-
-      return movieService.getOne( $stateParams.id )
-        .then( movie => {
-          return movie;
-        });
-    }
+    movie : resolveMovie
   }
 };
 
