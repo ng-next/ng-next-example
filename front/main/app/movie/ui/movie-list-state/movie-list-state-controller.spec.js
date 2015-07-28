@@ -5,9 +5,9 @@
 import 'angular';
 import 'angular-mocks';
 import { LogSpy, LogDummy } from 'test-doubles-log-service';
-import { ResolvingMovieServiceSpy, RejectingMovieServiceSpy, MovieServiceDummy }
+import { ResolvingMovieServiceSpy, RejectingMovieServiceSpy }
   from '../../services/test-doubles/movie-service-spy.td';
-import { StateDummy, StateSpy } from 'test-doubles-angular';
+import { StateDummy } from 'test-doubles-angular';
 import Controller from './movie-list-state-controller';
 
 describe( 'MovieListStateController', () => {
@@ -72,32 +72,6 @@ describe( 'MovieListStateController', () => {
             expect( controller.data ).to.equal( movieService.movies,
               'must bind to movies' );
           }).should.notify( done );
-      });
-    });
-  });
-
-  describe( 'given the stateProvider', () => {
-    let stateSpy;
-    let movieServiceDummy;
-    let logDummy;
-
-    beforeEach(() => {
-      stateSpy = new StateSpy();
-      logDummy = new LogDummy();
-      movieServiceDummy = new MovieServiceDummy();
-    });
-
-    describe( 'when createNewMovie() is called', () => {
-      beforeEach(() => {
-        controller = new Controller( stateSpy, logDummy, movieServiceDummy );
-        controller.createNewMovie();
-      });
-
-      it( 'should transition to the correct state.', () => {
-        const stateName = 'root.movie.detailnew';
-
-        expect( stateSpy.transitionTo.CalledWith( stateName ))
-        .to.equal( true, 'state.transitionTo must be called with' + stateName );
       });
     });
   });

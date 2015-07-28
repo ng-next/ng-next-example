@@ -17,8 +17,4 @@ export default class MovieListStateController {
         $log.error( 'Error retrieving data', error );
       });
   }
-
-  createNewMovie () {
-    this.state.transitionTo( 'root.movie.detailnew' );
-  }
 }
