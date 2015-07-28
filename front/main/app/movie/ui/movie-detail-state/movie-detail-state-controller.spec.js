@@ -10,7 +10,7 @@ import { RejectingMovieServiceSpy, ResolvingMovieServiceSpy, MovieServiceDummy }
   from '../../services/test-doubles/movie-service-spy.td';
 import { StateDummy, StateSpy } from 'test-doubles-angular';
 
-describe( 'MovieDetailStateController', () => {
+describe.skip( 'MovieDetailStateController', () => {
   let controller;
 
   describe( 'given a movie', () => {
