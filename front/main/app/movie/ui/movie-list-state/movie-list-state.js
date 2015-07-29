@@ -8,6 +8,7 @@ import { registerUiState } from 'nn-ng-utils';
 import controller from './movie-list-state-controller';
 import template from './movie-list-state.html!text';
 import resolveMovies from './get-all-movies';
+import resolveDefaultImage from './get-default-image';
 
 const config = {
   abstract     : false,
@@ -19,7 +20,8 @@ const config = {
     authenticationRequired : false
   },
   resolve      : {
-    movies : resolveMovies
+    movies       : resolveMovies,
+    defaultImage : resolveDefaultImage
   }
 };
 

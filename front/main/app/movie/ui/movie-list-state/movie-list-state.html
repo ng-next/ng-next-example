@@ -27,7 +27,11 @@
            flex-sm="100" flex-gt-sm="33" flex-gt-md="25" flex-gt-lg="15">
         <md-card>
           <a ui-sref="root.movie.detail({ id : movie.id })">
-            <img data-ng-src="{{ ::movie.images[ 0 ] }}"
+            <img ng-if="movie.images && movie.images.length > 0"
+                 data-ng-src="{{ ::movie.images[ 0 ] }}"
+                 alt="{{ ::movie.title }}">
+            <img ng-if="movie.images.length < 1"
+                 data-ng-src="{{ ::movieList.defaultImage }}"
                  alt="{{ ::movie.title }}">
           </a>
           <md-card-content>
