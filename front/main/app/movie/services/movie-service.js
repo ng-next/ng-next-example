@@ -40,13 +40,13 @@ class MovieService {
   }
 
   getAll () {
-    let promise = this.ctx.$q.resolve( this.movies );
+    let promise = this.ctx.$q.resolve( _.cloneDeep( this.movies ));
     return promise;
   }
 
   getOne ( id ) {
     let movie = _.find( this.movies, movie => movie.id === parseInt( id ));
-    let promise = this.ctx.$q.resolve( movie );
+    let promise = this.ctx.$q.resolve( _.cloneDeep( movie ));
 
     return promise;
   }
