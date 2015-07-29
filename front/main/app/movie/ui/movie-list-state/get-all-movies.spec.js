@@ -1,6 +1,3 @@
-//TODO test ui-state to ensure resolving of movies from movieService and error
-// logging (due to controller refactoring)
-
 // jscs:disable disallowEmptyBlocks
 //noinspection BadExpressionStatementJS
 'format es6';
