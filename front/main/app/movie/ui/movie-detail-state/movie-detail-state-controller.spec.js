@@ -26,7 +26,7 @@ describe( 'MovieDetailStateController', () => {
     let movie;
 
     beforeEach(() => {
-      movie = { id: 1337 };
+      movie = { id : 1337, images : [] };
     });
 
     describe( 'when instatiating', () => {
@@ -128,9 +128,115 @@ describe( 'MovieDetailStateController', () => {
         });
       });
     });
+
+    describe( 'and given a fileReaderService and an image file', () => {
+      let fileReaderStub;
+      let imageFile;
+      let expectedCount;
+
+      beforeEach(() => {
+        fileReaderStub = new FileReaderStub();
+        imageFile = { name : 'foo.jpg', size : 123456, type: 'image/png' };
+      });
+
+      describe( 'when adding an image', () => {
+        beforeEach( done => {
+          expectedCount = movie.images.length + 1;
+          controller = new Controller( ctxStub, stateDummy, logDummy,
+            movieServiceDummy, movie, fileReaderStub );
+
+          controller.addImage( imageFile ).then(() => {
+            done();
+          });
+        });
+
+        it( 'should add the image to the image collection', () => {
+          expect( controller.data.images.length ).to.equal( expectedCount,
+            'must add image to the image collection' );
+        });
+      });
+
+      describe( 'and given the image to add already exists', () => {
+        beforeEach(() => {
+          movie.images.push( 'data:' + imageFile.type +
+            ';base64,iVBORw0KGgoAA' );
+        });
+
+        describe( 'when adding a duplicate image', () => {
+          beforeEach( done => {
+            expectedCount = movie.images.length;
+            controller = new Controller( ctxStub, stateDummy, logDummy,
+              movieServiceDummy, movie, fileReaderStub );
+
+            controller.addImage( imageFile ).then(() => {
+              done();
+            });
+          });
+
+          it( 'should not add the image to the image collection', () => {
+            expect( controller.data.images.length ).to.equal( expectedCount,
+              'must add image to the image collection' );
+          });
+        });
+
+        describe( 'and given a logService', () => {
+          let logSpy;
+
+          beforeEach(() => {
+            logSpy = new LogSpy();
+          });
+
+          describe( 'when adding a duplicate image', () => {
+            beforeEach( done => {
+              controller = new Controller( ctxStub, stateDummy, logSpy,
+                movieServiceDummy, movie, fileReaderStub );
+
+              controller.addImage( imageFile ).then(() => {
+                done();
+              });
+            });
+
+            it( 'should notify the user about the duplicate image', () => {
+              expect( logSpy.infoCalledWith( 'Image alredy exists.' ))
+                .to.equal( true, 'must log user info' );
+            });
+          });
+        });
+      });
+    });
+
+    describe( 'and given a failing fileReaderService, an image file and a' +
+      ' log service',
+    () => {
+      let rejectingFileReaderStub;
+      let logSpy;
+      let imageFile;
+
+      beforeEach(() => {
+        rejectingFileReaderStub = new RejectingFileReaderStub();
+        logSpy = new LogSpy();
+        imageFile = { name : 'foo.jpg', size : 123456, type: 'image/png' };
+      });
+
+      describe( 'when adding an image', () => {
+        beforeEach( done => {
+          controller = new Controller( ctxStub, stateDummy, logSpy,
+            movieServiceDummy, movie, rejectingFileReaderStub );
+
+          controller.addImage( imageFile ).catch(() => {
+            done();
+          });
+        });
+
+        it( 'should log an error"Could not read image."', () => {
+          expect( logSpy.errorCalledWith( 'Could not read image.' ))
+            .to.equal( true, 'must log error' );
+        });
+      });
+    });
   });
 
-  describe( 'given no existing movie', () => {
+  describe( 'given a new movie', () => {
     let movie;
 
     beforeEach(() => {
@@ -234,3 +340,15 @@ describe( 'MovieDetailStateController', () => {
     });
   });
 });
+
+class FileReaderStub {
+  readAsDataUrl ( file ) {
+    return Promise.resolve( 'data:' + file.type + ';base64,iVBORw0KGgoAA' );
+  }
+}
+
+class RejectingFileReaderStub {
+  readAsDataUrl () {
+    return Promise.reject();
+  }
+}
