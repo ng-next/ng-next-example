@@ -6,7 +6,7 @@ let name = 'nnFileInput';
 
 import { registerDirective } from 'nn-ng-utils';
 
-export var ddo = ( $parse ) => {
+export var ddo = () => { // $parse
   //noinspection BadExpressionStatementJS
   'ngInject';
 
@@ -14,20 +14,16 @@ export var ddo = ( $parse ) => {
     restrict : 'E',
     replace  : true,
     template : '<input type="file" />',
-    link     : function ( scope, element, attrs ) {
-      let modelGet = $parse( attrs.imageData );
-      let modelSet = modelGet.assign;
-      let onChange = $parse( attrs.onChange );
-      let updateModel;
-
-      updateModel = function () {
-        scope.$apply( function () {
-          modelSet( scope, element[ 0 ].files[ 0 ] );
-          onChange( scope );
-        } );
+    scope    : {
+      onChange : '&'
+    },
+    link     : function ( scope, element ) {
+      let onChange = () => {
+        let selectedFile = element[ 0 ].files[ 0 ];
+        scope.onChange({ file : selectedFile });
       };
 
-      element.bind( 'change', updateModel );
+      element.bind( 'change', onChange );
     }
   };
 };
