@@ -22,6 +22,12 @@ class MovieService {
     return this.ctx.$q.resolve( newMovie );
   }
 
+  deleteMovie ( movie ) {
+    let deletedMovieIndex = this.movies.indexOf( movie );
+    this.movies.splice( deletedMovieIndex, 1 );
+    return this.ctx.$q.resolve( movie );
+  }
+
   updateMovie ( updatedMovie ) {
     let existingMovie = _.find(
       this.movies, m => m.id === updatedMovie.id );

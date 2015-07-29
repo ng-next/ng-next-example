@@ -11,8 +11,8 @@
                      class="md-icon-button"
                      aria-label="Create New Movie">
             <md-icon class="s24"
-                     md-svg-icon="app/assets/icons/add.svg">
-                     aria-label="Create New Movie Icon"
+                     md-svg-icon="app/assets/icons/add.svg"
+                     aria-label="Create New Movie Icon">
             </md-icon>
             <div class="md-ripple-container"></div>
           </md-button>
@@ -23,17 +23,28 @@
     <md-content layout-gt-sm="row"
                 layout-wrap>
 
-      <div ng-repeat="movie in ::movieList.data"
+      <div ng-repeat="movie in movieList.data"
            flex-sm="100" flex-gt-sm="33" flex-gt-md="25" flex-gt-lg="15">
         <md-card>
           <a ui-sref="root.movie.detail({ id : movie.id })">
             <img data-ng-src="{{ ::movie.images[ 0 ] }}"
-                           alt="{{ ::movie.title }}">
+                 alt="{{ ::movie.title }}">
           </a>
           <md-card-content>
             <h3>{{ ::movie.title}}</h3>
             <h4>{{ ::movie.year }}</h4>
             <h4>Director: {{ ::movie.director}}</h4>
+
+            <div layout="row" flex="" class="fill-height">
+              <span flex></span>
+              <md-button ng-click="movieList.deleteMovie( movie )"
+                         class="md-raised md-mini"
+                         aria-label="Delete Movie">
+                Remove
+                <div class="md-ripple-container"></div>
+              </md-button>
+            </div>
+
           </md-card-content>
         </md-card>
       </div>
