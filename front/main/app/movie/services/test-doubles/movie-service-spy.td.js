@@ -8,6 +8,7 @@ export class ResolvingMovieServiceSpy {
     this.createMovieCalled = false;
     this.updateMovieCalled = false;
     this.deleteMovieCalled = false;
+    this.getDefaultImageCalled = false;
     this.movies = [
       { name : 'foo' }
     ];
@@ -57,6 +58,10 @@ export class ResolvingMovieServiceSpy {
     //    resolve( this.movie );
     //  }, 0 );
     //});
+  }
+  getDefaultImage () {
+    this.getDefaultImageCalled = true;
+    return Promise.resolve( 'defaultBase64Image' );
   }
 
   createMovieCalledWith ( expectedMovie ) {
