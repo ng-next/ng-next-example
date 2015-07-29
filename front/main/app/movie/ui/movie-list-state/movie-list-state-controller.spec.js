@@ -16,14 +16,16 @@ import _ from 'lodash';
 describe( 'MovieListStateController', () => {
   let controller;
 
-  describe( 'given a movie collection', () => {
+  describe( 'given a movie collection and a default image', () => {
     let movies;
     let logDummy;
     let movieServiceDummy;
     let ctxStub;
+    let defaultImage;
 
     beforeEach(() => {
       movies = [ { id : 1, title : 'foo' }, { id : 2, title : 'bar' } ];
+      defaultImage = 'base64Image';
       logDummy = new LogDummy();
       movieServiceDummy = new MovieServiceDummy();
       ctxStub = new CtxStub();
@@ -36,12 +38,17 @@ describe( 'MovieListStateController', () => {
         ctxDummy = new CtxDummy();
 
         controller = new Controller( ctxDummy, logDummy, movieServiceDummy,
-          movies );
+          movies, defaultImage );
       });
 
       it( 'should keep a reference to the movie collection.', () => {
         expect( controller.data ).to.equal( movies, 'must keep reference to' +
           ' movie collection' );
+      });
+
+      it( 'should keep a reference to the defaultImage.', () => {
+        expect( controller.defaultImage ).to.equal( defaultImage, 'must keep' +
+          ' reference to defaultImage' );
       });
     });
 

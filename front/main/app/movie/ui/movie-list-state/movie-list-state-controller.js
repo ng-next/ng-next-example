@@ -2,7 +2,7 @@
 'format es6';
 
 export default class MovieListStateController {
-  constructor ( ctx, log, movieService, movies ) {
+  constructor ( ctx, log, movieService, movies, defaultImage ) {
     //noinspection BadExpressionStatementJS
     'ngInject';
 
@@ -10,6 +10,7 @@ export default class MovieListStateController {
     this.log = log;
     this.movieService = movieService;
     this.data = movies;
+    this.defaultImage = defaultImage;
   }
 
   deleteMovie ( movie ) {
