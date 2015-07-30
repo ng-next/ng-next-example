@@ -29,7 +29,11 @@ System.config({
     "clean-css": "npm:clean-css@3.3.7",
     "core-js": "npm:core-js@0.9.18",
     "css": "github:systemjs/plugin-css@0.1.13",
+    "js-data": "github:js-data/js-data@2.2.3",
+    "js-data-angular": "github:js-data/js-data-angular@3.0.0",
+    "js-data-localforage": "github:js-data/js-data-localforage@2.1.1",
     "jsonp": "npm:jsonp@0.2.0",
+    "localforage": "npm:localforage@1.2.4",
     "lodash": "npm:lodash@2.4.1",
     "nn-ng-utils": "github:ng-next/nn-ng-utils@1.0.0",
     "test-doubles-angular": "./test-doubles/angular/index",
@@ -129,6 +133,9 @@ System.config({
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "module": "github:jspm/nodelibs-module@0.1.0",
       "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.1"
+    },
+    "npm:asap@1.0.0": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
     "npm:asn1.js@2.1.3": {
@@ -288,6 +295,11 @@ System.config({
     "npm:jsonp@0.2.0": {
       "debug": "npm:debug@2.1.3"
     },
+    "npm:localforage@1.2.4": {
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.1",
+      "promise": "npm:promise@5.0.0"
+    },
     "npm:lodash@2.4.1": {
       "process": "github:jspm/nodelibs-process@0.1.1"
     },
@@ -320,6 +332,9 @@ System.config({
     },
     "npm:process@0.11.1": {
       "assert": "github:jspm/nodelibs-assert@0.1.0"
+    },
+    "npm:promise@5.0.0": {
+      "asap": "npm:asap@1.0.0"
     },
     "npm:public-encrypt@2.0.1": {
       "bn.js": "npm:bn.js@2.2.0",

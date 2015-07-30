@@ -10,6 +10,7 @@ import './ui-state-security-ng-config';
 import './ui-router-ng-config';
 import './md-toast-ng-config';
 import './logging-ng-config';
+import './js-data-ng-config';
 
 export default ( app ) => {
   configureConstants( app );

@@ -11,7 +11,7 @@ import resolveMovie from './get-movie';
 
 const config = {
   abstract     : false,
-  url          : '^/movies/{id:int}',
+  url          : '^/movies/{id}',
   template     : template,
   controller   : controller,
   controllerAs : 'movieCtrl',

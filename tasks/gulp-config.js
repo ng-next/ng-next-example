@@ -45,7 +45,11 @@ module.exports = function () {
     'angular-ui-router',
     'jsonp',
     'lodash',
-    'nn-ng-utils'
+    'nn-ng-utils',
+    'localforage',
+    'js-data',
+    'js-data-angular',
+    'js-data-localforage'
   ];
 
   var config = {

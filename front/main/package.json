@@ -12,7 +12,11 @@
     "angular-mocks": "github:angular/bower-angular-mocks@^1.4.3",
     "angular-ui-router": "github:angular-ui/ui-router@^0.2.13",
     "clean-css": "npm:clean-css@^3.3.7",
+    "js-data": "github:js-data/js-data@^2.2.3",
+    "js-data-angular": "github:js-data/js-data-angular@^3.0.0",
+    "js-data-localforage": "github:js-data/js-data-localforage@^2.1.1",
     "jsonp": "npm:jsonp@^0.2.0",
+    "localforage": "npm:localforage@^1.2.4",
     "lodash": "npm:lodash@^2.4.1",
     "nn-ng-utils": "github:ng-next/nn-ng-utils@^1.0.0",
     "text": "github:systemjs/plugin-text@^0.0.2"
