@@ -28,6 +28,4 @@ export var ddo = () => { // $parse
   };
 };
 
-registerDirective( name, __moduleName, ddo );
-
-export default __moduleName;
+registerDirective( name, ddo );

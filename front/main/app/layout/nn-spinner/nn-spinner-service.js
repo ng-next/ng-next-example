@@ -29,6 +29,6 @@ class SpinnerService {
   }
 }
 
-registerService( name, __moduleName, SpinnerService );
+registerService( name, SpinnerService );
 
 export default SpinnerService;

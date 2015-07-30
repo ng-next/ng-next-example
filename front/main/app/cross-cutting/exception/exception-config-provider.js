@@ -29,6 +29,6 @@ class ExceptionConfigProvider {
   }
 }
 
-registerProvider( name, __moduleName, ExceptionConfigProvider );
+registerProvider( name, ExceptionConfigProvider );
 
 export default ExceptionConfigProvider;

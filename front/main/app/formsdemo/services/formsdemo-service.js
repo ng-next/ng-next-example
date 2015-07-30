@@ -30,6 +30,6 @@ class FormsdemoService {
   }
 }
 
-registerService( name, __moduleName, FormsdemoService );
+registerService( name, FormsdemoService );
 
 export default FormsdemoService;

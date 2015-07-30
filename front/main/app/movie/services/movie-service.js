@@ -20,7 +20,7 @@ class MovieService {
 
   createMovie ( newMovie ) {
     let newId = _.max( this.movies, 'id' ).id + 1;
-    newMovie.id = newId;
+    newMovie.id = newId || 1;
     this.movies.push( newMovie );
     return this.ctx.$q.resolve( newMovie );
   }
@@ -75,6 +75,6 @@ class MovieService {
   }
 }
 
-registerService( name, __moduleName, MovieService );
+registerService( name, MovieService );
 
 export default MovieService;

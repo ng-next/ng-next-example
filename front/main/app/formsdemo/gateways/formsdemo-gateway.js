@@ -31,6 +31,6 @@ class FormsdemoGatewayService {
   }
 }
 
-registerService( name, __moduleName, FormsdemoGatewayService );
+registerService( name, FormsdemoGatewayService );
 
 export default FormsdemoGatewayService;

@@ -28,6 +28,6 @@ class FileReaderService {
   }
 }
 
-registerService( name, __moduleName, FileReaderService );
+registerService( name, FileReaderService );
 
 export default FileReaderService;

@@ -81,6 +81,6 @@ class ToastService {
   }
 }
 
-registerService( name, __moduleName, ToastService );
+registerService( name, ToastService );
 
 export default ToastService;

@@ -19,6 +19,4 @@ export var ddo = {
   scope        : {}
 };
 
-registerDirective( name, __moduleName, ddo );
-
-export default __moduleName;
+registerDirective( name, ddo );

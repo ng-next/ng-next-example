@@ -26,6 +26,6 @@ class RandomuserGatewayService {
   }
 }
 
-registerService( name, __moduleName, RandomuserGatewayService );
+registerService( name, RandomuserGatewayService );
 
 export default RandomuserGatewayService;

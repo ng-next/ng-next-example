@@ -14,6 +14,4 @@ const config = {
   }
 };
 
-registerUiState( name, config, __moduleName );
-
-export default __moduleName;
+registerUiState( name, config );

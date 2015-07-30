@@ -17,6 +17,4 @@ export var ddo = {
   controllerAs : 'mainContent'
 };
 
-registerDirective( name, __moduleName, ddo );
-
-export default __moduleName;
+registerDirective( name, ddo );

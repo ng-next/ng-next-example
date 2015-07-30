@@ -35,6 +35,14 @@ gulp.task( 'publish-lib', function () {
     .pipe( gulp.dest( config.publicLib ));
 });
 
+gulp.task( 'publish-runtime', function () {
+  log( 'Copying 3rdParty runtime library files to public folder' );
+
+  return gulp
+    .src( config.runtimeLibToPublish )
+    .pipe( gulp.dest( config.public ));
+});
+
 gulp.task( 'build-revisioned-files', function () {
   var filesToRevision = [
     config.public + config.jsBuildMainFile,
@@ -105,6 +113,8 @@ gulp.task( 'publish', function ( done ) {
     'clean-public',
     'publish-source',
     'publish-assets',
+    // babel external-helpers currently not needed
+    //'publish-runtime',
     'rev',
     done
   );
@@ -116,6 +126,8 @@ gulp.task( 'publish-gh-pages', function ( done ) {
     'publish-source',
     'publish-assets',
     'publish-lib',
+    // babel external-helpers currently not needed
+    //'publish-runtime',
     done
   );
 });

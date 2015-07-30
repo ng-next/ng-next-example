@@ -55,6 +55,6 @@ class LogService {
   }
 }
 
-registerService( name, __moduleName, LogService );
+registerService( name, LogService );
 
 export default LogService;

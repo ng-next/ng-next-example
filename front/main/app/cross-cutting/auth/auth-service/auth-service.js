@@ -21,6 +21,6 @@ class AuthService {
   }
 }
 
-registerService( name, __moduleName, AuthService );
+registerService( name, AuthService );
 
 export default AuthService;
