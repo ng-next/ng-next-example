@@ -51,6 +51,6 @@ class CtxService {
   }
 }
 
-registerService( name, __moduleName, CtxService );
+registerService( name, CtxService );
 
 export default CtxService;

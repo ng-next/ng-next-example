@@ -13,6 +13,4 @@ export var ddo = {
   template : template
 };
 
-registerDirective( name, __moduleName, ddo );
-
-export default __moduleName;
+registerDirective( name, ddo );

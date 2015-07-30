@@ -13,6 +13,8 @@ import 'angular-aria';
 import 'angular-material';
 import 'angular-material/angular-material.css!css';
 import { nnNgModules as angularModuleNameContainer } from 'nn-ng-utils';
+import 'js-data';
+import 'js-data-angular';
 // import custom app modules
 import 'app/cross-cutting/index';
 import 'app/layout/index';
@@ -21,6 +23,7 @@ import 'app/ngnext/index';
 import 'app/randomuser/index';
 import 'app/formsdemo/index';
 import 'app/reddit/index';
+import 'app/movie/index';
 import 'app.css!css';
 import configureAngular from 'app/config/index';
 
@@ -30,7 +33,7 @@ bootstrap();
 
 function registerAngularCoreModules () {
   angularModuleNameContainer.registerCore( [ 'ui.router', 'ngCookies',
-    'ngAnimate', 'ngMaterial', 'ngMessages', 'ngAria'
+    'ngAnimate', 'ngMaterial', 'ngMessages', 'ngAria', 'js-data'
   ] );
 }
 

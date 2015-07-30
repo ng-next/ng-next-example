@@ -8,4 +8,8 @@ export default class LogDummy {
   debug () {
     return null;
   }
+
+  info () {
+    return null;
+  }
 }

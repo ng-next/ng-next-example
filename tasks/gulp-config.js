@@ -20,6 +20,8 @@ module.exports = function () {
   var buildFolder              = frontend;
   var jsBuildMainFile          = 'app.js';
   var jsBuildLibFile           = 'lib.js';
+  // babel external-helpers currently not needed
+  //var es6RuntimeFile           = 'external-helpers.js';
   var jsBuildConstantsNgConfig = frontendApp + 'config/constants-ng-config.js';
   var jsTargetFolder           = buildFolder;
   var styles                   = [
@@ -43,7 +45,11 @@ module.exports = function () {
     'angular-ui-router',
     'jsonp',
     'lodash',
-    'nn-ng-utils'
+    'nn-ng-utils',
+    'localforage',
+    'js-data',
+    'js-data-angular',
+    'js-data-localforage'
   ];
 
   var config = {
@@ -153,12 +159,14 @@ module.exports = function () {
      * inject into html */
 
     jsToIncludeInHtmlSfx       : [
-      frontendLib + 'traceur-runtime.js',
+      // babel external-helpers currently not needed
+      //frontend + es6RuntimeFile,
       frontend + jsBuildMainFile
     ],
 
     jsToIncludeInDefaultBundle : [
-      frontendLib + 'traceur-runtime.js',
+      // babel external-helpers currently not needed
+      //frontend + es6RuntimeFile,
       frontendLib + 'system.js',
       frontend + 'config.js',
       // loading js build files manually (instead of using jspm'd --inject'
@@ -181,6 +189,11 @@ module.exports = function () {
       frontend + 'bootstrap.js',
       frontend + 'index.html',
       frontend + '*.js.map'
+    ],
+
+    runtimeLibToPublish        : [
+      // babel external-helpers currently not needed
+      //frontend + es6RuntimeFile
     ],
 
     // all assets that should be copied to the public asset folder and served by

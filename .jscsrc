@@ -8,6 +8,8 @@
     "front/main/config.js",
     "front/main/app.js",
     "front/main/lib.js",
+    "front/main/external-helpers.js",
+    "front/main/traceur-runtime.js",
     "public/**",
     "reports/**"
   ],

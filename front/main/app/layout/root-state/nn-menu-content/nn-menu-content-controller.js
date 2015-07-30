@@ -39,6 +39,11 @@ export default class NnMenuContentController {
     this.$state.transitionTo( 'root.reddit.perfectloops' );
   }
 
+  goToMovieList () {
+    this.closeLeftNav();
+    this.$state.transitionTo( 'root.movie.list' );
+  }
+
   userIsLoggedIn () {
     return this.authService.userIsLoggedIn();
   }

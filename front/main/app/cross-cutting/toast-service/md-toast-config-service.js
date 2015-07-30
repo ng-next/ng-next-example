@@ -40,6 +40,6 @@ class MdToastConfigProvider {
   }
 }
 
-registerProvider( name, __moduleName, MdToastConfigProvider );
+registerProvider( name, MdToastConfigProvider );
 
 export default MdToastConfigProvider;

@@ -1,0 +1,58 @@
+<div layout="column">
+  <md-content layout-padding>
+    <div ng-if="movieCtrl.isCreateMode()">
+      <h1>Add a new movie</h1>
+      <br/>
+    </div>
+
+    <form name="movieForm"
+          ng-submit="movieCtrl.saveMovie( movieCtrl.data )">
+
+      <div layout layout-sm="column">
+        <md-input-container flex>
+          <label>Title</label>
+          <input ng-model="movieCtrl.data.title">
+        </md-input-container>
+        <md-input-container flex>
+          <label>Director</label>
+          <input ng-model="movieCtrl.data.director">
+        </md-input-container>
+      </div>
+      <div layout layout-sm="column">
+        <md-input-container flex>
+          <label>Year</label>
+          <input ng-model="movieCtrl.data.year">
+        </md-input-container>
+      </div>
+
+      <md-content layout="row">
+        <div ng-repeat="movieImage in movieCtrl.data.images"
+             flex-sm="100" flex-gt-sm="33" flex-gt-md="25" flex-gt-lg="15">
+          <md-card>
+            <img data-ng-src="{{ ::movieImage }}">
+          </md-card>
+        </div>
+      </md-content>
+
+      <div layout layout-sm="column">
+        <md-input-container>
+          <h4>Upload an image:</h4>
+          <nn-file-input on-change="movieCtrl.addImage(file)"></nn-file-input>
+        </md-input-container>
+      </div>
+
+      <div layout="row" layout-sm="column" layout-align="end center">
+        <md-button class="md-raised md-primary"
+                   type="submit"
+                   ng-disabled="movieForm.$invalid">
+          Save
+        </md-button>
+        <md-button ui-sref="root.movie.list"
+                   class="md-raised md-warn"
+                   type="button">
+          Cancel
+        </md-button>
+      </div>
+    </form>
+  </md-content>
+</div>

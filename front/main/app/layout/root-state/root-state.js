@@ -22,4 +22,4 @@ var config = {
   }
 };
 
-registerUiState( name, config, __moduleName );
+registerUiState( name, config );

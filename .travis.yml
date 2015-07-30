@@ -14,7 +14,7 @@ env:
   - secure: "cL9LZNZrss/noXWQcyq/AT1eU9gFcDiwggoehaSh4/1ucKHh0YL8MynhtIzbblhosYkRRwEitkuJIVwF7VvLRLSqF2yonAcvAlz1R32j/0tFsVDL0wVrHNdrv1EV1avit0hftkd+1IWXY0cAGFiMqtQXJZBiokuhdrSkXY0DXQo="
 before_install:
 - npm install -g jspm gulp codeclimate-test-reporter
-- jspm config endpoints.github.auth $JSPM_GH_AUTH
+- jspm config registries.github.auth $JSPM_GH_AUTH
 install:
 - npm install
 after_success:
