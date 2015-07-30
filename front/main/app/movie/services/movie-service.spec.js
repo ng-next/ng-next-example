@@ -4,7 +4,7 @@
 
 import 'angular';
 import 'angular-mocks';
-import Service from './movie-service';
+import Service from './movie-service-in-memory';
 
 describe( 'MovieService', () => {
   let service;
