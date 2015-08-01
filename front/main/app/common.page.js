@@ -17,7 +17,7 @@ var get = function ( url ) {
   browser.driver.wait( function () {
     return browser.driver.isElementPresent(
       by.id( 'rootstate' ));
-  });
+  }, 10000 );
   browser.waitForAngular();
 };
 
