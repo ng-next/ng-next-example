@@ -3,6 +3,8 @@
 [![Test Coverage](https://codeclimate.com/github/ng-next/ng-next-example/badges/coverage.svg)](https://codeclimate.com/github/ng-next/ng-next-example)
 [![Dependency Status](https://gemnasium.com/ng-next/ng-next-example.svg)](https://gemnasium.com/ng-next/ng-next-example)
 
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/andreasgrimm.svg)](https://saucelabs.com/u/andreasgrimm)
+
 # ng-next
 angular jspm material-design example
 
