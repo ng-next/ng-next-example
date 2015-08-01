@@ -28,7 +28,7 @@ install:
 - gulp protractor-install
 - gulp build-gh-pages
 before_script:
-- node ./back/app.js
+- node ./back/app.js &
 - sleep 3
 script:
 - gulp test --type=ci
