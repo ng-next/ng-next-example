@@ -7,18 +7,33 @@ notifications:
 addons:
   code_climate:
     repo_token: fb3478a949e8256ee2401c2b843d189dae34b756bfaf0ad7cec1a75ad5f7017b
+  sauce_connect: true
 env:
   global:
   - GH_REF: github.com/ng-next/ng-next-example.git
-  - secure: "HdMbkApHi8qdZmwpd60oOVOiA3+bC7BWpWz420B7O9fXlzHr+GJj5pvi0tHPeR83ZRMCW5xW/1C04R0SPg/Indds+eIx/Oh72Yk5mz5Ay26+ZZ+2ZC5JcAbkzxeZmrK/PPbUdwtE1+UOpR7TXGGbW0JCQALwALh4XgsfiWUEljY="
-  - secure: "cL9LZNZrss/noXWQcyq/AT1eU9gFcDiwggoehaSh4/1ucKHh0YL8MynhtIzbblhosYkRRwEitkuJIVwF7VvLRLSqF2yonAcvAlz1R32j/0tFsVDL0wVrHNdrv1EV1avit0hftkd+1IWXY0cAGFiMqtQXJZBiokuhdrSkXY0DXQo="
+  - secure: HdMbkApHi8qdZmwpd60oOVOiA3+bC7BWpWz420B7O9fXlzHr+GJj5pvi0tHPeR83ZRMCW5xW/1C04R0SPg/Indds+eIx/Oh72Yk5mz5Ay26+ZZ+2ZC5JcAbkzxeZmrK/PPbUdwtE1+UOpR7TXGGbW0JCQALwALh4XgsfiWUEljY=
+  - secure: cL9LZNZrss/noXWQcyq/AT1eU9gFcDiwggoehaSh4/1ucKHh0YL8MynhtIzbblhosYkRRwEitkuJIVwF7VvLRLSqF2yonAcvAlz1R32j/0tFsVDL0wVrHNdrv1EV1avit0hftkd+1IWXY0cAGFiMqtQXJZBiokuhdrSkXY0DXQo=
+  - secure: e0WSupROQXO5daaSWsSMjXywETPWakSmLxDMqLpGXvFANi7gWBSTt1JABIyjt6O+IC/Dp5pAc8juVr4PvSCGaW5X3Hkn2mxKl130lKL50znzLeXT1f2cGri6SFEV6wUKyHC75A0QS/p2RgHTvyMbYwE5MXLP+nqRG8PDZ3m7ohA=
+  - secure: Xp370UicuiafSTD3oQdEegQLXR4bz4UOmJaxIubKxS0J0wCZ75IRi+y8dR6mBldYk+SxIoZeje+3TcgYDwvHgarpCOH8wLFQDIfIDzOJAtez1ZWVJheXea2W0UVk5l4CdIkqOYDj3voOCoPirMI4LRJ9/Zl7xe2Zy7qm7Kr/mTs=
+cache:
+  directories:
+    - node_modules
 before_install:
-- npm install -g jspm gulp codeclimate-test-reporter
-- jspm config registries.github.auth $JSPM_GH_AUTH
+- "npm config set spin false"
+- "npm install -g jspm gulp protractor codeclimate-test-reporter"
+- "npm --version && jspm --version && gulp --version && protractor --version && phantomjs --version"
+- "jspm config registries.github.auth $JSPM_GH_AUTH"
 install:
 - npm install
-after_success:
+- gulp protractor-install
 - gulp build-gh-pages
+before_script:
+- node ./back/app.js &
+- sleep 3
+script:
+- gulp test --type=ci
+after_success:
+#- gulp build-gh-pages
 - chmod +x ./utilities/deploy-ghpages.sh
 - npm run deploy
 #after_script:

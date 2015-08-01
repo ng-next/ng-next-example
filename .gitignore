@@ -17,10 +17,11 @@ front/main/lib
 
 # build artifacts
 build
-lib*.js
-app*.js
-app*.css
-index.html
+front/main/lib.js
+front/main/app.js
+front/main/app-*.js
+front/main/app.css
+front/main/index.html
 front/main/app/config/constants-ng-config.js
 
 #Sourecemaps
@@ -34,3 +35,6 @@ public
 
 # misc
 .sass-cache
+
+# sauselabs local credentials
+set-sauce.sh
