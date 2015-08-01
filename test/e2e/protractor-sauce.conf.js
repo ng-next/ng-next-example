@@ -71,7 +71,9 @@ var sauceConfig = {
     },
     {
       browserName : 'safari',
-      name        : scNamePrefix + ' - safari'
+      version     : '8',
+      platform    : 'MAC',
+      name        : scNamePrefix + ' - safari - MAC'
     },
     {
       browserName : 'iPhone',
