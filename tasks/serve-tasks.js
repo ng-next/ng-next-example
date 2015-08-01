@@ -126,7 +126,7 @@ function startBrowserSync ( browserSyncWatches ) {
 
   var options = {
     proxy          : 'localhost:' + port,
-    port           : 5000,
+    port           : config.browserSyncPort,
     files          : browserSyncWatches.browserSyncWatchFiles,
     ghostMode      : {
       clicks   : true,
@@ -139,7 +139,7 @@ function startBrowserSync ( browserSyncWatches ) {
     logLevel       : 'debug',
     logPrefix      : 'ng-next',
     notify         : true,
-    reloadDelay    : 1000,
+    reloadDelay    : config.browserSyncReloadDelay,
     online         : false
   };
 

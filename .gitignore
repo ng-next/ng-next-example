@@ -34,3 +34,6 @@ public
 
 # misc
 .sass-cache
+
+# sauselabs local credentials
+set-sauce.sh

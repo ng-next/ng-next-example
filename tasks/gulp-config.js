@@ -125,7 +125,7 @@ module.exports = function () {
 
     nodeServerStartScript      : './back/app.js',
 
-    nodeServerDefaultPort      : '3000',
+    nodeServerDefaultPort      : 3000,
 
     nodeEnvironments           : {
       development : 'development',
@@ -208,6 +208,8 @@ module.exports = function () {
 
     browserSyncReloadDelay     : 1000,
 
+    browserSyncPort            : 5000,
+
     // watched files in dev mode that trigger a browser reload
     browserSyncFilesDev        : mainJs.concat(
       // main partition
@@ -217,6 +219,8 @@ module.exports = function () {
       frontend + htmlBuildFile,
       frontend + 'favicon.ico',
       '!' + frontend + '**/*.spec.js',
+      '!' + frontend + '**/*.scenario.js',
+      '!' + frontend + '**/*.page.js',
 
       // app
       frontendApp + '/**/*.*',
@@ -235,7 +239,9 @@ module.exports = function () {
       // app
       styles, // styles are part of main partition and are part of app, too
       frontendApp + '**/*.*',
-      '!' + frontend + '**/*.spec.js'
+      '!' + frontend + '**/*.spec.js',
+      '!' + frontend + '**/*.scenario.js',
+      '!' + frontend + '**/*.page.js'
         // style files are included because they must trigger a rebuild
     ),
 
@@ -274,6 +280,17 @@ module.exports = function () {
 
     serverIntegrationTests     : [
       __dirname + '/' + frontendTest + 'integration/**/*.spec.js'
+    ],
+
+    protractorLocalConfig      : root + '/test/e2e/protractor-local.conf.js',
+
+    protractorSauceConfig      : root + '/test/e2e/protractor-sauce.conf.js',
+
+    sauceTunnelId              : 'askl34bsdvfvtyui345gv8',
+
+    e2eScenarios               : [
+      frontendApp + '**/*.scenario.js',
+      root + 'test/e2e/**/*.scenario.js'
     ]
   };
 
@@ -292,6 +309,8 @@ module.exports = function () {
       ],
       serveFiles    : [
         frontendApp + '**/!(*.spec)+(*.js)',
+        frontendApp + '**/!(*.page)+(*.js)',
+        frontendApp + '**/!(*.scenario)+(*.js)',
         frontendTest + 'unit/test-doubles/**/*'
       ],
       exclude       : [

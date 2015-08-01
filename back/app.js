@@ -1,11 +1,12 @@
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+var config = require( '../tasks/gulp-config' )();
 var path = require( 'path' );
 //var fs = require( 'fs' );
 var express = require( 'express' );
 var logger = require( 'morgan' );
 var app = express();
 
-app.set( 'port', process.env.PORT || 3000 );
+app.set( 'port', process.env.PORT || config.nodeServerDefaultPort );
 app.use( logger( 'dev' ));
 
 if ( app.get( 'env' ) === 'development' ) {

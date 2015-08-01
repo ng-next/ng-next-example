@@ -4,6 +4,7 @@ var $                = require( 'gulp-load-plugins' )({ lazy : true });
 var log              = require( './nn-gulp-utils' ).log;
 var path             = require( 'path' );
 var args             = require( 'yargs' ).argv;
+var runSequence      = require( 'run-sequence' );
 
 gulp.task( 'vet', function () {
   log( 'Analyzing source with JSHint and JSCS' );
@@ -17,7 +18,11 @@ gulp.task( 'vet', function () {
 });
 
 gulp.task( 'test', function ( done ) {
-  log( 'Running tests' );
+  runSequence( 'test-units', 'protractor-sauce-run', done );
+});
+
+gulp.task( 'test-units', function ( done ) {
+  log( 'Running unit tests' );
 
   startTests( true, done );
 });
