@@ -20,7 +20,7 @@ cache:
     - node_modules
 before_install:
 - "npm config set spin false"
-- "npm install -g npm@^2 jspm gulp protractor codeclimate-test-reporter"
+- "npm install -g jspm gulp protractor codeclimate-test-reporter"
 - "npm --version && jspm --version && gulp --version && protractor --version && phantomjs --version"
 - "jspm config registries.github.auth $JSPM_GH_AUTH"
 install:
