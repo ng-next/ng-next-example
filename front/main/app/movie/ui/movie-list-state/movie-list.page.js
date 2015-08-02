@@ -9,6 +9,15 @@ var MovieList = function () {
     this.newMovieButton.click();
     browser.waitForAngular();
   };
+
+  this.movieTitles = element.all( by.repeater( 'movie in movieList.data' )
+    .column( 'movie.title' ));
+
+  this.movieDirectors = element.all( by.repeater( 'movie in movieList.data' )
+    .column( 'movie.director' ));
+
+  this.movieYears = element.all( by.repeater( 'movie in movieList.data' )
+    .column( 'movie.year' ));
 };
 
 module.exports = new MovieList();
