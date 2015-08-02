@@ -23,12 +23,13 @@ var sauceConfig = {
   sauceUser         : process.env.SAUCE_USERNAME,
   sauceKey          : process.env.SAUCE_ACCESS_KEY,
 
-  //capabilities : _.assign(
-  //  { browserName : 'chrome', name : scCapabilities.name + ' - chrome' },
-  //  scCapabilities
-  //),
-
   multiCapabilities : [
+    {
+      browserName : 'safari',
+      version     : '8',
+      platform    : 'MAC',
+      name        : scNamePrefix + ' - safari - MAC'
+    },
     {
       browserName : 'chrome',
       platform    : 'MAC',
@@ -64,16 +65,22 @@ var sauceConfig = {
       browserName : 'firefox',
       platform    : 'LINUX',
       name        : scNamePrefix + ' - firefox - LINUX'
-    },
+    }
+  ],
+
+  maxSessions       : -1
+
+  // https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities
+  // browsername:
+  // android|chrome|firefox|htmlunit|internet explorer|iPhone|iPad|opera|safari
+  // platform: WINDOWS|XP|VISTA|MAC|LINUX|UNIX|ANDROID
+};
+
+if ( !process.env.TRAVIS ) {
+  var mobileCaps = [
     {
       browserName : 'android',
       name        : scNamePrefix + ' - android'
-    },
-    {
-      browserName : 'safari',
-      version     : '8',
-      platform    : 'MAC',
-      name        : scNamePrefix + ' - safari - MAC'
     },
     {
       browserName : 'iPhone',
@@ -85,15 +92,12 @@ var sauceConfig = {
       version     : '8',
       name        : scNamePrefix + ' - iPad'
     }
-  ],
+  ];
 
-  maxSessions       : -1
-
-  // https://github.com/SeleniumHQ/selenium/wiki/DesiredCapabilities
-  // browsername:
-  // android|chrome|firefox|htmlunit|internet explorer|iPhone|iPad|opera|safari
-  // platform: WINDOWS|XP|VISTA|MAC|LINUX|UNIX|ANDROID
-};
+  _.each( mobileCaps, function ( cap ) {
+    sauceConfig.multiCapabilities.push( cap );
+  });
+}
 
 _.each( sauceConfig.multiCapabilities, function ( c ) {
   _.assign( c, scCapabilities );
